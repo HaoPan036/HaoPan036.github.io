@@ -245,7 +245,9 @@
   .lang-toggle { position: absolute; top: 1.1rem; right: 1.5rem; display: inline-flex; background: var(--surface-warm); border: 1px solid var(--border); border-radius: 999px; padding: 2px; z-index: 5; }
   .lang-toggle .lc { font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.62rem; border-radius: 999px; color: var(--ink-muted); cursor: pointer; user-select: none; }
   .lang-toggle .lc.active { background: var(--accent); color: #fff; }
-  #view-engineering header { position: relative; }
+  .site-header { padding: 2.2rem 0 1.8rem; }
+  .site-header .mode-toggle { margin-top: 1.3rem; }
+  .eng-intro { position: relative; padding: 1.5rem 0 0.2rem; }
   #view-engineering[data-lang="en"] .lang-zh { display: none; }
   #view-engineering[data-lang="zh"] .lang-en { display: none; }
 
@@ -282,7 +284,7 @@
   @media (max-width: 640px) {
     .oss-grid { grid-template-columns: 1fr; }
     .lang-toggle { position: static; margin: 0 0 0.9rem; }
-    #view-engineering header { position: static; }
+    .eng-intro { position: static; }
   }
 
   footer { padding: 1.5rem 0; text-align: center; font-size: 0.75rem; color: var(--ink-muted); }
@@ -312,48 +314,48 @@
 <body>
 
 <!-- ══════════ SHARED TAB BAR ══════════ -->
-<div class="tabbar">
+<!-- ══════════════════════════════════════════ -->
+<!-- ════════════ SHARED HEADER ════════════════ -->
+<!-- ══════════════════════════════════════════ -->
+<header class="site-header">
   <div class="container">
+    <h1>Hao Pan</h1>
+    <p class="tagline">Master of Computing in Applied AI, Nanyang Technological University</p>
+    <div class="links">
+      <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:hao036@e.ntu.edu.sg">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        hao036@e.ntu.edu.sg
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Students Taught</div></div>
+      <div class="stat"><div class="stat-num" style="font-size:1.1rem;">Top 0.2%</div><div class="stat-label">China National Scholarship</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Skills shipped<br>to production BI</div></div>
+      <div class="stat"><div class="stat-num">9</div><div class="stat-label">NL2SQL failure<br>modes mapped</div></div>
+    </div>
     <div class="mode-toggle" role="tablist" aria-label="Portfolio view">
       <span class="tab active" data-view="engineering" role="tab" tabindex="0">Engineering</span>
       <span class="tab" data-view="research" role="tab" tabindex="0">Research</span>
     </div>
   </div>
-</div>
+</header>
 
-<!-- ══════════════════════════════════════════ -->
 <!-- ════════════ ENGINEERING VIEW ════════════ -->
-<!-- ══════════════════════════════════════════ -->
 <div class="view active" id="view-engineering">
 
-  <header>
-    <div class="container">
-      <div class="lang-toggle"><span class="lc active" data-lang="en">EN</span><span class="lc" data-lang="zh">中</span></div>
-      <h1>Hao Pan</h1>
+  <div class="container eng-intro">
+    <div class="lang-toggle"><span class="lc active" data-lang="en">EN</span><span class="lc" data-lang="zh">中</span></div>
       <p class="role-tagline"><span class="lang-en">Data Agent / LLM Application Engineer</span><span class="lang-zh">数据 Agent / LLM 应用工程师</span></p>
       <p class="subtagline"><span class="lang-en">I make LLM-powered data agents <span class="highlight">production-reliable</span> — not training models or building platforms, but designing the constraints, Skills, and failure-mode guardrails that keep agents trustworthy inside real BI workflows.</span><span class="lang-zh">我让 LLM 驱动的数据 Agent <span class="highlight">在生产环境里稳定可靠</span>——不训练模型、也不造平台，而是设计约束、Skill 与失败模式护栏，让 Agent 在真实 BI 工作流里值得信任。</span></p>
-      <div class="links">
-        <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="mailto:hao036@e.ntu.edu.sg">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          hao036@e.ntu.edu.sg
-        </a>
-      </div>
-      <div class="stats">
-        <div class="stat"><div class="stat-num">2&ndash;3<small> min</small></div><div class="stat-label"><span class="lang-en">Per analysis<br>(was 30&ndash;45 min)</span><span class="lang-zh">每次分析<br>(原 30&ndash;45 分钟)</span></div></div>
-        <div class="stat"><div class="stat-num">~2<small> s</small></div><div class="stat-label"><span class="lang-en">Presto query<br>(was ~300 s)</span><span class="lang-zh">Presto 查询<br>(原 ~300 秒)</span></div></div>
-        <div class="stat"><div class="stat-num">3</div><div class="stat-label"><span class="lang-en">Skills shipped<br>to production BI</span><span class="lang-zh">已上线 Skill<br>(生产 BI)</span></div></div>
-        <div class="stat"><div class="stat-num">9</div><div class="stat-label"><span class="lang-en">NL2SQL failure<br>modes mapped</span><span class="lang-zh">梳理的 NL2SQL<br>失败模式</span></div></div>
-      </div>
-    </div>
-  </header>
+  </div>
 
   <nav>
     <div class="container">
@@ -822,33 +824,6 @@
 <!-- ════════════ RESEARCH VIEW ═══════════════ -->
 <!-- ══════════════════════════════════════════ -->
 <div class="view" id="view-research">
-
-  <header>
-    <div class="container">
-      <h1>Hao Pan</h1>
-      <p class="tagline">Master of Computing in Applied AI, Nanyang Technological University</p>
-      <div class="links">
-        <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="mailto:hao036@e.ntu.edu.sg">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          hao036@e.ntu.edu.sg
-        </a>
-      </div>
-      <div class="stats">
-        <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Students Taught</div></div>
-        <div class="stat"><div class="stat-num">11</div><div class="stat-label">GitHub Repos</div></div>
-        <div class="stat"><div class="stat-num">6</div><div class="stat-label">LLM Failure Modes</div></div>
-        <div class="stat"><div class="stat-num" style="font-size:1.1rem;">Top 0.2%</div><div class="stat-label">China National Scholarship</div></div>
-      </div>
-    </div>
-  </header>
 
   <nav>
     <div class="container">
