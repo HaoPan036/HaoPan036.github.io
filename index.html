@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hao Pan — Academic Portfolio</title>
-<meta name="description" content="Hao Pan's academic portfolio — AI education, LLM-powered workflow design, and human-centered AI research.">
+<title>Hao Pan — Portfolio</title>
+<meta name="description" content="Hao Pan — Data Agent / LLM Application Engineer and applied-AI / HCI researcher. Two views: Engineering (production agent reliability) and Research (AI tools that scaffold reflection).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -16,11 +16,12 @@
     --surface: #fafaf9; --surface-warm: #f5f5f4; --surface-card: #ffffff;
     --border: #e7e5e4; --border-accent: #c2d6eb;
     --tag-bg: #eef3f9; --tag-text: #1e3a5f;
-    --green: #166534; --amber: #92400e;
+    --green: #166534; --green-pale: #ecfdf5; --amber: #92400e; --amber-pale: #fffbeb;
+    --red: #b91c1c; --red-pale: #fef2f2;
     --serif: 'Source Serif 4', Georgia, serif;
     --sans: 'DM Sans', -apple-system, sans-serif;
     --mono: 'JetBrains Mono', monospace;
-    --max-w: 780px;
+    --max-w: 820px;
   }
   html { scroll-behavior: smooth; }
   body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: var(--surface); -webkit-font-smoothing: antialiased; }
@@ -29,18 +30,32 @@
   a:hover { border-bottom-color: var(--accent-light); }
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
 
-  header { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--border); }
+  /* ── View switching ─────────────── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── Tab bar (shared) ─────────────── */
+  .tabbar { padding: 1.4rem 0 0; }
+  .mode-toggle { display: inline-flex; background: var(--surface-warm); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+  .mode-toggle .tab { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; padding: 0.32rem 0.95rem; border-radius: 999px; color: var(--ink-muted); border-bottom: none; transition: all 0.2s; cursor: pointer; user-select: none; }
+  .mode-toggle .tab.active { background: var(--accent); color: #fff; }
+  .mode-toggle .tab:not(.active):hover { color: var(--accent); }
+
+  header { padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--border); }
   header h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.25rem; }
-  header .tagline { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 1rem; }
+  .tagline { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 1rem; }
+  .role-tagline { font-size: 1rem; color: var(--accent); font-weight: 500; margin-bottom: 0.3rem; }
+  .subtagline { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1rem; max-width: 640px; }
   .links { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.84rem; }
   .links a { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink-muted); border-bottom: none; }
   .links a:hover { color: var(--accent); }
   .links svg { width: 14px; height: 14px; flex-shrink: 0; }
 
   .stats { display: flex; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; }
-  .stat { flex: 1; background: var(--surface-card); padding: 1rem 1.2rem; text-align: center; }
-  .stat-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1.2; }
-  .stat-label { font-size: 0.72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.15rem; }
+  .stat { flex: 1; background: var(--surface-card); padding: 1rem 0.9rem; text-align: center; }
+  .stat-num { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--accent); line-height: 1.15; }
+  .stat-num small { font-size: 0.95rem; }
+  .stat-label { font-size: 0.68rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; line-height: 1.3; }
 
   nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,249,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.7rem 0; }
   nav .container { display: flex; gap: 1.8rem; overflow-x: auto; }
@@ -52,9 +67,127 @@
   .section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.4rem; }
   h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin-bottom: 1rem; letter-spacing: -0.01em; }
   h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+  h4.block-label { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; }
   .highlight { font-weight: 600; color: var(--accent); }
-  .profile-statement { font-size: 1rem; color: var(--ink-soft); line-height: 1.75; max-width: 640px; }
+  .lead { font-size: 1.02rem; color: var(--ink-soft); line-height: 1.75; max-width: 680px; }
 
+  /* ── Positioning ladder (eng) ─────────── */
+  .ladder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-top: 1.4rem; }
+  .rung { border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; background: var(--surface-card); position: relative; }
+  .rung .rung-tag { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); font-weight: 600; }
+  .rung h4 { font-size: 0.9rem; color: var(--ink); margin: 0.2rem 0 0.3rem; font-family: var(--sans); font-weight: 600; }
+  .rung p { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+  .rung.me { border-color: var(--accent); border-width: 1.5px; background: var(--accent-pale); }
+  .rung.me .rung-tag { color: var(--accent); }
+  .rung.me::after { content: '\2190 me'; position: absolute; top: 0.7rem; right: 0.9rem; font-size: 0.7rem; font-weight: 700; color: var(--accent); }
+
+  /* ── Project cards ─────────── */
+  .project-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.4rem; transition: border-color 0.25s, box-shadow 0.25s; overflow: hidden; }
+  .project-card:hover { border-color: var(--border-accent); box-shadow: 0 2px 18px rgba(30,58,95,0.06); }
+  .project-header { display: grid; grid-template-columns: 52px 1fr; gap: 1rem; padding: 1.4rem 1.5rem 0; align-items: start; }
+  .project-icon { width: 52px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .project-icon svg { width: 26px; height: 26px; }
+  .project-icon.diana, .project-icon.shopee { background: #fff7ed; color: #c2410c; }
+  .project-icon.flow, .project-icon.edu { background: #eff6ff; color: #1d4ed8; }
+  .project-icon.multi, .project-icon.agent { background: #ecfdf5; color: #059669; }
+  .project-icon.surviv, .project-icon.obsidian { background: #f5f3ff; color: #6d28d9; }
+  .project-icon.bazi { background: #fdf2f8; color: #be185d; }
+  .project-titles h3 { line-height: 1.3; }
+  .project-meta { font-size: 0.8rem; color: var(--ink-muted); font-style: italic; margin-top: 0.15rem; }
+  .project-body { padding: 1.1rem 1.5rem 1.5rem; }
+  .project-body > p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.65; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.9rem 0 0; }
+  .pill { font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem; border-radius: 999px; letter-spacing: 0.01em; }
+  .pill.win { background: var(--green-pale); color: var(--green); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
+  .tag { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.5rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 3px; }
+
+  /* ── Two column bullets ─────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem; }
+  .col-block h4 { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; }
+  .col-block ul { list-style: none; padding: 0; }
+  .col-block li { position: relative; padding-left: 0.95rem; margin-bottom: 0.35rem; font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
+  .col-block li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.45; }
+  .col-block li code { font-family: var(--mono); font-size: 0.76rem; background: var(--surface-warm); padding: 0.05rem 0.3rem; border-radius: 3px; color: var(--accent); }
+
+  /* ── Before / after metric bars (eng) ─────────── */
+  .ba { background: var(--surface-warm); border-radius: 8px; padding: 1.1rem 1.2rem; margin-top: 1rem; }
+  .ba-row { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+  .ba-row:last-child { margin-bottom: 0; }
+  .ba-label { font-size: 0.76rem; color: var(--ink-soft); font-weight: 500; text-align: right; }
+  .ba-track { height: 22px; border-radius: 5px; position: relative; background: transparent; }
+  .ba-fill { height: 100%; border-radius: 5px; }
+  .ba-fill.before { background: linear-gradient(90deg, #c2410c, #ea7c4a); }
+  .ba-fill.after { background: linear-gradient(90deg, #166534, #4ade80); }
+  .ba-val { font-family: var(--mono); font-size: 0.78rem; font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .ba-note { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.7rem; line-height: 1.45; }
+
+  /* ── Caveat / honesty note (eng) ─────────── */
+  .caveat { display: flex; gap: 0.55rem; align-items: start; background: var(--amber-pale); border: 1px solid #fde68a; border-radius: 7px; padding: 0.65rem 0.9rem; margin-top: 0.9rem; font-size: 0.8rem; line-height: 1.5; color: #78350f; }
+  .caveat svg { flex-shrink: 0; margin-top: 2px; color: var(--amber); }
+
+  /* ── Critical-bug highlight (eng) ─────────── */
+  .bug-box { background: var(--surface-card); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 0 7px 7px 0; padding: 0.85rem 1.1rem; margin-top: 1rem; }
+  .bug-box .bug-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red); }
+  .bug-box h4 { font-family: var(--sans); font-size: 0.85rem; color: var(--ink); margin: 0.2rem 0 0.35rem; }
+  .bug-box p { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.55; }
+  .bug-box code { font-family: var(--mono); font-size: 0.74rem; background: var(--surface-warm); padding: 0.05rem 0.3rem; border-radius: 3px; }
+
+  /* ── Architecture figure (eng) ─────────── */
+  .figure { border: 1px solid var(--border); border-radius: 8px; background: var(--surface-card); padding: 1.1rem 1.2rem 0.9rem; margin-top: 1rem; overflow-x: auto; }
+  .figure svg { display: block; width: 100%; height: auto; min-width: 540px; }
+  .figure figcaption { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.6rem; line-height: 1.45; }
+  .figure figcaption strong { color: var(--ink-soft); }
+
+  /* ── Failure taxonomy grid (eng) ─────────── */
+  .tax-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .tax-item { font-size: 0.78rem; color: var(--ink-soft); background: var(--surface-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; display: flex; align-items: center; gap: 0.45rem; line-height: 1.3; }
+  .tax-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.4; flex-shrink: 0; }
+  .tax-item.crit { border-color: #fecaca; background: var(--red-pale); color: #7f1d1d; }
+  .tax-item.crit .dot { background: var(--red); opacity: 1; }
+
+  /* ── Ablation / chart (eng) ─────────── */
+  .chart-card { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem; }
+  .chart-box { background: var(--surface-warm); border-radius: 8px; padding: 1rem 1.1rem; }
+  .chart-box h4 { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.7rem; }
+  .chart-box svg { width: 100%; height: auto; }
+
+  /* ── Skills (eng grid) ─────────── */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+  .skill-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+  .skill-card h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .skill-card h4 svg { width: 14px; height: 14px; }
+  .skill-card p { font-size: 0.84rem; color: var(--ink-soft); line-height: 1.55; }
+  .skill-card code { font-family: var(--mono); font-size: 0.76rem; }
+  .skill-card.develop { border-style: dashed; background: var(--surface-warm); }
+  .skill-card.develop h4 { color: var(--ink-muted); }
+
+  /* ── Honors (eng) ─────────── */
+  .honor-list { margin-top: 1rem; display: grid; gap: 0.7rem; }
+  .honor { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start; background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1.1rem; }
+  .honor .medal { font-size: 1.1rem; line-height: 1.4; }
+  .honor h4 { font-family: var(--sans); font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+  .honor .honor-meta { font-size: 0.74rem; color: var(--ink-muted); font-weight: 400; }
+  .honor p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.2rem; }
+
+  /* ── Education ─────────── */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+  .edu-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+  .edu-card h4 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
+  .edu-card .edu-school { font-size: 0.82rem; color: var(--accent); font-weight: 500; }
+  .edu-card .edu-date { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.1rem; }
+  .edu-card .edu-note { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.3rem; }
+
+  /* ── Contact ─────────── */
+  .contact-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; text-align: center; }
+  .contact-block p { color: var(--ink-soft); margin-bottom: 0.8rem; font-size: 0.95rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; }
+  .contact-links a { font-weight: 500; color: var(--accent); }
+
+  /* ══════ RESEARCH-VIEW-SPECIFIC ══════ */
+  .profile-statement { font-size: 1rem; color: var(--ink-soft); line-height: 1.75; max-width: 640px; }
   .interest-visual { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin: 1.5rem 0; background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
   .interest-side { padding: 1.5rem; }
   .interest-side h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; font-weight: 600; }
@@ -63,30 +196,8 @@
   .interest-right h4 { color: var(--amber); }
   .interest-arrow { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; }
 
-  .project-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.2rem; transition: border-color 0.25s, box-shadow 0.25s; overflow: hidden; }
-  .project-card:hover { border-color: var(--border-accent); box-shadow: 0 2px 16px rgba(30,58,95,0.06); }
-  .project-header { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.4rem 1.5rem 0; align-items: start; }
-  .project-icon { width: 56px; height: 56px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .project-icon svg { width: 28px; height: 28px; }
-  .project-icon.edu { background: #eff6ff; color: #1d4ed8; }
-  .project-icon.obsidian { background: #f5f3ff; color: #6d28d9; }
-  .project-icon.shopee { background: #fff7ed; color: #c2410c; }
-  .project-icon.bazi { background: #fdf2f8; color: #be185d; }
-  .project-icon.agent { background: #ecfdf5; color: #059669; }
-  .project-meta { font-size: 0.8rem; color: var(--ink-muted); font-style: italic; margin-top: 0.15rem; }
-  .project-body { padding: 1rem 1.5rem 1.4rem; }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.8rem; }
-  .col-block h4 { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; }
-  .col-block ul { list-style: none; padding: 0; }
-  .col-block li { position: relative; padding-left: 0.9rem; margin-bottom: 0.3rem; font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
-  .col-block li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.4; }
-
   .lesson-bar { display: flex; align-items: start; gap: 0.6rem; background: var(--surface-warm); border-left: 3px solid var(--accent); padding: 0.7rem 1rem; margin-top: 0.8rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
   .lesson-bar svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.8rem; }
-  .tag { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.5rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 3px; letter-spacing: 0.02em; }
 
   .rq-box { background: var(--accent); padding: 1.3rem 1.6rem; margin: 1.2rem 0; border-radius: 8px; }
   .rq-box p { font-family: var(--serif); font-size: 1rem; font-style: italic; color: #fff; line-height: 1.6; }
@@ -107,16 +218,7 @@
   .measure-text span { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.45; }
 
   .skills-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-  .skill-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
-  .skill-card h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem; }
-  .skill-card h4 svg { width: 14px; height: 14px; }
-  .skill-card p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.55; }
-  .skill-card.develop { border-style: dashed; background: var(--surface-warm); }
-  .skill-card.develop h4 { color: var(--ink-muted); }
 
-  .contact-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; text-align: center; }
-
-  /* ── Mini project cards ─────────── */
   .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
   .mini-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; transition: border-color 0.25s; }
   .mini-card:hover { border-color: var(--border-accent); }
@@ -129,381 +231,860 @@
   .mini-card a.repo-link:hover { border-bottom: 1px solid var(--accent-light); }
   .mini-card a.repo-link svg { width: 12px; height: 12px; }
 
-  /* ── Education cards ────────────── */
-  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-  .edu-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; }
-  .edu-card h4 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
-  .edu-card .edu-school { font-size: 0.82rem; color: var(--accent); font-weight: 500; }
-  .edu-card .edu-date { font-size: 0.75rem; color: var(--ink-muted); margin-bottom: 0.3rem; }
-  .edu-card .edu-note { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.3rem; }
-  .contact-block p { color: var(--ink-soft); margin-bottom: 0.8rem; font-size: 0.95rem; }
-  .contact-links { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; }
-  .contact-links a { font-weight: 500; color: var(--accent); }
-
   footer { padding: 1.5rem 0; text-align: center; font-size: 0.75rem; color: var(--ink-muted); }
 
   @media (max-width: 640px) {
     header h1 { font-size: 1.7rem; }
-    .stats { flex-direction: column; }
+    .stats { flex-wrap: wrap; }
+    .stat { flex: 1 1 40%; }
+    .ladder { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .tax-grid { grid-template-columns: 1fr 1fr; }
+    .chart-card { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .ba-row { grid-template-columns: 72px 1fr auto; }
+    nav .container { gap: 1.2rem; }
     .interest-visual { grid-template-columns: 1fr; }
     .interest-arrow { transform: rotate(90deg); padding: 0.5rem; }
-    .two-col { grid-template-columns: 1fr; }
     .study-flow { grid-template-columns: 1fr; }
     .measures-grid { grid-template-columns: 1fr; }
     .skills-visual { grid-template-columns: 1fr; }
     .skill-card.develop { grid-column: span 1; }
     .mini-grid { grid-template-columns: 1fr; }
-    .edu-grid { grid-template-columns: 1fr; }
-    nav .container { gap: 1.2rem; }
-    .project-header { grid-template-columns: 44px 1fr; }
-    .project-icon { width: 44px; height: 44px; border-radius: 8px; }
-    .project-icon svg { width: 22px; height: 22px; }
   }
 </style>
 </head>
 <body>
 
-<header>
+<!-- ══════════ SHARED TAB BAR ══════════ -->
+<div class="tabbar">
   <div class="container">
-    <h1>Hao Pan</h1>
-    <p class="tagline">Master of Computing in Applied AI, Nanyang Technological University</p>
-    <div class="links">
-      <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="mailto:hao036@e.ntu.edu.sg">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        hao036@e.ntu.edu.sg
-      </a>
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Students Taught</div></div>
-      <div class="stat"><div class="stat-num">11</div><div class="stat-label">GitHub Repos</div></div>
-      <div class="stat"><div class="stat-num">6</div><div class="stat-label">LLM Failure Modes</div></div>
-      <div class="stat"><div class="stat-num" style="font-size:1.1rem;">Top 0.2%</div><div class="stat-label">China National Scholarship</div></div>
+    <div class="mode-toggle" role="tablist" aria-label="Portfolio view">
+      <span class="tab active" data-view="engineering" role="tab" tabindex="0">Engineering</span>
+      <span class="tab" data-view="research" role="tab" tabindex="0">Research</span>
     </div>
   </div>
-</header>
+</div>
 
-<nav>
-  <div class="container">
-    <a href="#profile">Profile</a>
-    <a href="#projects">Projects</a>
-    <a href="#more">More</a>
-    <a href="#education">Education</a>
-    <a href="#research">Research</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+<!-- ══════════════════════════════════════════ -->
+<!-- ════════════ ENGINEERING VIEW ════════════ -->
+<!-- ══════════════════════════════════════════ -->
+<div class="view active" id="view-engineering">
 
-<section id="profile">
-  <div class="container">
-    <p class="section-label">About</p>
-    <h2>Profile</h2>
-    <p class="profile-statement">My recurring interest is <span class="highlight">how AI tools can support reflection, learning, and expertise development without hiding the reasoning process from the user</span>. I am seeking research collaboration to turn applied observations into rigorous HCI research.</p>
-    <div class="interest-visual">
-      <div class="interest-side interest-left">
-        <h4>&#10022; When AI helps</h4>
-        <p>Users see structure they couldn't see before. AI scaffolds reflection, self-evaluation, and contextual judgment.</p>
+  <header>
+    <div class="container">
+      <h1>Hao Pan</h1>
+      <p class="role-tagline">Data Agent / LLM Application Engineer</p>
+      <p class="subtagline">I make LLM-powered data agents <span class="highlight">production-reliable</span> — not training models or building platforms, but designing the constraints, Skills, and failure-mode guardrails that keep agents trustworthy inside real BI workflows.</p>
+      <div class="links">
+        <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:hao036@e.ntu.edu.sg">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          hao036@e.ntu.edu.sg
+        </a>
       </div>
-      <div class="interest-arrow">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="23" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="3 3"/>
-          <text x="24" y="28" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" fill="#1e3a5f">vs</text>
-        </svg>
-      </div>
-      <div class="interest-side interest-right">
-        <h4>&#9888; When AI harms</h4>
-        <p>AI moves faster than the user can reflect. Fluent output bypasses the cognitive work required for genuine learning.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">2&ndash;3<small> min</small></div><div class="stat-label">Per analysis<br>(was 30&ndash;45 min)</div></div>
+        <div class="stat"><div class="stat-num">~2<small> s</small></div><div class="stat-label">Presto query<br>(was ~300 s)</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Skills shipped<br>to production BI</div></div>
+        <div class="stat"><div class="stat-num">9</div><div class="stat-label">NL2SQL failure<br>modes mapped</div></div>
       </div>
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="projects">
-  <div class="container">
-    <p class="section-label">Portfolio</p>
-    <h2>Projects</h2>
+  <nav>
+    <div class="container">
+      <a href="#e-focus">Focus</a>
+      <a href="#e-diana">Diana Agent</a>
+      <a href="#e-workflow">SQL Workflow</a>
+      <a href="#e-multiagent">Multi-Agent</a>
+      <a href="#e-surviv">Surviv</a>
+      <a href="#e-skills">Skills</a>
+      <a href="#e-honors">Honors</a>
+      <a href="#e-contact">Contact</a>
+    </div>
+  </nav>
 
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-        <div><h3>AI / Python Teaching &amp; Learning Scaffolds</h3><p class="project-meta">Jinken Vocational &amp; Technical College — 300+ students</p></div>
-      </div>
-      <div class="project-body">
-        <div class="two-col">
-          <div class="col-block"><h4>What I Built</h4><ul><li>AI &amp; Python curricula for applied ML and GenAI</li><li>Prompt-design rubrics for reflective AI use</li><li>Socratic active-learning approach (hit theoretical limits)</li></ul></div>
-          <div class="col-block"><h4>Research Relevance</h4><ul><li>Motivates core question on feedback format &amp; durable learning</li><li>Access to realistic learning scenarios for future studies</li><li>Connects to metacognition &amp; cognitive scaffolding</li></ul></div>
+  <section id="e-focus">
+    <div class="container">
+      <p class="section-label">What I do</p>
+      <h2>The application layer is where agents break</h2>
+      <p class="lead">A capable LLM doesn't equal a solved problem — in between sits a large amount of <span class="highlight">constraint engineering</span>. My work lives in that gap: turning an analyst's tacit logic into auditable Skills, locking down the steps where free generation silently produces plausible-but-wrong numbers, and keeping a human in the loop where judgment is needed.</p>
+      <div class="ladder">
+        <div class="rung">
+          <div class="rung-tag">L1 · User</div>
+          <h4>Uses the agent</h4>
+          <p>Asks questions, writes simple prompts. Treats the agent as a black box.</p>
         </div>
-        <div class="lesson-bar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>Students received fluent AI explanations yet retained little conceptual understanding — learning was bypassed.</span>
+        <div class="rung me">
+          <div class="rung-tag">L2 · Application Engineer</div>
+          <h4>Makes it reliable</h4>
+          <p>Designs Skill constraints, maps failure modes, aligns capability boundaries with PMs, migrates analyst work onto the agent.</p>
         </div>
-        <div class="tags"><span class="tag">AI Education</span><span class="tag">Scaffolding</span><span class="tag">Metacognition</span><span class="tag">Feedback Design</span></div>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon obsidian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <div><h3>Obsidian Knowledge-System Refactor</h3><p class="project-meta">Claude + Antigravity — multi-year personal knowledge system</p></div>
-      </div>
-      <div class="project-body">
-        <div class="two-col">
-          <div class="col-block"><h4>What I Built</h4><ul><li>LLM agent refactored hundreds of notes in context</li><li>Surfaced hidden inconsistencies &amp; overlapping templates</li><li>Automated diary → weekly review extraction pipeline</li></ul></div>
-          <div class="col-block"><h4>Research Relevance</h4><ul><li>Agentic AI for reflective knowledge work</li><li>Interfaces for inspection, rollback, &amp; user judgment</li><li>Cognitive scaffolding &amp; safe human–AI collaboration</li></ul></div>
+        <div class="rung">
+          <div class="rung-tag">L3 · Platform Developer</div>
+          <h4>Builds the agent</h4>
+          <p>Implements the retriever / planner / executor of the agent platform itself.</p>
         </div>
-        <div class="lesson-bar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>The most critical moments were human decisions — reviewing plans, restoring from backup, rejecting technically correct but contextually wrong suggestions.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="e-diana">
+    <div class="container">
+      <p class="section-label">Hero project · Shopee</p>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon diana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="project-titles"><h3>Diana &mdash; Skill Engineering for an LLM Data Agent</h3><p class="project-meta">BI Engineer Intern · Buyer &amp; Marketing BI Team · Feb 2026&ndash;Present</p></div>
         </div>
-        <div class="tags"><span class="tag">Agentic AI</span><span class="tag">Knowledge Management</span><span class="tag">Human-AI Collaboration</span><span class="tag">Reflection</span></div>
-      </div>
-    </div>
+        <div class="project-body">
+          <p>Diana is an internal LLM-powered data agent. The platform belongs to another team; <strong>I own the application-constraint layer</strong> &mdash; designing the Skills (runbooks) that let analysts hand recurring AB-test analyses to the agent and trust the numbers it returns.</p>
 
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon shopee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <div><h3>Shopee LLM-Powered Data Analyst Agent</h3><p class="project-meta">BI Engineer Intern, Buyer &amp; Marketing BI Team</p></div>
-      </div>
-      <div class="project-body">
-        <div class="two-col">
-          <div class="col-block"><h4>What I Built</h4><ul><li>Constrained Skills/runbooks from tacit analyst logic</li><li>Structured authoring for domain knowledge capture</li><li>Mapped 6 failure modes → redesigned for human-in-the-loop</li></ul></div>
-          <div class="col-block"><h4>Research Relevance</h4><ul><li>AI supporting experts without replacing judgment</li><li>Expertise capture &amp; workflow scaffolding</li><li>Reliability &amp; human-in-the-loop AI</li></ul></div>
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-label">Manual analysis</span>
+              <span class="ba-track"><span class="ba-fill before" style="width:100%"></span></span>
+              <span class="ba-val">30&ndash;45 min</span>
+            </div>
+            <div class="ba-row">
+              <span class="ba-label">Diana Skill</span>
+              <span class="ba-track"><span class="ba-fill after" style="width:7%"></span></span>
+              <span class="ba-val">2&ndash;3 min</span>
+            </div>
+            <p class="ba-note">Before: hand-write SQL, switch between two data sources, edit region / date / group_id, run each region, assemble a comparison table. After: fill a form &rarr; Skill auto-runs &rarr; structured report.</p>
+          </div>
+          <div class="caveat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Honest framing: the saving comes from <strong>automating the analyst's manual workflow</strong>, not from making any single query faster. The Skill makes the agent's reasoning auditable and repeatable.</span>
+          </div>
+
+          <div class="two-col">
+            <div class="col-block">
+              <h4 class="block-label">What I built</h4>
+              <ul>
+                <li><strong>3 production Skills</strong>: Me-Page traffic, PDP ads-voucher CR, PDP OPU &amp; GMV</li>
+                <li>5-section runbook structure: inputs &rarr; procedure &rarr; SQL template &rarr; output schema &rarr; pre-return checklist</li>
+                <li>Hardcoded invariants &amp; locked denominators over free-form generation</li>
+                <li>A Skill-generator (v1&rarr;v2&rarr;v3) with <strong>14 lint rules</strong> to make authoring self-checking</li>
+              </ul>
+            </div>
+            <div class="col-block">
+              <h4 class="block-label">Why it's reliable</h4>
+              <ul>
+                <li>Runbook style is <em>followed top-to-bottom</em>; prose style gets partially skipped</li>
+                <li>Enum-constrained outputs (<code>Literal</code> + <code>__post_init__</code> validation)</li>
+                <li><code>LEFT JOIN</code> + <code>COALESCE</code> so denominators can't silently shrink</li>
+                <li>Black-box evaluation feeds a 9-mode failure taxonomy back into design</li>
+              </ul>
+            </div>
+          </div>
+
+          <h4 class="block-label" style="margin-top:1.4rem;">NL2SQL failure taxonomy — designed around, not hoped away</h4>
+          <div class="tax-grid">
+            <div class="tax-item"><span class="dot"></span>Schema-linking error</div>
+            <div class="tax-item"><span class="dot"></span>Metric-definition error</div>
+            <div class="tax-item"><span class="dot"></span>Missing filter</div>
+            <div class="tax-item crit"><span class="dot"></span>Wrong denominator (silent)</div>
+            <div class="tax-item"><span class="dot"></span>Invalid scope</div>
+            <div class="tax-item"><span class="dot"></span>Empty-result fallback</div>
+            <div class="tax-item"><span class="dot"></span>SQL syntax / truncation</div>
+            <div class="tax-item"><span class="dot"></span>Unstable output</div>
+            <div class="tax-item"><span class="dot"></span>Skill skipping / scope mismatch</div>
+          </div>
+
+          <div class="bug-box">
+            <span class="bug-tag">Most dangerous failure &mdash; and how I caught it</span>
+            <h4>The silent <code>LEFT JOIN &rarr; INNER JOIN</code> collapse</h4>
+            <p>An early SQL referenced a left-joined column in <code>WHERE</code>. When the key was <code>NULL</code>, <code>NULL IN (...)</code> dropped the row &mdash; turning the <code>LEFT JOIN</code> into an <code>INNER JOIN</code>, shrinking the denominator and <em>inflating conversion rate</em>. A syntax error screams; a wrong denominator looks perfectly normal and quietly poisons the decision. I made the join invariant explicit so it can't regress.</p>
+          </div>
+
+          <div class="tags"><span class="tag">LLM Agents</span><span class="tag">NL2SQL</span><span class="tag">Skill / Runbook Design</span><span class="tag">Constraint Engineering</span><span class="tag">Reliability</span><span class="tag">Presto SQL</span></div>
         </div>
-        <div class="tags"><span class="tag">LLM Agents</span><span class="tag">Expertise Capture</span><span class="tag">Skill Authoring</span><span class="tag">Reliability</span></div>
       </div>
     </div>
+  </section>
 
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon bazi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <div><h3>Bazi Interpretation Skill — Accuracy Testing</h3><p class="project-meta">Cultural AI application — tested predictions against real outcomes among friends</p></div>
-      </div>
-      <div class="project-body">
-        <div class="two-col">
-          <div class="col-block"><h4>What I Built</h4><ul><li>Structured skill combining domain rules, workflow logic &amp; deterministic checks</li><li>Applied the skill to friends' charts and tracked prediction accuracy against real life events</li><li>Iterated through failure analysis: where the system was wrong, why, and what a human interpreter would have caught</li></ul></div>
-          <div class="col-block"><h4>Research Relevance</h4><ul><li>Skill authoring as domain knowledge externalization</li><li>Empirical testing of AI-generated interpretations against ground truth</li><li>Human-in-the-loop judgment in culturally situated, interpretive domains</li></ul></div>
+  <section id="e-workflow">
+    <div class="container">
+      <p class="section-label">Project · Shopee</p>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg></div>
+          <div class="project-titles"><h3>AB-Test Text-to-SQL Workflow</h3><p class="project-meta">Multi-region traffic &amp; funnel analysis pipeline</p></div>
         </div>
-        <div class="tags"><span class="tag">Domain Knowledge</span><span class="tag">Accuracy Testing</span><span class="tag">Skill Authoring</span><span class="tag">Human-in-the-Loop</span></div>
-      </div>
-    </div>
+        <div class="project-body">
+          <p>A deterministic low-code workflow for AB-test analysis across 8 regions. The key engineering judgment: <strong>shrink the LLM's job to Stage&nbsp;1</strong> (variable extraction) and make everything downstream deterministic &mdash; flexible enough to take natural language, reliable enough for production.</p>
 
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-icon agent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-        <div><h3>Multi-Agent Literature Monitoring System</h3><p class="project-meta">CA6123 course project — 4-person team</p></div>
-      </div>
-      <div class="project-body">
-        <div class="two-col">
-          <div class="col-block"><h4>What I Built</h4><ul><li>Multi-agent system for frontier AI research monitoring</li><li>Orchestrator with critic-revision &amp; observability</li><li>18/18 smoke tests + full pytest pass</li></ul></div>
-          <div class="col-block"><h4>Research Relevance</h4><ul><li>Hands-on agent prototyping &amp; system design</li><li>LLM interfaces &amp; human-in-the-loop systems</li></ul></div>
+          <figure class="figure">
+            <svg viewBox="0 0 720 360" role="img" aria-label="Four-stage AB-test workflow architecture">
+              <defs>
+                <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1 L8 5 L2 9" fill="none" stroke="#78716c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+              </defs>
+              <text x="12" y="40" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 1 — PARSE</text>
+              <text x="12" y="128" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 2 — ASSEMBLE SQL</text>
+              <text x="12" y="216" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 3 — EXECUTE × 8 REGIONS (PARALLEL)</text>
+              <text x="12" y="320" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 4 — MERGE &amp; OUTPUT</text>
+
+              <g font-family="DM Sans" font-size="12">
+                <rect x="40" y="50" width="92" height="40" rx="7" fill="#f5f5f4" stroke="#a8a29e"/><text x="86" y="74" text-anchor="middle" fill="#44403c" font-weight="500">User query</text>
+                <rect x="156" y="50" width="120" height="40" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="216" y="68" text-anchor="middle" fill="#5b21b6" font-weight="600">Router</text><text x="216" y="82" text-anchor="middle" fill="#7c3aed" font-size="10">structured output</text>
+                <rect x="300" y="50" width="150" height="40" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="375" y="68" text-anchor="middle" fill="#5b21b6" font-weight="600">Variable Extractor</text><text x="375" y="82" text-anchor="middle" fill="#7c3aed" font-size="10">11 variables · LLM only here</text>
+              </g>
+              <line x1="132" y1="70" x2="154" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="276" y1="70" x2="298" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="375" y1="92" x2="375" y2="136" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+              <g font-family="DM Sans" font-size="12">
+                <rect x="250" y="138" width="120" height="38" rx="7" fill="#ecfdf5" stroke="#059669"/><text x="310" y="161" text-anchor="middle" fill="#065f46" font-weight="500">SQL template (KB)</text>
+                <rect x="392" y="138" width="120" height="38" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="452" y="155" text-anchor="middle" fill="#5b21b6" font-weight="600">SQL Builder</text><text x="452" y="169" text-anchor="middle" fill="#7c3aed" font-size="10">bind placeholders</text>
+              </g>
+              <line x1="370" y1="157" x2="390" y2="157" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="452" y1="176" x2="452" y2="206" stroke="#78716c" stroke-width="1.5"/>
+              <line x1="120" y1="206" x2="452" y2="206" stroke="#78716c" stroke-width="1.5"/>
+
+              <g font-family="DM Sans" font-size="11">
+                <rect x="40" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="85" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">SG executor</text><text x="85" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
+                <rect x="150" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="195" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">TH executor</text><text x="195" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
+                <rect x="260" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="305" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">VN executor</text><text x="305" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
+                <text x="392" y="254" fill="#a8a29e" font-size="16" font-weight="700">· · ·</text>
+                <rect x="430" y="226" width="100" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="480" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">+5 regions</text><text x="480" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
+              </g>
+              <line x1="85" y1="206" x2="85" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="195" y1="216" x2="195" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="305" y1="216" x2="305" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="480" y1="216" x2="480" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+
+              <g font-family="DM Sans" font-size="12">
+                <rect x="220" y="300" width="120" height="40" rx="7" fill="#f5f5f4" stroke="#a8a29e"/><text x="280" y="324" text-anchor="middle" fill="#44403c" font-weight="500">Merge (unifier)</text>
+                <rect x="392" y="300" width="140" height="40" rx="7" fill="#e8f0fa" stroke="#1e3a5f"/><text x="462" y="318" text-anchor="middle" fill="#1e3a5f" font-weight="600">Google Sheet</text><text x="462" y="332" text-anchor="middle" fill="#2d5a8e" font-size="10">structured report</text>
+              </g>
+              <line x1="280" y1="272" x2="280" y2="298" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+              <line x1="340" y1="320" x2="390" y2="320" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
+            </svg>
+            <figcaption><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</figcaption>
+          </figure>
+
+          <h4 class="block-label" style="margin-top:1.4rem;">Query latency: ~300 s → ~2 s</h4>
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-label">Raw-table scan</span>
+              <span class="ba-track"><span class="ba-fill before" style="width:100%"></span></span>
+              <span class="ba-val">~300 s (timeouts)</span>
+            </div>
+            <div class="ba-row">
+              <span class="ba-label">Pre-agg mart</span>
+              <span class="ba-track"><span class="ba-fill after" style="width:1.5%"></span></span>
+              <span class="ba-val">~2 s</span>
+            </div>
+            <p class="ba-note">Earlier filtering, fewer redundant joins, and migrating expensive raw-table queries onto pre-aggregated data marts.</p>
+          </div>
+          <div class="caveat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Honest framing: this speedup is <strong>data modeling &amp; query optimization</strong> (pre-agg marts, predicate pushdown, join control) &mdash; <em>not</em> the LLM. The agent automates the analysis chain; it does not accelerate the database.</span>
+          </div>
+
+          <div class="tags"><span class="tag">Presto / Trino</span><span class="tag">Data Modeling</span><span class="tag">Pre-Aggregation</span><span class="tag">Workflow Orchestration</span><span class="tag">Parallel Execution</span><span class="tag">Agent vs Workflow Trade-off</span></div>
         </div>
-        <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Prototyping</span></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ════════ MORE PROJECTS ════════ -->
-<section id="more">
-  <div class="container">
-    <p class="section-label">GitHub &amp; Earlier Work</p>
-    <h2>More Projects</h2>
-    <div class="mini-grid">
-
-      <div class="mini-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Synapse</h4>
-        <p>Auto-generates notes, knowledge graphs &amp; quizzes from video lectures. Directly relevant to AI-assisted learning research.</p>
-        <div class="mini-tags"><span class="mini-tag">AI + Education</span><span class="mini-tag">Knowledge Graphs</span><span class="mini-tag">Quizzes</span></div>
-        <br><a class="repo-link" href="https://github.com/HaoPan036/Synapse" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
-      </div>
-
-      <div class="mini-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Mini-GPT</h4>
-        <p>Decoder-only Transformer built from scratch in PyTorch — causal attention, LayerNorm, training pipeline. Demonstrates understanding of LLM internals.</p>
-        <div class="mini-tags"><span class="mini-tag">PyTorch</span><span class="mini-tag">Transformers</span><span class="mini-tag">From Scratch</span></div>
-        <br><a class="repo-link" href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
-      </div>
-
-      <div class="mini-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Yuehuo AI Disability Assistance</h4>
-        <p>AI solution to improve functioning for disabled users. Validated through user research and data-driven needs analysis.</p>
-        <div class="mini-tags"><span class="mini-tag">HCI</span><span class="mini-tag">Accessibility</span><span class="mini-tag">User Research</span></div>
-      </div>
-
-      <div class="mini-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Semi-Automated Data Labeling</h4>
-        <p>Production-ready labeling system achieving 100% accuracy with 84% automation rate. Shows rigorous engineering methodology.</p>
-        <div class="mini-tags"><span class="mini-tag">Data Quality</span><span class="mini-tag">Automation</span><span class="mini-tag">Python</span></div>
-        <br><a class="repo-link" href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════ EDUCATION ════════ -->
-<section id="education">
-  <div class="container">
-    <p class="section-label">Background</p>
-    <h2>Education</h2>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <h4>Master of Computing in Applied AI</h4>
-        <p class="edu-school">Nanyang Technological University</p>
-        <p class="edu-date">Nov 2025 – Jan 2027 · Singapore</p>
-        <p class="edu-note">College of Computing and Data Science (CCDS)</p>
-      </div>
-      <div class="edu-card">
-        <h4>B.Eng. Data Science &amp; Big Data Technology</h4>
-        <p class="edu-school">Suzhou University</p>
-        <p class="edu-date">Sep 2019 – Jun 2023 · China</p>
-        <p class="edu-note">🏆 China National Scholarship (Top 0.2% nationwide)</p>
+  <section id="e-multiagent">
+    <div class="container">
+      <p class="section-label">Project · NTU CA6123</p>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon multi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="project-titles"><h3>Multi-Agent Literature Monitoring System</h3><p class="project-meta">Google ADK · Gemini · 4-person team · Apr&ndash;May 2026</p></div>
+        </div>
+        <div class="project-body">
+          <p>A multi-agent system that monitors frontier-AI research and produces personalized digests. I owned the <strong>orchestrator architecture and the design decisions</strong>; I picked up Google ADK from scratch for it.</p>
+          <div class="two-col">
+            <div class="col-block">
+              <h4 class="block-label">Architecture (mine)</h4>
+              <ul>
+                <li>ADK chosen over LangChain/LangGraph after a trade-off study</li>
+                <li><code>SequentialAgent</code> + <code>LoopAgent</code> orchestrator with a critic-revision loop</li>
+                <li>2 human-in-the-loop checkpoints: after planning, after synthesis</li>
+                <li>Dual storage: SQLite (state) + ChromaDB (semantic recall)</li>
+                <li>Observability: traced decorator, per-step cost tracking</li>
+              </ul>
+            </div>
+            <div class="col-block">
+              <h4 class="block-label">By the numbers</h4>
+              <ul>
+                <li>~<strong>3,990 LOC</strong> in my modules (orchestrator 642, schemas 498, storage 544, observability 330)</li>
+                <li><strong>18/18</strong> stdlib smoke tests pass + full pytest</li>
+                <li>7 test files · ~1,285 LOC of tests</li>
+                <li>11 dataclass contracts with runtime <code>__post_init__</code> validation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="caveat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Per the course acknowledgement, an AI coding assistant generated boilerplate scaffolding. The <strong>architecture, ADK composition, schema-design principles, and orchestrator critic loop are my own</strong>; PR history documents the decisions.</span>
+          </div>
+          <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Google ADK</span><span class="tag">Gemini</span><span class="tag">ChromaDB</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Human-in-the-Loop</span></div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="research">
-  <div class="container">
-    <p class="section-label">Research</p>
-    <h2>Research Sketch</h2>
-    <p style="font-size: 0.85rem; color: var(--ink-muted); font-style: italic; margin-bottom: 1.2rem;">Early-stage proposal for discussion</p>
+  <section id="e-surviv">
+    <div class="container">
+      <p class="section-label">Project · NTU RL Lab</p>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon surviv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="project-titles"><h3>Hand-Coded Adversarial Agent &mdash; "Design beats scale"</h3><p class="project-meta">Pure Python (stdlib only) · ~600 LOC · May 2026</p></div>
+        </div>
+        <div class="project-body">
+          <p>In a battle-royale RL environment, most teams trained 70M-step neural-net agents. I wrote a <strong>code-as-policy</strong> agent by hand and, through black-box behavioral analysis and ablation, found the blind spots in the trained NN's lead-the-shot prediction.</p>
+          <div class="pill-row">
+            <span class="pill win">Tied 1st on average placement vs a 70M-step trained NN</span>
+          </div>
 
-    <div class="rq-box">
-      <p>When students use AI tools for learning, how does the format of AI-generated feedback — direct explanation vs. scaffolded self-evaluation prompt — affect conceptual retention and metacognitive awareness?</p>
+          <div class="chart-card">
+            <div class="chart-box">
+              <h4>Tournament — 50 games</h4>
+              <svg viewBox="0 0 300 170" role="img" aria-label="Win counts and average placement">
+                <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
+                <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
+                <g font-family="DM Sans" font-size="10" fill="#78716c">
+                  <text x="36" y="34" text-anchor="end">12</text>
+                  <text x="36" y="84" text-anchor="end">6</text>
+                  <text x="36" y="132" text-anchor="end">0</text>
+                </g>
+                <rect x="62" y="55" width="46" height="75" rx="3" fill="#1e3a5f"/>
+                <text x="85" y="49" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#1e3a5f" font-weight="600">9</text>
+                <text x="85" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c" font-weight="600">PanHao</text>
+                <text x="85" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.14 avg</text>
+                <rect x="132" y="55" width="46" height="75" rx="3" fill="#94a3b8"/>
+                <text x="155" y="49" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#64748b" font-weight="600">9</text>
+                <text x="155" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c">SM</text>
+                <text x="155" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.14 avg</text>
+                <rect x="202" y="38" width="46" height="92" rx="3" fill="#94a3b8"/>
+                <text x="225" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#64748b" font-weight="600">11</text>
+                <text x="225" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c">Evan&nbsp;NN</text>
+                <text x="225" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.16 avg</text>
+              </svg>
+              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;">Bars = wins. Average placement (more robust to luck in battle royale) is tied: 3.14 / 3.14 / 3.16.</p>
+            </div>
+            <div class="chart-box">
+              <h4>Ablation — win rate vs NN by engage distance</h4>
+              <svg viewBox="0 0 300 170" role="img" aria-label="Win rate by ENGAGE_DIST">
+                <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
+                <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
+                <g font-family="DM Sans" font-size="10" fill="#78716c">
+                  <text x="36" y="34" text-anchor="end">50%</text>
+                  <text x="36" y="84" text-anchor="end">25%</text>
+                  <text x="36" y="132" text-anchor="end">0</text>
+                </g>
+                <rect x="56" y="74" width="38" height="56" rx="3" fill="#cbd5e1"/>
+                <text x="75" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">28</text>
+                <text x="75" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.40</text>
+                <rect x="110" y="68" width="38" height="62" rx="3" fill="#cbd5e1"/>
+                <text x="129" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">31</text>
+                <text x="129" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.30</text>
+                <rect x="164" y="44" width="38" height="86" rx="3" fill="#6d28d9"/>
+                <text x="183" y="38" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6d28d9" font-weight="700">43</text>
+                <text x="183" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#5b21b6" font-weight="600">0.22 ★</text>
+                <rect x="218" y="56" width="38" height="74" rx="3" fill="#cbd5e1"/>
+                <text x="237" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">37</text>
+                <text x="237" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.15</text>
+              </svg>
+              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> is where the NN's lead-the-shot becomes unreliable at close range.</p>
+            </div>
+          </div>
+
+          <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:1.1rem;line-height:1.6;">The same thesis as Diana, in a different domain: in a narrow regime, <span class="highlight">domain-specific constraint design often beats scaling generic ML</span>. Not anti-ML — Diana itself is built on an LLM — but "having a model" isn't "solving the problem."</p>
+          <div class="tags"><span class="tag">Code-as-Policy</span><span class="tag">Ablation</span><span class="tag">Black-box Analysis</span><span class="tag">Pure Python</span><span class="tag">Failure Documentation</span></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <h3 style="margin-top: 1.5rem;">Motivation</h3>
-    <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">In teaching AI/Python to 300+ students, I observed that fluent AI explanations helped complete tasks but often bypassed cognitive effort needed for durable understanding. Prompto's work on cognitive-state-aware prompting suggests the <em>form and timing</em> of intervention shapes receptivity. I want to apply this to learning: does interface design help learners do the cognitive work required to actually learn?</p>
+  <section id="e-skills">
+    <div class="container">
+      <p class="section-label">Capabilities</p>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Languages</h4>
+          <p>Python · SQL (<code>Presto</code> / <code>Hive</code> / <code>MySQL</code>) · C++ · Shell</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg> LLM / Agent Systems</h4>
+          <p>Skill &amp; runbook design · prompt engineering · structured output / constrained decoding · function calling · RAG · multi-agent orchestration</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg> Data &amp; Analytics</h4>
+          <p>Data modeling &amp; pre-aggregation · query optimization · AB-test &amp; funnel analysis · failure-mode taxonomy</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Tools &amp; Frameworks</h4>
+          <p>Google ADK · Gemini · ChromaDB · SQLite · Langfuse · PyTorch · Git · Linux</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <h3 style="margin-top: 1.5rem;">Three Interface Conditions</h3>
-    <div class="study-flow">
-      <div class="flow-card">
-        <div class="flow-card-top"><span class="flow-num">1</span><strong>Direct Explanation</strong></div>
-        <div class="flow-card-body">Complete answer delivered immediately.</div>
-        <div class="flow-card-visual">
-          <svg width="140" height="36" viewBox="0 0 140 36">
-            <rect x="4" y="4" width="50" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-            <text x="29" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#1e3a5f">Question</text>
-            <line x1="58" y1="18" x2="78" y2="18" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#a1)"/>
-            <rect x="82" y="4" width="50" height="28" rx="4" fill="#1e3a5f"/>
-            <text x="107" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#fff">Answer</text>
-            <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#1e3a5f" stroke-width="1"/></marker></defs>
+  <section id="e-honors">
+    <div class="container">
+      <p class="section-label">Background</p>
+      <h2>Honors &amp; Education</h2>
+      <div class="honor-list">
+        <div class="honor">
+          <span class="medal">🏆</span>
+          <div>
+            <h4>China National Scholarship <span class="honor-meta">— Top 0.2% nationwide, 2022&ndash;23</span></h4>
+            <p>Awarded during B.Eng. in Data Science &amp; Big Data Technology, Suzhou University.</p>
+          </div>
+        </div>
+        <div class="honor">
+          <span class="medal">🥉</span>
+          <div>
+            <h4>Huawei ICT Competition — Global Final, 3rd Prize <span class="honor-meta">— Cloud Track, Top 5% globally, Jun 2022</span></h4>
+            <p>Built a PySpark / Hive / MySQL big-data pipeline on TB-scale datasets; reduced query latency by <strong>40%</strong>.</p>
+          </div>
+        </div>
+        <div class="honor">
+          <span class="medal">🥉</span>
+          <div>
+            <h4>RAICOM 2024 National Robotics Finals, 3rd Prize <span class="honor-meta">— Aerial Reconnaissance, Aug 2024</span></h4>
+            <p>Led an autonomous indoor UAV project using ROS, scenario decomposition, and obstacle avoidance.</p>
+          </div>
+        </div>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <h4>M.Comp. in Applied AI</h4>
+          <p class="edu-school">Nanyang Technological University</p>
+          <p class="edu-date">Nov 2025 – Jan 2027 · Singapore · CCDS</p>
+        </div>
+        <div class="edu-card">
+          <h4>B.Eng. Data Science &amp; Big Data</h4>
+          <p class="edu-school">Suzhou University</p>
+          <p class="edu-date">Sep 2019 – Jun 2023 · China</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="e-contact">
+    <div class="container">
+      <p class="section-label">Get In Touch</p>
+      <h2>Contact</h2>
+      <div class="contact-block">
+        <p>Based in Singapore — open to Data Agent / LLM Application Engineer roles.</p>
+        <div class="contact-links">
+          <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
+          <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-engineering -->
+
+<!-- ══════════════════════════════════════════ -->
+<!-- ════════════ RESEARCH VIEW ═══════════════ -->
+<!-- ══════════════════════════════════════════ -->
+<div class="view" id="view-research">
+
+  <header>
+    <div class="container">
+      <h1>Hao Pan</h1>
+      <p class="tagline">Master of Computing in Applied AI, Nanyang Technological University</p>
+      <div class="links">
+        <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:hao036@e.ntu.edu.sg">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          hao036@e.ntu.edu.sg
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Students Taught</div></div>
+        <div class="stat"><div class="stat-num">11</div><div class="stat-label">GitHub Repos</div></div>
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">LLM Failure Modes</div></div>
+        <div class="stat"><div class="stat-num" style="font-size:1.1rem;">Top 0.2%</div><div class="stat-label">China National Scholarship</div></div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="#r-profile">Profile</a>
+      <a href="#r-projects">Projects</a>
+      <a href="#r-more">More</a>
+      <a href="#r-education">Education</a>
+      <a href="#r-research">Research</a>
+      <a href="#r-skills">Skills</a>
+      <a href="#r-contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="r-profile">
+    <div class="container">
+      <p class="section-label">About</p>
+      <h2>Profile</h2>
+      <p class="profile-statement">My recurring interest is <span class="highlight">how AI tools can support reflection, learning, and expertise development without hiding the reasoning process from the user</span>. I am seeking research collaboration to turn applied observations into rigorous HCI research.</p>
+      <div class="interest-visual">
+        <div class="interest-side interest-left">
+          <h4>&#10022; When AI helps</h4>
+          <p>Users see structure they couldn't see before. AI scaffolds reflection, self-evaluation, and contextual judgment.</p>
+        </div>
+        <div class="interest-arrow">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="23" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="24" y="28" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" fill="#1e3a5f">vs</text>
           </svg>
         </div>
-      </div>
-      <div class="flow-card">
-        <div class="flow-card-top"><span class="flow-num">2</span><strong>Socratic Scaffolding</strong></div>
-        <div class="flow-card-body">Guided questions before revealing answer.</div>
-        <div class="flow-card-visual">
-          <svg width="140" height="36" viewBox="0 0 140 36">
-            <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-            <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
-            <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-            <rect x="46" y="4" width="34" height="28" rx="4" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 2"/>
-            <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1d4ed8">Guide</text>
-            <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-            <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
-            <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
-          </svg>
-        </div>
-      </div>
-      <div class="flow-card">
-        <div class="flow-card-top"><span class="flow-num">3</span><strong>Self-Evaluation First</strong></div>
-        <div class="flow-card-body">Learner predicts &amp; rates confidence first.</div>
-        <div class="flow-card-visual">
-          <svg width="140" height="36" viewBox="0 0 140 36">
-            <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-            <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
-            <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-            <rect x="46" y="4" width="34" height="28" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="1" stroke-dasharray="3 2"/>
-            <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#92400e">Reflect</text>
-            <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-            <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
-            <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
-          </svg>
+        <div class="interest-side interest-right">
+          <h4>&#9888; When AI harms</h4>
+          <p>AI moves faster than the user can reflect. Fluent output bypasses the cognitive work required for genuine learning.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <h3 style="margin-top: 1.5rem;">Measures</h3>
-    <div class="measures-grid">
-      <div class="measure-item">
-        <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-        <div class="measure-text"><strong>Conceptual Retention</strong><span>Immediate &amp; delayed post-tests</span></div>
+  <section id="r-projects">
+    <div class="container">
+      <p class="section-label">Portfolio</p>
+      <h2>Projects</h2>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div><h3>AI / Python Teaching &amp; Learning Scaffolds</h3><p class="project-meta">Jinken Vocational &amp; Technical College — 300+ students</p></div>
+        </div>
+        <div class="project-body">
+          <div class="two-col">
+            <div class="col-block"><h4>What I Built</h4><ul><li>AI &amp; Python curricula for applied ML and GenAI</li><li>Prompt-design rubrics for reflective AI use</li><li>Socratic active-learning approach (hit theoretical limits)</li></ul></div>
+            <div class="col-block"><h4>Research Relevance</h4><ul><li>Motivates core question on feedback format &amp; durable learning</li><li>Access to realistic learning scenarios for future studies</li><li>Connects to metacognition &amp; cognitive scaffolding</li></ul></div>
+          </div>
+          <div class="lesson-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Students received fluent AI explanations yet retained little conceptual understanding — learning was bypassed.</span>
+          </div>
+          <div class="tags"><span class="tag">AI Education</span><span class="tag">Scaffolding</span><span class="tag">Metacognition</span><span class="tag">Feedback Design</span></div>
+        </div>
       </div>
-      <div class="measure-item">
-        <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <div class="measure-text"><strong>Metacognitive Accuracy</strong><span>Predicted vs. actual performance</span></div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon obsidian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div><h3>Obsidian Knowledge-System Refactor</h3><p class="project-meta">Claude + Antigravity — multi-year personal knowledge system</p></div>
+        </div>
+        <div class="project-body">
+          <div class="two-col">
+            <div class="col-block"><h4>What I Built</h4><ul><li>LLM agent refactored hundreds of notes in context</li><li>Surfaced hidden inconsistencies &amp; overlapping templates</li><li>Automated diary → weekly review extraction pipeline</li></ul></div>
+            <div class="col-block"><h4>Research Relevance</h4><ul><li>Agentic AI for reflective knowledge work</li><li>Interfaces for inspection, rollback, &amp; user judgment</li><li>Cognitive scaffolding &amp; safe human–AI collaboration</li></ul></div>
+          </div>
+          <div class="lesson-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>The most critical moments were human decisions — reviewing plans, restoring from backup, rejecting technically correct but contextually wrong suggestions.</span>
+          </div>
+          <div class="tags"><span class="tag">Agentic AI</span><span class="tag">Knowledge Management</span><span class="tag">Human-AI Collaboration</span><span class="tag">Reflection</span></div>
+        </div>
       </div>
-      <div class="measure-item">
-        <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div class="measure-text"><strong>Learning Process</strong><span>Interaction logs, time-on-task, help-seeking</span></div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon shopee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div><h3>Shopee LLM-Powered Data Analyst Agent</h3><p class="project-meta">BI Engineer Intern · reduced a recurring analysis from 30&ndash;45 min to 2&ndash;3 min</p></div>
+        </div>
+        <div class="project-body">
+          <div class="two-col">
+            <div class="col-block"><h4>What I Built</h4><ul><li>Constrained Skills/runbooks from tacit analyst logic</li><li>Structured authoring for domain knowledge capture</li><li>Mapped 6 failure modes → redesigned for human-in-the-loop</li></ul></div>
+            <div class="col-block"><h4>Research Relevance</h4><ul><li>AI supporting experts without replacing judgment</li><li>Expertise capture &amp; workflow scaffolding</li><li>Reliability &amp; human-in-the-loop AI</li></ul></div>
+          </div>
+          <div class="tags"><span class="tag">LLM Agents</span><span class="tag">Expertise Capture</span><span class="tag">Skill Authoring</span><span class="tag">Reliability</span></div>
+        </div>
       </div>
-      <div class="measure-item">
-        <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-        <div class="measure-text"><strong>User Experience</strong><span>Effort, usefulness, frustration, trust</span></div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon bazi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div><h3>Bazi Interpretation Skill — Accuracy Testing</h3><p class="project-meta">Cultural AI application — tested predictions against real outcomes among friends</p></div>
+        </div>
+        <div class="project-body">
+          <div class="two-col">
+            <div class="col-block"><h4>What I Built</h4><ul><li>Skill combining domain rules, workflow logic &amp; deterministic checks</li><li>Tracked prediction accuracy against real-life events</li><li>Failure analysis: where it was wrong, and what a human would have caught</li></ul></div>
+            <div class="col-block"><h4>Research Relevance</h4><ul><li>Skill authoring as knowledge externalization</li><li>Empirical testing against ground truth</li><li>Human judgment in interpretive domains</li></ul></div>
+          </div>
+          <div class="tags"><span class="tag">Domain Knowledge</span><span class="tag">Accuracy Testing</span><span class="tag">Skill Authoring</span><span class="tag">Human-in-the-Loop</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon agent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div><h3>Multi-Agent Literature Monitoring System</h3><p class="project-meta">CA6123 course project — 4-person team</p></div>
+        </div>
+        <div class="project-body">
+          <div class="two-col">
+            <div class="col-block"><h4>What I Built</h4><ul><li>Multi-agent system for frontier AI research monitoring</li><li>Orchestrator with critic-revision &amp; observability</li><li>18/18 smoke tests + full pytest pass</li></ul></div>
+            <div class="col-block"><h4>Research Relevance</h4><ul><li>Hands-on agent prototyping &amp; system design</li><li>LLM interfaces &amp; human-in-the-loop systems</li></ul></div>
+          </div>
+          <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Prototyping</span></div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <h3 style="margin-top: 1.5rem;">Expected Contribution</h3>
-    <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">An <strong>interface design pattern</strong> for LLM-based learning tools that balances answer quality with learner reflection, self-evaluation, and durable understanding.</p>
-  </div>
-</section>
+  <section id="r-more">
+    <div class="container">
+      <p class="section-label">GitHub &amp; Earlier Work</p>
+      <h2>More Projects</h2>
+      <div class="mini-grid">
 
-<section id="skills">
-  <div class="container">
-    <p class="section-label">Capabilities</p>
-    <h2>Skills</h2>
-    <div class="skills-visual">
-      <div class="skill-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Programming</h4>
-        <p>Python, SQL (Presto / Hive / MySQL), C++, Shell</p>
-      </div>
-      <div class="skill-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg> LLM / AI Systems</h4>
-        <p>Prompt engineering, RAG, agent orchestration, skill/runbook design</p>
-      </div>
-      <div class="skill-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Prototyping</h4>
-        <p>Workflow automation, dashboards, agentic coding, data pipelines</p>
-      </div>
-      <div class="skill-card">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Education</h4>
-        <p>Curriculum design, assessment, AI-assisted learning observations</p>
-      </div>
-      <div class="skill-card develop" style="grid-column: span 2;">
-        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> To Develop</h4>
-        <p>Formal user-study design, questionnaires &amp; interviews, statistical analysis for HCI, publication writing</p>
+        <div class="mini-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Synapse</h4>
+          <p>Auto-generates notes, knowledge graphs &amp; quizzes from video lectures. Directly relevant to AI-assisted learning research.</p>
+          <div class="mini-tags"><span class="mini-tag">AI + Education</span><span class="mini-tag">Knowledge Graphs</span><span class="mini-tag">Quizzes</span></div>
+          <br><a class="repo-link" href="https://github.com/HaoPan036/Synapse" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
+        </div>
+
+        <div class="mini-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Mini-GPT</h4>
+          <p>Decoder-only Transformer built from scratch in PyTorch — causal attention, LayerNorm, training pipeline. Demonstrates understanding of LLM internals.</p>
+          <div class="mini-tags"><span class="mini-tag">PyTorch</span><span class="mini-tag">Transformers</span><span class="mini-tag">From Scratch</span></div>
+          <br><a class="repo-link" href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
+        </div>
+
+        <div class="mini-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Yuehuo AI Disability Assistance</h4>
+          <p>AI solution to improve functioning for disabled users. Validated through user research and data-driven needs analysis.</p>
+          <div class="mini-tags"><span class="mini-tag">HCI</span><span class="mini-tag">Accessibility</span><span class="mini-tag">User Research</span></div>
+        </div>
+
+        <div class="mini-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Semi-Automated Data Labeling</h4>
+          <p>Production-ready labeling system achieving 100% accuracy with 84% automation rate. Shows rigorous engineering methodology.</p>
+          <div class="mini-tags"><span class="mini-tag">Data Quality</span><span class="mini-tag">Automation</span><span class="mini-tag">Python</span></div>
+          <br><a class="repo-link" href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contact">
-  <div class="container">
-    <p class="section-label">Get In Touch</p>
-    <h2>Contact</h2>
-    <div class="contact-block">
-      <p>Based in Singapore — happy to meet for a conversation.</p>
-      <div class="contact-links">
-        <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
-        <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn</a>
+  <section id="r-education">
+    <div class="container">
+      <p class="section-label">Background</p>
+      <h2>Education</h2>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <h4>Master of Computing in Applied AI</h4>
+          <p class="edu-school">Nanyang Technological University</p>
+          <p class="edu-date">Nov 2025 – Jan 2027 · Singapore</p>
+          <p class="edu-note">College of Computing and Data Science (CCDS)</p>
+        </div>
+        <div class="edu-card">
+          <h4>B.Eng. Data Science &amp; Big Data Technology</h4>
+          <p class="edu-school">Suzhou University</p>
+          <p class="edu-date">Sep 2019 – Jun 2023 · China</p>
+          <p class="edu-note">🏆 China National Scholarship (Top 0.2% nationwide)</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="r-research">
+    <div class="container">
+      <p class="section-label">Research</p>
+      <h2>Research Sketch</h2>
+      <p style="font-size: 0.85rem; color: var(--ink-muted); font-style: italic; margin-bottom: 1.2rem;">Early-stage proposal for discussion</p>
+
+      <div class="rq-box">
+        <p>When students use AI tools for learning, how does the format of AI-generated feedback — direct explanation vs. scaffolded self-evaluation prompt — affect conceptual retention and metacognitive awareness?</p>
+      </div>
+
+      <h3 style="margin-top: 1.5rem;">Motivation</h3>
+      <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">Teaching 300+ students, I saw fluent AI explanations help complete tasks while bypassing the cognitive effort needed for durable understanding. If the <em>form and timing</em> of intervention shapes receptivity, can interface design make learners do the cognitive work required to actually learn?</p>
+
+      <h3 style="margin-top: 1.5rem;">Three Interface Conditions</h3>
+      <div class="study-flow">
+        <div class="flow-card">
+          <div class="flow-card-top"><span class="flow-num">1</span><strong>Direct Explanation</strong></div>
+          <div class="flow-card-body">Complete answer delivered immediately.</div>
+          <div class="flow-card-visual">
+            <svg width="140" height="36" viewBox="0 0 140 36">
+              <rect x="4" y="4" width="50" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
+              <text x="29" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#1e3a5f">Question</text>
+              <line x1="58" y1="18" x2="78" y2="18" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#a1)"/>
+              <rect x="82" y="4" width="50" height="28" rx="4" fill="#1e3a5f"/>
+              <text x="107" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#fff">Answer</text>
+              <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#1e3a5f" stroke-width="1"/></marker></defs>
+            </svg>
+          </div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-card-top"><span class="flow-num">2</span><strong>Socratic Scaffolding</strong></div>
+          <div class="flow-card-body">Guided questions before revealing answer.</div>
+          <div class="flow-card-visual">
+            <svg width="140" height="36" viewBox="0 0 140 36">
+              <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
+              <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
+              <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
+              <rect x="46" y="4" width="34" height="28" rx="4" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1d4ed8">Guide</text>
+              <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
+              <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
+              <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
+            </svg>
+          </div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-card-top"><span class="flow-num">3</span><strong>Self-Evaluation First</strong></div>
+          <div class="flow-card-body">Learner predicts &amp; rates confidence first.</div>
+          <div class="flow-card-visual">
+            <svg width="140" height="36" viewBox="0 0 140 36">
+              <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
+              <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
+              <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
+              <rect x="46" y="4" width="34" height="28" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#92400e">Reflect</text>
+              <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
+              <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
+              <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 1.5rem;">Measures</h3>
+      <div class="measures-grid">
+        <div class="measure-item">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div class="measure-text"><strong>Conceptual Retention</strong><span>Immediate &amp; delayed post-tests</span></div>
+        </div>
+        <div class="measure-item">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div class="measure-text"><strong>Metacognitive Accuracy</strong><span>Predicted vs. actual performance</span></div>
+        </div>
+        <div class="measure-item">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="measure-text"><strong>Learning Process</strong><span>Interaction logs, time-on-task, help-seeking</span></div>
+        </div>
+        <div class="measure-item">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="measure-text"><strong>User Experience</strong><span>Effort, usefulness, frustration, trust</span></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 1.5rem;">Expected Contribution</h3>
+      <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">An <strong>interface design pattern</strong> for LLM-based learning tools that balances answer quality with learner reflection, self-evaluation, and durable understanding.</p>
+    </div>
+  </section>
+
+  <section id="r-skills">
+    <div class="container">
+      <p class="section-label">Capabilities</p>
+      <h2>Skills</h2>
+      <div class="skills-visual">
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Programming</h4>
+          <p>Python, SQL (Presto / Hive / MySQL), C++, Shell</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg> LLM / AI Systems</h4>
+          <p>Prompt engineering, RAG, agent orchestration, skill/runbook design</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Prototyping</h4>
+          <p>Workflow automation, dashboards, agentic coding, data pipelines</p>
+        </div>
+        <div class="skill-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Education</h4>
+          <p>Curriculum design, assessment, AI-assisted learning observations</p>
+        </div>
+        <div class="skill-card develop" style="grid-column: span 2;">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> To Develop</h4>
+          <p>Formal user-study design, questionnaires &amp; interviews, statistical analysis for HCI, publication writing</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="r-contact">
+    <div class="container">
+      <p class="section-label">Get In Touch</p>
+      <h2>Contact</h2>
+      <div class="contact-block">
+        <p>Based in Singapore — happy to meet for a conversation.</p>
+        <div class="contact-links">
+          <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
+          <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /view-research -->
 
 <footer><div class="container"><p>&copy; 2026 Hao Pan</p></div></footer>
+
+<script>
+(function () {
+  var VIEWS = { engineering: 'view-engineering', research: 'view-research' };
+  var tabs = document.querySelectorAll('.mode-toggle .tab');
+
+  function setView(name, scrollTop) {
+    if (!VIEWS[name]) name = 'engineering';
+    for (var key in VIEWS) {
+      document.getElementById(VIEWS[key]).classList.toggle('active', key === name);
+    }
+    tabs.forEach(function (t) { t.classList.toggle('active', t.dataset.view === name); });
+    if (scrollTop) window.scrollTo(0, 0);
+  }
+
+  function viewForHash(h) {
+    if (h === 'research' || h.indexOf('r-') === 0) return 'research';
+    return 'engineering'; // default landing — change to 'research' to flip
+  }
+
+  function route() {
+    var h = (location.hash || '').slice(1);
+    setView(viewForHash(h));
+    if (h && document.getElementById(h)) {
+      document.getElementById(h).scrollIntoView();
+    }
+  }
+
+  tabs.forEach(function (t) {
+    function go() {
+      var name = t.dataset.view;
+      setView(name, true);
+      history.replaceState(null, '', '#' + name);
+    }
+    t.addEventListener('click', go);
+    t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
 
 </body>
 </html>
