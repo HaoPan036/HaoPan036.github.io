@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hao Pan — Portfolio</title>
 <meta name="description" content="Hao Pan — Data Agent / LLM Application Engineer and applied-AI / HCI researcher. Two views: Engineering (production agent reliability) and Research (AI tools that scaffold reflection).">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231e3a5f'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='15' fill='white' text-anchor='middle' font-weight='700'%3EHP%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://haopan036.github.io/">
+<meta property="og:title" content="Hao Pan — Data Agent / LLM Application Engineer">
+<meta property="og:description" content="I make LLM-powered data agents production-reliable: Skill engineering, constraint design, and failure-mode analysis for real BI workflows.">
+<meta property="og:image" content="https://haopan036.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hao Pan — Data Agent / LLM Application Engineer">
+<meta name="twitter:description" content="I make LLM-powered data agents production-reliable: Skill engineering, constraint design, failure-mode analysis.">
+<meta name="twitter:image" content="https://haopan036.github.io/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -231,6 +241,50 @@
   .mini-card a.repo-link:hover { border-bottom: 1px solid var(--accent-light); }
   .mini-card a.repo-link svg { width: 12px; height: 12px; }
 
+  /* ── Engineering language toggle ─────────── */
+  .lang-toggle { position: absolute; top: 1.1rem; right: 1.5rem; display: inline-flex; background: var(--surface-warm); border: 1px solid var(--border); border-radius: 999px; padding: 2px; z-index: 5; }
+  .lang-toggle .lc { font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.62rem; border-radius: 999px; color: var(--ink-muted); cursor: pointer; user-select: none; }
+  .lang-toggle .lc.active { background: var(--accent); color: #fff; }
+  #view-engineering header { position: relative; }
+  #view-engineering[data-lang="en"] .lang-zh { display: none; }
+  #view-engineering[data-lang="zh"] .lang-en { display: none; }
+
+  /* ── Hero thesis diagram ─────────── */
+  .hero-flow { margin-top: 1.4rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-card); padding: 1rem 1.1rem; overflow-x: auto; }
+  .hero-flow svg { display: block; width: 100%; height: auto; min-width: 520px; }
+
+  /* ── Skill proficiency bars ─────────── */
+  .bars { margin-top: 1rem; display: grid; gap: 0.8rem; }
+  .bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; }
+  .bar-head .bk { font-size: 0.85rem; color: var(--ink); font-weight: 500; }
+  .bar-head .tier { font-size: 0.66rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .bar-track { height: 8px; background: var(--surface-warm); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+  .bar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.25rem; line-height: 1.4; }
+
+  /* ── Project links / status chips ─────────── */
+  .proj-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .proj-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.76rem; font-weight: 600; padding: 0.32rem 0.72rem; border-radius: 6px; background: var(--accent); color: #fff; border-bottom: none; }
+  .proj-link:hover { background: var(--accent-light); border-bottom: none; }
+  .proj-link svg { width: 13px; height: 13px; }
+  .proj-chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 500; padding: 0.32rem 0.72rem; border-radius: 6px; background: var(--surface-warm); color: var(--ink-muted); border: 1px solid var(--border); }
+
+  /* ── Open-source strip ─────────── */
+  .oss-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-top: 1rem; }
+  .oss-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; background: var(--surface-card); transition: border-color 0.2s; }
+  .oss-card:hover { border-color: var(--border-accent); }
+  .oss-card h4 { font-family: var(--sans); font-size: 0.84rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.35rem; }
+  .oss-card h4 svg { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
+  .oss-card p { font-size: 0.76rem; color: var(--ink-soft); line-height: 1.45; margin-bottom: 0.45rem; }
+  .oss-card a.oss-go { font-size: 0.74rem; font-weight: 600; color: var(--accent-light); border-bottom: none; display: inline-flex; align-items: center; gap: 0.25rem; }
+  .oss-card a.oss-go svg { width: 12px; height: 12px; }
+
+  @media (max-width: 640px) {
+    .oss-grid { grid-template-columns: 1fr; }
+    .lang-toggle { position: static; margin: 0 0 0.9rem; }
+    #view-engineering header { position: static; }
+  }
+
   footer { padding: 1.5rem 0; text-align: center; font-size: 0.75rem; color: var(--ink-muted); }
 
   @media (max-width: 640px) {
@@ -274,9 +328,10 @@
 
   <header>
     <div class="container">
+      <div class="lang-toggle"><span class="lc active" data-lang="en">EN</span><span class="lc" data-lang="zh">中</span></div>
       <h1>Hao Pan</h1>
-      <p class="role-tagline">Data Agent / LLM Application Engineer</p>
-      <p class="subtagline">I make LLM-powered data agents <span class="highlight">production-reliable</span> — not training models or building platforms, but designing the constraints, Skills, and failure-mode guardrails that keep agents trustworthy inside real BI workflows.</p>
+      <p class="role-tagline"><span class="lang-en">Data Agent / LLM Application Engineer</span><span class="lang-zh">数据 Agent / LLM 应用工程师</span></p>
+      <p class="subtagline"><span class="lang-en">I make LLM-powered data agents <span class="highlight">production-reliable</span> — not training models or building platforms, but designing the constraints, Skills, and failure-mode guardrails that keep agents trustworthy inside real BI workflows.</span><span class="lang-zh">我让 LLM 驱动的数据 Agent <span class="highlight">在生产环境里稳定可靠</span>——不训练模型、也不造平台，而是设计约束、Skill 与失败模式护栏，让 Agent 在真实 BI 工作流里值得信任。</span></p>
       <div class="links">
         <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -292,47 +347,66 @@
         </a>
       </div>
       <div class="stats">
-        <div class="stat"><div class="stat-num">2&ndash;3<small> min</small></div><div class="stat-label">Per analysis<br>(was 30&ndash;45 min)</div></div>
-        <div class="stat"><div class="stat-num">~2<small> s</small></div><div class="stat-label">Presto query<br>(was ~300 s)</div></div>
-        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Skills shipped<br>to production BI</div></div>
-        <div class="stat"><div class="stat-num">9</div><div class="stat-label">NL2SQL failure<br>modes mapped</div></div>
+        <div class="stat"><div class="stat-num">2&ndash;3<small> min</small></div><div class="stat-label"><span class="lang-en">Per analysis<br>(was 30&ndash;45 min)</span><span class="lang-zh">每次分析<br>(原 30&ndash;45 分钟)</span></div></div>
+        <div class="stat"><div class="stat-num">~2<small> s</small></div><div class="stat-label"><span class="lang-en">Presto query<br>(was ~300 s)</span><span class="lang-zh">Presto 查询<br>(原 ~300 秒)</span></div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label"><span class="lang-en">Skills shipped<br>to production BI</span><span class="lang-zh">已上线 Skill<br>(生产 BI)</span></div></div>
+        <div class="stat"><div class="stat-num">9</div><div class="stat-label"><span class="lang-en">NL2SQL failure<br>modes mapped</span><span class="lang-zh">梳理的 NL2SQL<br>失败模式</span></div></div>
       </div>
     </div>
   </header>
 
   <nav>
     <div class="container">
-      <a href="#e-focus">Focus</a>
-      <a href="#e-diana">Diana Agent</a>
-      <a href="#e-workflow">SQL Workflow</a>
-      <a href="#e-multiagent">Multi-Agent</a>
-      <a href="#e-surviv">Surviv</a>
-      <a href="#e-skills">Skills</a>
-      <a href="#e-honors">Honors</a>
-      <a href="#e-contact">Contact</a>
+      <a href="#e-focus"><span class="lang-en">Focus</span><span class="lang-zh">定位</span></a>
+      <a href="#e-diana"><span class="lang-en">Diana Agent</span><span class="lang-zh">Diana Agent</span></a>
+      <a href="#e-workflow"><span class="lang-en">SQL Workflow</span><span class="lang-zh">SQL 工作流</span></a>
+      <a href="#e-multiagent"><span class="lang-en">Multi-Agent</span><span class="lang-zh">多 Agent</span></a>
+      <a href="#e-surviv"><span class="lang-en">Surviv</span><span class="lang-zh">Surviv</span></a>
+      <a href="#e-skills"><span class="lang-en">Skills</span><span class="lang-zh">技能</span></a>
+      <a href="#e-honors"><span class="lang-en">Honors</span><span class="lang-zh">荣誉</span></a>
+      <a href="#e-contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
     </div>
   </nav>
 
   <section id="e-focus">
     <div class="container">
-      <p class="section-label">What I do</p>
-      <h2>The application layer is where agents break</h2>
-      <p class="lead">A capable LLM doesn't equal a solved problem — in between sits a large amount of <span class="highlight">constraint engineering</span>. My work lives in that gap: turning an analyst's tacit logic into auditable Skills, locking down the steps where free generation silently produces plausible-but-wrong numbers, and keeping a human in the loop where judgment is needed.</p>
+      <p class="section-label"><span class="lang-en">What I do</span><span class="lang-zh">我做什么</span></p>
+      <h2><span class="lang-en">The application layer is where agents break</span><span class="lang-zh">Agent 出问题，往往在应用层</span></h2>
+      <p class="lead"><span class="lang-en">A capable LLM doesn't equal a solved problem — in between sits a large amount of <span class="highlight">constraint engineering</span>. My work lives in that gap: turning an analyst's tacit logic into auditable Skills, locking down the steps where free generation silently produces plausible-but-wrong numbers, and keeping a human in the loop where judgment is needed.</span><span class="lang-zh">一个强大的 LLM 不等于问题被解决——中间隔着大量的<span class="highlight">约束工程</span>。我的工作就在这道缝里：把分析师的隐性逻辑变成可审计的 Skill，锁死那些"自由生成会悄悄给出看似合理却错误数字"的环节，并在需要判断的地方保留人工介入。</span></p>
+
+      <div class="hero-flow">
+        <svg viewBox="0 0 680 120" role="img" aria-label="From a capable LLM through constraint engineering to a reliable production agent">
+          <defs><marker id="harr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1 L8 5 L2 9" fill="none" stroke="#78716c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+          <rect x="14" y="42" width="150" height="46" rx="8" fill="#f5f5f4" stroke="#a8a29e"/>
+          <text x="89" y="69" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="600" fill="#44403c">Capable LLM</text>
+          <text x="180" y="73" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="#a8a29e">+</text>
+          <text x="318" y="26" text-anchor="middle" font-family="DM Sans" font-size="10" font-weight="600" fill="#1e3a5f">where I work</text>
+          <rect x="196" y="33" width="244" height="64" rx="9" fill="#1e3a5f"/>
+          <text x="318" y="60" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="700" fill="#fff">Constraint engineering</text>
+          <text x="318" y="79" text-anchor="middle" font-family="DM Sans" font-size="10.5" fill="#c2d6eb">Skills · invariants · HITL · failure modes</text>
+          <line x1="440" y1="65" x2="466" y2="65" stroke="#78716c" stroke-width="1.5" marker-end="url(#harr)"/>
+          <rect x="470" y="42" width="196" height="46" rx="8" fill="#ecfdf5" stroke="#059669"/>
+          <text x="568" y="62" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="600" fill="#065f46">Reliable agent</text>
+          <text x="568" y="79" text-anchor="middle" font-family="DM Sans" font-size="10.5" fill="#059669">in production</text>
+        </svg>
+        <p class="bar-sub" style="text-align:center;margin-top:0.55rem;"><span class="lang-en">A capable model is the input, not the outcome.</span><span class="lang-zh">强模型只是输入，不是结果。</span></p>
+      </div>
+
       <div class="ladder">
         <div class="rung">
-          <div class="rung-tag">L1 · User</div>
-          <h4>Uses the agent</h4>
-          <p>Asks questions, writes simple prompts. Treats the agent as a black box.</p>
+          <div class="rung-tag">L1 · <span class="lang-en">User</span><span class="lang-zh">用户</span></div>
+          <h4><span class="lang-en">Uses the agent</span><span class="lang-zh">使用 Agent</span></h4>
+          <p><span class="lang-en">Asks questions, writes simple prompts. Treats the agent as a black box.</span><span class="lang-zh">提问、写简单 prompt，把 Agent 当黑盒。</span></p>
         </div>
         <div class="rung me">
-          <div class="rung-tag">L2 · Application Engineer</div>
-          <h4>Makes it reliable</h4>
-          <p>Designs Skill constraints, maps failure modes, aligns capability boundaries with PMs, migrates analyst work onto the agent.</p>
+          <div class="rung-tag">L2 · <span class="lang-en">Application Engineer</span><span class="lang-zh">应用工程师</span></div>
+          <h4><span class="lang-en">Makes it reliable</span><span class="lang-zh">让它可靠</span></h4>
+          <p><span class="lang-en">Designs Skill constraints, maps failure modes, aligns capability boundaries with PMs, migrates analyst work onto the agent.</span><span class="lang-zh">设计 Skill 约束、梳理失败模式、与 PM 对齐能力边界，把分析师的工作迁移到 Agent 上。</span></p>
         </div>
         <div class="rung">
-          <div class="rung-tag">L3 · Platform Developer</div>
-          <h4>Builds the agent</h4>
-          <p>Implements the retriever / planner / executor of the agent platform itself.</p>
+          <div class="rung-tag">L3 · <span class="lang-en">Platform Developer</span><span class="lang-zh">平台开发者</span></div>
+          <h4><span class="lang-en">Builds the agent</span><span class="lang-zh">构建 Agent</span></h4>
+          <p><span class="lang-en">Implements the retriever / planner / executor of the agent platform itself.</span><span class="lang-zh">实现 Agent 平台本身的 retriever / planner / executor。</span></p>
         </div>
       </div>
     </div>
@@ -344,10 +418,10 @@
       <div class="project-card">
         <div class="project-header">
           <div class="project-icon diana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <div class="project-titles"><h3>Diana &mdash; Skill Engineering for an LLM Data Agent</h3><p class="project-meta">BI Engineer Intern · Buyer &amp; Marketing BI Team · Feb 2026&ndash;Present</p></div>
+          <div class="project-titles"><h3><span class="lang-en">Diana &mdash; Skill Engineering for an LLM Data Agent</span><span class="lang-zh">Diana &mdash; LLM 数据 Agent 的 Skill 工程</span></h3><p class="project-meta"><span class="lang-en">BI Engineer Intern · Buyer &amp; Marketing BI Team · Feb 2026&ndash;Present</span><span class="lang-zh">BI 工程师实习 · Buyer &amp; Marketing BI 团队 · 2026.02 至今</span></p></div>
         </div>
         <div class="project-body">
-          <p>Diana is an internal LLM-powered data agent. The platform belongs to another team; <strong>I own the application-constraint layer</strong> &mdash; designing the Skills (runbooks) that let analysts hand recurring AB-test analyses to the agent and trust the numbers it returns.</p>
+          <p><span class="lang-en">Diana is an internal LLM-powered data agent. The platform belongs to another team; <strong>I own the application-constraint layer</strong> &mdash; designing the Skills (runbooks) that let analysts hand recurring AB-test analyses to the agent and trust the numbers it returns.</span><span class="lang-zh">Diana 是一个内部的 LLM 数据 Agent。平台由另一个团队开发；<strong>我负责应用约束层</strong>&mdash;&mdash;设计 Skill（runbook），让分析师把重复的 AB 测试分析交给 Agent，并能信任它返回的数字。</span></p>
 
           <div class="ba">
             <div class="ba-row">
@@ -360,53 +434,54 @@
               <span class="ba-track"><span class="ba-fill after" style="width:7%"></span></span>
               <span class="ba-val">2&ndash;3 min</span>
             </div>
-            <p class="ba-note">Before: hand-write SQL, switch between two data sources, edit region / date / group_id, run each region, assemble a comparison table. After: fill a form &rarr; Skill auto-runs &rarr; structured report.</p>
+            <p class="ba-note"><span class="lang-en">Before: hand-write SQL, switch between two data sources, edit region / date / group_id, run each region, assemble a comparison table. After: fill a form &rarr; Skill auto-runs &rarr; structured report.</span><span class="lang-zh">迁移前：手写 SQL、在两种数据源间切换、改 region / date / group_id、逐个 region 跑、再拼成对比表。迁移后：填表单 &rarr; Skill 自动执行 &rarr; 结构化报告。</span></p>
           </div>
           <div class="caveat">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span>Honest framing: the saving comes from <strong>automating the analyst's manual workflow</strong>, not from making any single query faster. The Skill makes the agent's reasoning auditable and repeatable.</span>
+            <span><span class="lang-en">Honest framing: the saving comes from <strong>automating the analyst's manual workflow</strong>, not from making any single query faster. The Skill makes the agent's reasoning auditable and repeatable.</span><span class="lang-zh">诚实地说：提速来自<strong>把分析师的手工流程自动化</strong>，而不是让某条查询本身更快。Skill 让 Agent 的推理可审计、可复现。</span></span>
           </div>
 
           <div class="two-col">
             <div class="col-block">
-              <h4 class="block-label">What I built</h4>
+              <h4 class="block-label"><span class="lang-en">What I built</span><span class="lang-zh">我做了什么</span></h4>
               <ul>
-                <li><strong>3 production Skills</strong>: Me-Page traffic, PDP ads-voucher CR, PDP OPU &amp; GMV</li>
-                <li>5-section runbook structure: inputs &rarr; procedure &rarr; SQL template &rarr; output schema &rarr; pre-return checklist</li>
-                <li>Hardcoded invariants &amp; locked denominators over free-form generation</li>
-                <li>A Skill-generator (v1&rarr;v2&rarr;v3) with <strong>14 lint rules</strong> to make authoring self-checking</li>
+                <li><span class="lang-en"><strong>3 production Skills</strong>: Me-Page traffic, PDP ads-voucher CR, PDP OPU &amp; GMV</span><span class="lang-zh"><strong>3 个生产 Skill</strong>：Me-Page 流量、PDP 广告 voucher 转化率、PDP OPU &amp; GMV</span></li>
+                <li><span class="lang-en">5-section runbook structure: inputs &rarr; procedure &rarr; SQL template &rarr; output schema &rarr; pre-return checklist</span><span class="lang-zh">5 段式 runbook 结构：输入 &rarr; 流程 &rarr; SQL 模板 &rarr; 输出 schema &rarr; 返回前检查</span></li>
+                <li><span class="lang-en">Hardcoded invariants &amp; locked denominators over free-form generation</span><span class="lang-zh">用硬编码不变量与锁定分母，取代自由生成</span></li>
+                <li><span class="lang-en">A Skill-generator (v1&rarr;v2&rarr;v3) with <strong>14 lint rules</strong> to make authoring self-checking</span><span class="lang-zh">一个 Skill 生成器（v1&rarr;v2&rarr;v3），内置 <strong>14 条 lint 规则</strong>让撰写自带校验</span></li>
               </ul>
             </div>
             <div class="col-block">
-              <h4 class="block-label">Why it's reliable</h4>
+              <h4 class="block-label"><span class="lang-en">Why it's reliable</span><span class="lang-zh">为什么可靠</span></h4>
               <ul>
-                <li>Runbook style is <em>followed top-to-bottom</em>; prose style gets partially skipped</li>
-                <li>Enum-constrained outputs (<code>Literal</code> + <code>__post_init__</code> validation)</li>
-                <li><code>LEFT JOIN</code> + <code>COALESCE</code> so denominators can't silently shrink</li>
-                <li>Black-box evaluation feeds a 9-mode failure taxonomy back into design</li>
+                <li><span class="lang-en">Runbook style is <em>followed top-to-bottom</em>; prose style gets partially skipped</span><span class="lang-zh">Runbook 式会被<em>自上而下执行</em>；散文式会被部分跳过</span></li>
+                <li><span class="lang-en">Enum-constrained outputs (<code>Literal</code> + <code>__post_init__</code> validation)</span><span class="lang-zh">枚举约束输出（<code>Literal</code> + <code>__post_init__</code> 校验）</span></li>
+                <li><span class="lang-en"><code>LEFT JOIN</code> + <code>COALESCE</code> so denominators can't silently shrink</span><span class="lang-zh"><code>LEFT JOIN</code> + <code>COALESCE</code>，分母不会被悄悄缩小</span></li>
+                <li><span class="lang-en">Black-box evaluation feeds a 9-mode failure taxonomy back into design</span><span class="lang-zh">黑盒评测把 9 类失败模式反馈回设计</span></li>
               </ul>
             </div>
           </div>
 
-          <h4 class="block-label" style="margin-top:1.4rem;">NL2SQL failure taxonomy — designed around, not hoped away</h4>
+          <h4 class="block-label" style="margin-top:1.4rem;"><span class="lang-en">NL2SQL failure taxonomy — designed around, not hoped away</span><span class="lang-zh">NL2SQL 失败模式分类 —— 主动设计规避，而非寄望它不发生</span></h4>
           <div class="tax-grid">
-            <div class="tax-item"><span class="dot"></span>Schema-linking error</div>
-            <div class="tax-item"><span class="dot"></span>Metric-definition error</div>
-            <div class="tax-item"><span class="dot"></span>Missing filter</div>
-            <div class="tax-item crit"><span class="dot"></span>Wrong denominator (silent)</div>
-            <div class="tax-item"><span class="dot"></span>Invalid scope</div>
-            <div class="tax-item"><span class="dot"></span>Empty-result fallback</div>
-            <div class="tax-item"><span class="dot"></span>SQL syntax / truncation</div>
-            <div class="tax-item"><span class="dot"></span>Unstable output</div>
-            <div class="tax-item"><span class="dot"></span>Skill skipping / scope mismatch</div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Schema-linking error</span><span class="lang-zh">Schema 链接错误</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Metric-definition error</span><span class="lang-zh">指标定义错误</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Missing filter</span><span class="lang-zh">缺失过滤条件</span></div>
+            <div class="tax-item crit"><span class="dot"></span><span class="lang-en">Wrong denominator (silent)</span><span class="lang-zh">分母错误（静默）</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Invalid scope</span><span class="lang-zh">范围无效</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Empty-result fallback</span><span class="lang-zh">空结果兜底</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">SQL syntax / truncation</span><span class="lang-zh">SQL 语法 / 截断</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Unstable output</span><span class="lang-zh">输出不稳定</span></div>
+            <div class="tax-item"><span class="dot"></span><span class="lang-en">Skill skipping / scope mismatch</span><span class="lang-zh">跳过 Skill / 范围不匹配</span></div>
           </div>
 
           <div class="bug-box">
-            <span class="bug-tag">Most dangerous failure &mdash; and how I caught it</span>
-            <h4>The silent <code>LEFT JOIN &rarr; INNER JOIN</code> collapse</h4>
-            <p>An early SQL referenced a left-joined column in <code>WHERE</code>. When the key was <code>NULL</code>, <code>NULL IN (...)</code> dropped the row &mdash; turning the <code>LEFT JOIN</code> into an <code>INNER JOIN</code>, shrinking the denominator and <em>inflating conversion rate</em>. A syntax error screams; a wrong denominator looks perfectly normal and quietly poisons the decision. I made the join invariant explicit so it can't regress.</p>
+            <span class="bug-tag"><span class="lang-en">Most dangerous failure &mdash; and how I caught it</span><span class="lang-zh">最危险的失败 —— 以及我怎么抓到它</span></span>
+            <h4><span class="lang-en">The silent <code>LEFT JOIN &rarr; INNER JOIN</code> collapse</span><span class="lang-zh">静默的 <code>LEFT JOIN &rarr; INNER JOIN</code> 塌缩</span></h4>
+            <p><span class="lang-en">An early SQL referenced a left-joined column in <code>WHERE</code>. When the key was <code>NULL</code>, <code>NULL IN (...)</code> dropped the row &mdash; turning the <code>LEFT JOIN</code> into an <code>INNER JOIN</code>, shrinking the denominator and <em>inflating conversion rate</em>. A syntax error screams; a wrong denominator looks perfectly normal and quietly poisons the decision. I made the join invariant explicit so it can't regress.</span><span class="lang-zh">早期一条 SQL 在 <code>WHERE</code> 里引用了被 left-join 的列。当键为 <code>NULL</code> 时，<code>NULL IN (...)</code> 会丢弃该行 &mdash; 于是 <code>LEFT JOIN</code> 退化成 <code>INNER JOIN</code>，分母变小、<em>转化率被抬高</em>。语法错误会报警；分母错误看起来完全正常，却悄悄污染决策。我把这个 join 不变量显式化，让它无法回退。</span></p>
           </div>
 
+          <div class="proj-links"><span class="proj-chip">🔒 <span class="lang-en">Internal · Shopee (code not public)</span><span class="lang-zh">内部项目 · Shopee（代码不公开）</span></span></div>
           <div class="tags"><span class="tag">LLM Agents</span><span class="tag">NL2SQL</span><span class="tag">Skill / Runbook Design</span><span class="tag">Constraint Engineering</span><span class="tag">Reliability</span><span class="tag">Presto SQL</span></div>
         </div>
       </div>
@@ -419,10 +494,10 @@
       <div class="project-card">
         <div class="project-header">
           <div class="project-icon flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg></div>
-          <div class="project-titles"><h3>AB-Test Text-to-SQL Workflow</h3><p class="project-meta">Multi-region traffic &amp; funnel analysis pipeline</p></div>
+          <div class="project-titles"><h3><span class="lang-en">AB-Test Text-to-SQL Workflow</span><span class="lang-zh">AB 测试 Text-to-SQL 工作流</span></h3><p class="project-meta"><span class="lang-en">Multi-region traffic &amp; funnel analysis pipeline</span><span class="lang-zh">多区域流量与漏斗分析流水线</span></p></div>
         </div>
         <div class="project-body">
-          <p>A deterministic low-code workflow for AB-test analysis across 8 regions. The key engineering judgment: <strong>shrink the LLM's job to Stage&nbsp;1</strong> (variable extraction) and make everything downstream deterministic &mdash; flexible enough to take natural language, reliable enough for production.</p>
+          <p><span class="lang-en">A deterministic low-code workflow for AB-test analysis across 8 regions. The key engineering judgment: <strong>shrink the LLM's job to Stage&nbsp;1</strong> (variable extraction) and make everything downstream deterministic &mdash; flexible enough to take natural language, reliable enough for production.</span><span class="lang-zh">一个覆盖 8 个区域的确定性低代码工作流。关键的工程判断：<strong>把 LLM 的职责收缩到 Stage&nbsp;1</strong>（变量抽取），下游全部确定性执行&mdash;&mdash;既能接收自然语言，又足够可靠可上生产。</span></p>
 
           <figure class="figure">
             <svg viewBox="0 0 720 360" role="img" aria-label="Four-stage AB-test workflow architecture">
@@ -470,10 +545,10 @@
               <line x1="280" y1="272" x2="280" y2="298" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
               <line x1="340" y1="320" x2="390" y2="320" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
             </svg>
-            <figcaption><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</figcaption>
+            <figcaption><span class="lang-en"><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</span><span class="lang-zh"><strong>Router → 变量抽取 → SQL Builder → 8 路并行执行 → Merge。</strong> LLM 只在 Stage 1 起作用；SQL 拼装与执行都是确定性的。此为生产流水线的脱敏重绘（不含内部表名）。</span></figcaption>
           </figure>
 
-          <h4 class="block-label" style="margin-top:1.4rem;">Query latency: ~300 s → ~2 s</h4>
+          <h4 class="block-label" style="margin-top:1.4rem;"><span class="lang-en">Query latency: ~300 s → ~2 s</span><span class="lang-zh">查询延迟：~300 秒 → ~2 秒</span></h4>
           <div class="ba">
             <div class="ba-row">
               <span class="ba-label">Raw-table scan</span>
@@ -485,13 +560,14 @@
               <span class="ba-track"><span class="ba-fill after" style="width:1.5%"></span></span>
               <span class="ba-val">~2 s</span>
             </div>
-            <p class="ba-note">Earlier filtering, fewer redundant joins, and migrating expensive raw-table queries onto pre-aggregated data marts.</p>
+            <p class="ba-note"><span class="lang-en">Earlier filtering, fewer redundant joins, and migrating expensive raw-table queries onto pre-aggregated data marts.</span><span class="lang-zh">更早过滤、减少无效 join，并把昂贵的原始表查询迁移到预聚合数据集市。</span></p>
           </div>
           <div class="caveat">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span>Honest framing: this speedup is <strong>data modeling &amp; query optimization</strong> (pre-agg marts, predicate pushdown, join control) &mdash; <em>not</em> the LLM. The agent automates the analysis chain; it does not accelerate the database.</span>
+            <span><span class="lang-en">Honest framing: this speedup is <strong>data modeling &amp; query optimization</strong> (pre-agg marts, predicate pushdown, join control) &mdash; <em>not</em> the LLM. The agent automates the analysis chain; it does not accelerate the database.</span><span class="lang-zh">诚实地说：这个提速来自<strong>数据建模与查询优化</strong>（预聚合集市、谓词下推、join 控制）&mdash;&mdash;<em>不是</em> LLM。Agent 自动化的是分析链路，并不加速数据库本身。</span></span>
           </div>
 
+          <div class="proj-links"><span class="proj-chip">🔒 <span class="lang-en">Internal · Shopee (code not public)</span><span class="lang-zh">内部项目 · Shopee（代码不公开）</span></span></div>
           <div class="tags"><span class="tag">Presto / Trino</span><span class="tag">Data Modeling</span><span class="tag">Pre-Aggregation</span><span class="tag">Workflow Orchestration</span><span class="tag">Parallel Execution</span><span class="tag">Agent vs Workflow Trade-off</span></div>
         </div>
       </div>
@@ -504,35 +580,36 @@
       <div class="project-card">
         <div class="project-header">
           <div class="project-icon multi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <div class="project-titles"><h3>Multi-Agent Literature Monitoring System</h3><p class="project-meta">Google ADK · Gemini · 4-person team · Apr&ndash;May 2026</p></div>
+          <div class="project-titles"><h3><span class="lang-en">Multi-Agent Literature Monitoring System</span><span class="lang-zh">多 Agent 文献监控系统</span></h3><p class="project-meta"><span class="lang-en">Google ADK · Gemini · 4-person team · Apr&ndash;May 2026</span><span class="lang-zh">Google ADK · Gemini · 4 人团队 · 2026.04&ndash;05</span></p></div>
         </div>
         <div class="project-body">
-          <p>A multi-agent system that monitors frontier-AI research and produces personalized digests. I owned the <strong>orchestrator architecture and the design decisions</strong>; I picked up Google ADK from scratch for it.</p>
+          <p><span class="lang-en">A multi-agent system that monitors frontier-AI research and produces personalized digests. I owned the <strong>orchestrator architecture and the design decisions</strong>; I picked up Google ADK from scratch for it.</span><span class="lang-zh">一个监控前沿 AI 研究、生成个性化摘要的多 Agent 系统。我负责 <strong>orchestrator 架构与设计决策</strong>；为此从零上手了 Google ADK。</span></p>
           <div class="two-col">
             <div class="col-block">
-              <h4 class="block-label">Architecture (mine)</h4>
+              <h4 class="block-label"><span class="lang-en">Architecture (mine)</span><span class="lang-zh">架构（我做的）</span></h4>
               <ul>
-                <li>ADK chosen over LangChain/LangGraph after a trade-off study</li>
-                <li><code>SequentialAgent</code> + <code>LoopAgent</code> orchestrator with a critic-revision loop</li>
-                <li>2 human-in-the-loop checkpoints: after planning, after synthesis</li>
-                <li>Dual storage: SQLite (state) + ChromaDB (semantic recall)</li>
-                <li>Observability: traced decorator, per-step cost tracking</li>
+                <li><span class="lang-en">ADK chosen over LangChain/LangGraph after a trade-off study</span><span class="lang-zh">经权衡后选 ADK 而非 LangChain/LangGraph</span></li>
+                <li><span class="lang-en"><code>SequentialAgent</code> + <code>LoopAgent</code> orchestrator with a critic-revision loop</span><span class="lang-zh"><code>SequentialAgent</code> + <code>LoopAgent</code> 编排，含 critic-revision 循环</span></li>
+                <li><span class="lang-en">2 human-in-the-loop checkpoints: after planning, after synthesis</span><span class="lang-zh">2 个人工介入检查点：规划后、综合后</span></li>
+                <li><span class="lang-en">Dual storage: SQLite (state) + ChromaDB (semantic recall)</span><span class="lang-zh">双存储：SQLite（状态）+ ChromaDB（语义召回）</span></li>
+                <li><span class="lang-en">Observability: traced decorator, per-step cost tracking</span><span class="lang-zh">可观测性：traced 装饰器、逐步成本追踪</span></li>
               </ul>
             </div>
             <div class="col-block">
-              <h4 class="block-label">By the numbers</h4>
+              <h4 class="block-label"><span class="lang-en">By the numbers</span><span class="lang-zh">关键数字</span></h4>
               <ul>
-                <li>~<strong>3,990 LOC</strong> in my modules (orchestrator 642, schemas 498, storage 544, observability 330)</li>
-                <li><strong>18/18</strong> stdlib smoke tests pass + full pytest</li>
-                <li>7 test files · ~1,285 LOC of tests</li>
-                <li>11 dataclass contracts with runtime <code>__post_init__</code> validation</li>
+                <li><span class="lang-en">~<strong>3,990 LOC</strong> in my modules (orchestrator 642, schemas 498, storage 544, observability 330)</span><span class="lang-zh">我负责的模块约 <strong>3,990 行</strong>（orchestrator 642、schemas 498、storage 544、observability 330）</span></li>
+                <li><span class="lang-en"><strong>18/18</strong> stdlib smoke tests pass + full pytest</span><span class="lang-zh"><strong>18/18</strong> 冒烟测试通过 + 完整 pytest</span></li>
+                <li><span class="lang-en">7 test files · ~1,285 LOC of tests</span><span class="lang-zh">7 个测试文件 · 约 1,285 行测试</span></li>
+                <li><span class="lang-en">11 dataclass contracts with runtime <code>__post_init__</code> validation</span><span class="lang-zh">11 个 dataclass 契约，运行时 <code>__post_init__</code> 校验</span></li>
               </ul>
             </div>
           </div>
           <div class="caveat">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span>Per the course acknowledgement, an AI coding assistant generated boilerplate scaffolding. The <strong>architecture, ADK composition, schema-design principles, and orchestrator critic loop are my own</strong>; PR history documents the decisions.</span>
+            <span><span class="lang-en">Per the course acknowledgement, an AI coding assistant generated boilerplate scaffolding. The <strong>architecture, ADK composition, schema-design principles, and orchestrator critic loop are my own</strong>; PR history documents the decisions.</span><span class="lang-zh">按课程声明，AI 编码助手生成了样板脚手架。<strong>架构、ADK 组合、schema 设计原则与 orchestrator critic 循环都是我自己做的</strong>；PR 历史记录了这些决策。</span></span>
           </div>
+          <div class="proj-links"><span class="proj-chip">👥 <span class="lang-en">Team project · code &amp; PR history on request</span><span class="lang-zh">团队项目 · 代码与 PR 历史可索取</span></span></div>
           <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Google ADK</span><span class="tag">Gemini</span><span class="tag">ChromaDB</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Human-in-the-Loop</span></div>
         </div>
       </div>
@@ -545,17 +622,17 @@
       <div class="project-card">
         <div class="project-header">
           <div class="project-icon surviv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-          <div class="project-titles"><h3>Hand-Coded Adversarial Agent &mdash; "Design beats scale"</h3><p class="project-meta">Pure Python (stdlib only) · ~600 LOC · May 2026</p></div>
+          <div class="project-titles"><h3><span class="lang-en">Hand-Coded Adversarial Agent &mdash; "Design beats scale"</span><span class="lang-zh">手写对抗 Agent &mdash; "设计胜过堆量"</span></h3><p class="project-meta"><span class="lang-en">Pure Python (stdlib only) · ~600 LOC · May 2026</span><span class="lang-zh">纯 Python（仅标准库）· 约 600 行 · 2026.05</span></p></div>
         </div>
         <div class="project-body">
-          <p>In a battle-royale RL environment, most teams trained 70M-step neural-net agents. I wrote a <strong>code-as-policy</strong> agent by hand and, through black-box behavioral analysis and ablation, found the blind spots in the trained NN's lead-the-shot prediction.</p>
+          <p><span class="lang-en">In a battle-royale RL environment, most teams trained 70M-step neural-net agents. I wrote a <strong>code-as-policy</strong> agent by hand and, through black-box behavioral analysis and ablation, found the blind spots in the trained NN's lead-the-shot prediction.</span><span class="lang-zh">在一个吃鸡式 RL 环境里，多数队伍训练 70M 步的神经网络 Agent。我手写了一个 <strong>code-as-policy</strong> Agent，通过黑盒行为分析和消融实验，找到了训练好的 NN 在"提前量射击"预测上的盲区。</span></p>
           <div class="pill-row">
-            <span class="pill win">Tied 1st on average placement vs a 70M-step trained NN</span>
+            <span class="pill win"><span class="lang-en">Tied 1st on average placement vs a 70M-step trained NN</span><span class="lang-zh">平均名次与 70M 步训练的 NN 并列第一</span></span>
           </div>
 
           <div class="chart-card">
             <div class="chart-box">
-              <h4>Tournament — 50 games</h4>
+              <h4><span class="lang-en">Tournament — 50 games</span><span class="lang-zh">锦标赛 — 50 局</span></h4>
               <svg viewBox="0 0 300 170" role="img" aria-label="Win counts and average placement">
                 <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
                 <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
@@ -577,10 +654,10 @@
                 <text x="225" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c">Evan&nbsp;NN</text>
                 <text x="225" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.16 avg</text>
               </svg>
-              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;">Bars = wins. Average placement (more robust to luck in battle royale) is tied: 3.14 / 3.14 / 3.16.</p>
+              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><span class="lang-en">Bars = wins. Average placement (more robust to luck in battle royale) is tied: 3.14 / 3.14 / 3.16.</span><span class="lang-zh">柱状 = 胜场。平均名次（吃鸡里更抗运气波动）三方并列：3.14 / 3.14 / 3.16。</span></p>
             </div>
             <div class="chart-box">
-              <h4>Ablation — win rate vs NN by engage distance</h4>
+              <h4><span class="lang-en">Ablation — win rate vs NN by engage distance</span><span class="lang-zh">消融 — 不同交战距离下对 NN 的胜率</span></h4>
               <svg viewBox="0 0 300 170" role="img" aria-label="Win rate by ENGAGE_DIST">
                 <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
                 <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
@@ -602,11 +679,12 @@
                 <text x="237" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">37</text>
                 <text x="237" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.15</text>
               </svg>
-              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> is where the NN's lead-the-shot becomes unreliable at close range.</p>
+              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> <span class="lang-en">is where the NN's lead-the-shot becomes unreliable at close range.</span><span class="lang-zh">正是 NN 的提前量射击在近距离失准的临界点。</span></p>
             </div>
           </div>
 
-          <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:1.1rem;line-height:1.6;">The same thesis as Diana, in a different domain: in a narrow regime, <span class="highlight">domain-specific constraint design often beats scaling generic ML</span>. Not anti-ML — Diana itself is built on an LLM — but "having a model" isn't "solving the problem."</p>
+          <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:1.1rem;line-height:1.6;"><span class="lang-en">The same thesis as Diana, in a different domain: in a narrow regime, <span class="highlight">domain-specific constraint design often beats scaling generic ML</span>. Not anti-ML — Diana itself is built on an LLM — but "having a model" isn't "solving the problem."</span><span class="lang-zh">与 Diana 同一个论点，换了个领域：在窄场景里，<span class="highlight">领域特定的约束设计往往胜过堆通用 ML</span>。这不是反对 ML&mdash;&mdash;Diana 本身就建在 LLM 之上&mdash;&mdash;而是说"有了模型"不等于"解决了问题"。</span></p>
+          <div class="proj-links"><span class="proj-chip">📄 <span class="lang-en">Writeup &amp; ablation log on request</span><span class="lang-zh">详细写作与消融记录可索取</span></span></div>
           <div class="tags"><span class="tag">Code-as-Policy</span><span class="tag">Ablation</span><span class="tag">Black-box Analysis</span><span class="tag">Pure Python</span><span class="tag">Failure Documentation</span></div>
         </div>
       </div>
@@ -615,24 +693,57 @@
 
   <section id="e-skills">
     <div class="container">
-      <p class="section-label">Capabilities</p>
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Languages</h4>
-          <p>Python · SQL (<code>Presto</code> / <code>Hive</code> / <code>MySQL</code>) · C++ · Shell</p>
+      <p class="section-label"><span class="lang-en">Capabilities</span><span class="lang-zh">能力</span></p>
+      <h2><span class="lang-en">Skills</span><span class="lang-zh">技能</span></h2>
+      <div class="bars">
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk">Python</span><span class="tier"><span class="lang-en">Core</span><span class="lang-zh">核心</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+          <p class="bar-sub"><span class="lang-en">Primary language — data work and agent application code.</span><span class="lang-zh">主力语言——数据工作与 Agent 应用代码。</span></p>
         </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg> LLM / Agent Systems</h4>
-          <p>Skill &amp; runbook design · prompt engineering · structured output / constrained decoding · function calling · RAG · multi-agent orchestration</p>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk">SQL · Presto / Hive / MySQL</span><span class="tier"><span class="lang-en">Core</span><span class="lang-zh">核心</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+          <p class="bar-sub"><span class="lang-en">Data modeling, query optimization, AB-test &amp; funnel analysis.</span><span class="lang-zh">数据建模、查询优化、AB 测试与漏斗分析。</span></p>
         </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg> Data &amp; Analytics</h4>
-          <p>Data modeling &amp; pre-aggregation · query optimization · AB-test &amp; funnel analysis · failure-mode taxonomy</p>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk"><span class="lang-en">LLM / Agent systems</span><span class="lang-zh">LLM / Agent 系统</span></span><span class="tier"><span class="lang-en">Strong</span><span class="lang-zh">熟练</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+          <p class="bar-sub"><span class="lang-en">Skill / runbook design · prompting · structured output · RAG · multi-agent orchestration.</span><span class="lang-zh">Skill / runbook 设计 · prompt · 结构化输出 · RAG · 多 Agent 编排。</span></p>
         </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Tools &amp; Frameworks</h4>
-          <p>Google ADK · Gemini · ChromaDB · SQLite · Langfuse · PyTorch · Git · Linux</p>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk"><span class="lang-en">Data modeling &amp; query optimization</span><span class="lang-zh">数据建模与查询优化</span></span><span class="tier"><span class="lang-en">Strong</span><span class="lang-zh">熟练</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+          <p class="bar-sub"><span class="lang-en">Pre-aggregation, predicate pushdown, join control on Presto.</span><span class="lang-zh">预聚合、谓词下推、Presto join 控制。</span></p>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk"><span class="lang-en">Agent frameworks · ADK / LangGraph</span><span class="lang-zh">Agent 框架 · ADK / LangGraph</span></span><span class="tier"><span class="lang-en">Working</span><span class="lang-zh">可用</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+          <p class="bar-sub"><span class="lang-en">Tools &amp; frameworks: Google ADK, Gemini, ChromaDB, SQLite, Langfuse, PyTorch, Git, Linux.</span><span class="lang-zh">工具与框架：Google ADK、Gemini、ChromaDB、SQLite、Langfuse、PyTorch、Git、Linux。</span></p>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bk">C++ · Shell</span><span class="tier"><span class="lang-en">Working</span><span class="lang-zh">可用</span></span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
+        </div>
+      </div>
+      <p class="bar-sub" style="margin-top:0.8rem;"><span class="lang-en">Self-assessed — Core: daily depth · Strong: production-comfortable · Working: functional.</span><span class="lang-zh">自评——核心：日常深度 · 熟练：可上生产 · 可用：能用。</span></p>
+
+      <h4 class="block-label" style="margin-top:1.8rem;"><span class="lang-en">Open-source</span><span class="lang-zh">开源项目</span></h4>
+      <div class="oss-grid">
+        <div class="oss-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Mini-GPT</h4>
+          <p><span class="lang-en">Decoder-only Transformer from scratch in PyTorch — causal attention, LayerNorm, training loop.</span><span class="lang-zh">用 PyTorch 从零实现 decoder-only Transformer——因果注意力、LayerNorm、训练循环。</span></p>
+          <a class="oss-go" href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener">GitHub &rarr;</a>
+        </div>
+        <div class="oss-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Synapse</h4>
+          <p><span class="lang-en">Auto-generates notes, knowledge graphs &amp; quizzes from video lectures.</span><span class="lang-zh">从视频讲座自动生成笔记、知识图谱与测验。</span></p>
+          <a class="oss-go" href="https://github.com/HaoPan036/Synapse" target="_blank" rel="noopener">GitHub &rarr;</a>
+        </div>
+        <div class="oss-card">
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Data Labeling</h4>
+          <p><span class="lang-en">Semi-automated labeling — 100% accuracy at 84% automation rate.</span><span class="lang-zh">半自动标注——100% 准确率、84% 自动化率。</span></p>
+          <a class="oss-go" href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener">GitHub &rarr;</a>
         </div>
       </div>
     </div>
@@ -640,41 +751,41 @@
 
   <section id="e-honors">
     <div class="container">
-      <p class="section-label">Background</p>
-      <h2>Honors &amp; Education</h2>
+      <p class="section-label"><span class="lang-en">Background</span><span class="lang-zh">背景</span></p>
+      <h2><span class="lang-en">Honors &amp; Education</span><span class="lang-zh">荣誉与教育</span></h2>
       <div class="honor-list">
         <div class="honor">
           <span class="medal">🏆</span>
           <div>
-            <h4>China National Scholarship <span class="honor-meta">— Top 0.2% nationwide, 2022&ndash;23</span></h4>
-            <p>Awarded during B.Eng. in Data Science &amp; Big Data Technology, Suzhou University.</p>
+            <h4><span class="lang-en">China National Scholarship</span><span class="lang-zh">国家奖学金</span> <span class="honor-meta"><span class="lang-en">— Top 0.2% nationwide, 2022&ndash;23</span><span class="lang-zh">— 全国前 0.2%，2022&ndash;23</span></span></h4>
+            <p><span class="lang-en">Awarded during B.Eng. in Data Science &amp; Big Data Technology, Suzhou University.</span><span class="lang-zh">本科（数据科学与大数据技术，苏州大学）期间获得。</span></p>
           </div>
         </div>
         <div class="honor">
           <span class="medal">🥉</span>
           <div>
-            <h4>Huawei ICT Competition — Global Final, 3rd Prize <span class="honor-meta">— Cloud Track, Top 5% globally, Jun 2022</span></h4>
-            <p>Built a PySpark / Hive / MySQL big-data pipeline on TB-scale datasets; reduced query latency by <strong>40%</strong>.</p>
+            <h4><span class="lang-en">Huawei ICT Competition — Global Final, 3rd Prize</span><span class="lang-zh">华为 ICT 大赛 — 全球总决赛三等奖</span> <span class="honor-meta"><span class="lang-en">— Cloud Track, Top 5% globally, Jun 2022</span><span class="lang-zh">— 云赛道，全球前 5%，2022.06</span></span></h4>
+            <p><span class="lang-en">Built a PySpark / Hive / MySQL big-data pipeline on TB-scale datasets; reduced query latency by <strong>40%</strong>.</span><span class="lang-zh">在 TB 级数据上构建 PySpark / Hive / MySQL 大数据流水线；查询延迟降低 <strong>40%</strong>。</span></p>
           </div>
         </div>
         <div class="honor">
           <span class="medal">🥉</span>
           <div>
-            <h4>RAICOM 2024 National Robotics Finals, 3rd Prize <span class="honor-meta">— Aerial Reconnaissance, Aug 2024</span></h4>
-            <p>Led an autonomous indoor UAV project using ROS, scenario decomposition, and obstacle avoidance.</p>
+            <h4><span class="lang-en">RAICOM 2024 National Robotics Finals, 3rd Prize</span><span class="lang-zh">RAICOM 2024 全国机器人大赛总决赛三等奖</span> <span class="honor-meta"><span class="lang-en">— Aerial Reconnaissance, Aug 2024</span><span class="lang-zh">— 空中侦察赛项，2024.08</span></span></h4>
+            <p><span class="lang-en">Led an autonomous indoor UAV project using ROS, scenario decomposition, and obstacle avoidance.</span><span class="lang-zh">主导一个基于 ROS 的室内自主无人机项目，含场景分解与避障。</span></p>
           </div>
         </div>
       </div>
       <div class="edu-grid">
         <div class="edu-card">
-          <h4>M.Comp. in Applied AI</h4>
+          <h4><span class="lang-en">M.Comp. in Applied AI</span><span class="lang-zh">应用人工智能 理学硕士</span></h4>
           <p class="edu-school">Nanyang Technological University</p>
-          <p class="edu-date">Nov 2025 – Jan 2027 · Singapore · CCDS</p>
+          <p class="edu-date"><span class="lang-en">Nov 2025 – Jan 2027 · Singapore · CCDS</span><span class="lang-zh">2025.11 – 2027.01 · 新加坡 · CCDS</span></p>
         </div>
         <div class="edu-card">
-          <h4>B.Eng. Data Science &amp; Big Data</h4>
+          <h4><span class="lang-en">B.Eng. Data Science &amp; Big Data</span><span class="lang-zh">工学学士 数据科学与大数据</span></h4>
           <p class="edu-school">Suzhou University</p>
-          <p class="edu-date">Sep 2019 – Jun 2023 · China</p>
+          <p class="edu-date"><span class="lang-en">Sep 2019 – Jun 2023 · China</span><span class="lang-zh">2019.09 – 2023.06 · 中国</span></p>
         </div>
       </div>
     </div>
@@ -682,10 +793,10 @@
 
   <section id="e-contact">
     <div class="container">
-      <p class="section-label">Get In Touch</p>
-      <h2>Contact</h2>
+      <p class="section-label"><span class="lang-en">Get In Touch</span><span class="lang-zh">联系我</span></p>
+      <h2><span class="lang-en">Contact</span><span class="lang-zh">联系</span></h2>
       <div class="contact-block">
-        <p>Based in Singapore — open to Data Agent / LLM Application Engineer roles.</p>
+        <p><span class="lang-en">Based in Singapore — open to Data Agent / LLM Application Engineer roles.</span><span class="lang-zh">坐标新加坡 —— 求 Data Agent / LLM 应用工程师岗位。</span></p>
         <div class="contact-links">
           <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
           <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
@@ -1083,6 +1194,22 @@
 
   window.addEventListener('hashchange', route);
   route();
+
+  // language toggle (Engineering view only)
+  var engView = document.getElementById('view-engineering');
+  var langChips = document.querySelectorAll('.lang-toggle .lc');
+  function setLang(l) {
+    if (l !== 'zh') l = 'en';
+    engView.setAttribute('data-lang', l);
+    langChips.forEach(function (c) { c.classList.toggle('active', c.dataset.lang === l); });
+    try { localStorage.setItem('engLang', l); } catch (e) {}
+  }
+  langChips.forEach(function (c) {
+    c.addEventListener('click', function () { setLang(c.dataset.lang); });
+  });
+  var savedLang = 'en';
+  try { savedLang = localStorage.getItem('engLang') || 'en'; } catch (e) {}
+  setLang(savedLang);
 })();
 </script>
 
