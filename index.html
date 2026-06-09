@@ -163,6 +163,7 @@
   .chart-box { background: var(--surface-warm); border-radius: 8px; padding: 1rem 1.1rem; }
   .chart-box h4 { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.7rem; }
   .chart-box svg { width: 100%; height: auto; }
+  .demo-vid { width: 100%; display: block; border-radius: 8px; border: 1px solid var(--border); margin-top: 1rem; background: #1a1e26; }
 
   /* ── Skills (eng grid) ─────────── */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
@@ -631,6 +632,11 @@
           <div class="pill-row">
             <span class="pill win"><span class="lang-en">Tied 1st on average placement vs a 70M-step trained NN</span><span class="lang-zh">平均名次与 70M 步训练的 NN 并列第一</span></span>
           </div>
+
+          <video class="demo-vid" autoplay muted loop playsinline preload="metadata" poster="surviv-poster.jpg">
+            <source src="surviv-demo.mp4" type="video/mp4">
+          </video>
+          <p class="bar-sub" style="margin-top:0.4rem;"><span class="lang-en">Live match — 6 agents, shrinking poison zone. PanHao (gold) is hand-coded; no neural net.</span><span class="lang-zh">实时对战 —— 6 个 agent、毒圈收缩。PanHao（金色）是纯手写策略，无神经网络。</span></p>
 
           <div class="chart-card">
             <div class="chart-box">
