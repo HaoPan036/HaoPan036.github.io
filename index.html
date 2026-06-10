@@ -411,6 +411,7 @@
       <a href="#e-workflow"><span class="lang-en">SQL Workflow</span><span class="lang-zh">SQL 工作流</span></a>
       <a href="#e-multiagent"><span class="lang-en">Multi-Agent</span><span class="lang-zh">多 Agent</span></a>
       <a href="#e-surviv"><span class="lang-en">Surviv</span><span class="lang-zh">Surviv</span></a>
+      <a href="#e-calories"><span class="lang-en">Sim2Real ML</span><span class="lang-zh">Sim2Real ML</span></a>
       <a href="#e-skills"><span class="lang-en">Skills</span><span class="lang-zh">技能</span></a>
       <a href="#e-honors"><span class="lang-en">Honors</span><span class="lang-zh">荣誉</span></a>
       <a href="#e-contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
@@ -736,6 +737,65 @@
           <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:1.1rem;line-height:1.6;"><span class="lang-en">The same thesis as Diana, in a different domain: in a narrow regime, <span class="highlight">domain-specific constraint design often beats scaling generic ML</span>. Not anti-ML — Diana itself is built on an LLM — but "having a model" isn't "solving the problem."</span><span class="lang-zh">与 Diana 同一个论点，换了个领域：在窄场景里，<span class="highlight">领域特定的约束设计往往胜过堆通用 ML</span>。这不是反对 ML&mdash;&mdash;Diana 本身就建在 LLM 之上&mdash;&mdash;而是说"有了模型"不等于"解决了问题"。</span></p>
           <div class="proj-links"><a class="proj-link" href="https://github.com/HaoPan036/surviv-code-as-policies" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></div>
           <div class="tags"><span class="tag">Code-as-Policy</span><span class="tag">Ablation</span><span class="tag">Black-box Analysis</span><span class="tag">Pure Python</span><span class="tag">Failure Documentation</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="e-calories">
+    <div class="container">
+      <p class="section-label"><span class="lang-en">Project · Machine Learning</span><span class="lang-zh">项目 · 机器学习</span></p>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon diana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="project-titles"><h3><span class="lang-en">Sim2Real Calorie Prediction &mdash; physics beats complexity</span><span class="lang-zh">Sim2Real 卡路里预测 &mdash; 物理建模胜过模型复杂度</span></h3><p class="project-meta"><span class="lang-en">Physics-informed ML pipeline · Python, scikit-learn</span><span class="lang-zh">物理信息 ML 流水线 · Python, scikit-learn</span></p></div>
+        </div>
+        <div class="project-body">
+          <p><span class="lang-en">Models trained on gym data fail on real daily activity &mdash; the <strong>Sim2Real gap</strong>. I turned a biased 973-sample seed set into a 20k physics-consistent synthetic set that generalizes to 15k unseen real-world samples.</span><span class="lang-zh">在健身房数据上训练的模型，用到真实日常活动会失效&mdash;&mdash;这就是 <strong>Sim2Real 差距</strong>。我把有偏的 973 条种子数据扩成 2 万条物理一致的合成数据，使其能泛化到 1.5 万条未见过的真实数据。</span></p>
+
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-tag">External R² · real-world</span>
+              <span class="rc-big">&minus;14.38 → 0.79</span>
+              <span class="rc-note">baseline fail → Sim2Real SOTA</span>
+            </div>
+            <div class="rc-metrics">
+              <div class="rc-m"><div class="rc-n">973 → 20k</div><div class="rc-l">samples</div></div>
+              <div class="rc-m"><div class="rc-n">15k</div><div class="rc-l">real validation</div></div>
+            </div>
+          </div>
+
+          <table class="rtable">
+            <thead><tr><th>Model</th><th>Internal CV</th><th>External (real)</th></tr></thead>
+            <tbody>
+              <tr><td>Baseline RF (raw)</td><td class="num">0.95</td><td class="num">&minus;14.38</td></tr>
+              <tr class="hl"><td>Sim2Real · Linear Reg</td><td class="num">0.67</td><td class="num">0.79</td></tr>
+            </tbody>
+          </table>
+          <p class="fig-cap"><b class="fig-n">Table 2</b><span class="lang-en">A linear model with physics-based features beat random forest on real-world data &mdash; design over complexity.</span><span class="lang-zh">带物理特征的线性模型在真实数据上击败随机森林 &mdash; 设计胜过复杂度。</span></p>
+
+          <div class="two-col">
+            <div class="col-block">
+              <h4 class="block-label"><span class="lang-en">What I did</span><span class="lang-zh">我做了什么</span></h4>
+              <ul>
+                <li><span class="lang-en">Data expansion: bootstrapped 973 → 20k with noise injection</span><span class="lang-zh">数据扩充：973 → 2 万，自助采样 + 噪声注入</span></li>
+                <li><span class="lang-en">Physics re-labeling via the <strong>METs formula</strong> to fix outliers</span><span class="lang-zh">用 <strong>METs 公式</strong>重算标签、修正离群值</span></li>
+                <li><span class="lang-en">Distribution alignment: injected short-duration (0.1&ndash;0.5h) blind spots</span><span class="lang-zh">分布对齐：补入短时长(0.1&ndash;0.5h)盲区样本</span></li>
+                <li><span class="lang-en">Physics feature engineering: <code>Duration×HeartRate</code>, <code>Duration×Weight</code></span><span class="lang-zh">物理特征工程：<code>Duration×HeartRate</code>、<code>Duration×Weight</code></span></li>
+              </ul>
+            </div>
+            <div class="col-block">
+              <h4 class="block-label"><span class="lang-en">Why it matters</span><span class="lang-zh">意义</span></h4>
+              <ul>
+                <li><span class="lang-en">Same thesis as Diana / Surviv: <strong>domain-informed design beats scaling complexity</strong></span><span class="lang-zh">与 Diana / Surviv 同一论点：<strong>领域设计胜过堆复杂度</strong></span></li>
+                <li><span class="lang-en">Honest generalization: validated on truly unseen real data, not just CV</span><span class="lang-zh">对泛化诚实：在真正未见过的真实数据上验证，不只看 CV</span></li>
+                <li><span class="lang-en">End-to-end pipeline: EDA → cleaning → expansion → features → eval</span><span class="lang-zh">端到端流水线：EDA → 清洗 → 扩充 → 特征 → 评估</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="proj-links"><a class="proj-link" href="https://github.com/HaoPan036/Burning-your-calories" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></div>
+          <div class="tags"><span class="tag">Physics-Informed ML</span><span class="tag">Sim2Real</span><span class="tag">Feature Engineering</span><span class="tag">Data Pipeline</span><span class="tag">scikit-learn</span></div>
         </div>
       </div>
     </div>
