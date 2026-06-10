@@ -169,6 +169,37 @@
   .chart-box svg { width: 100%; height: auto; }
   .demo-vid { width: 100%; display: block; border-radius: 8px; border: 1px solid var(--border); margin-top: 1rem; background: #1a1e26; }
 
+  /* ── Results table (paper-style) ─────────── */
+  .rtable { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.84rem; }
+  .rtable th { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); font-weight: 600; text-align: right; padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border); }
+  .rtable th:first-child { text-align: left; }
+  .rtable td { padding: 0.5rem 0.55rem; border-bottom: 1px solid var(--border); color: var(--ink-soft); text-align: right; }
+  .rtable td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+  .rtable td.num { font-family: var(--mono); font-size: 0.82rem; }
+  .rtable tr:last-child td { border-bottom: none; }
+  .rtable tr.hl td { background: var(--accent-pale); }
+  .rtable tr.hl td:first-child, .rtable tr.hl td.num { color: var(--accent); font-weight: 700; }
+
+  /* ── Figure caption / number ─────────── */
+  .fig-cap { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.6rem; line-height: 1.45; }
+  b.fig-n { font-family: var(--mono); color: var(--accent); font-weight: 700; font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase; margin-right: 0.4rem; }
+
+  /* ── Result card (hero metric) ─────────── */
+  .result-card { display: flex; align-items: center; flex-wrap: wrap; gap: 0.9rem 1.6rem; background: var(--surface-card); border: 1px solid var(--border-accent); border-radius: 10px; padding: 1.1rem 1.4rem; margin-top: 1rem; box-shadow: var(--shadow); }
+  .result-card .rc-head { display: flex; flex-direction: column; gap: 0.12rem; padding-right: 1.5rem; border-right: 1px solid var(--border); }
+  .result-card .rc-tag { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); font-weight: 700; }
+  .result-card .rc-big { font-family: var(--serif); font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+  .result-card .rc-note { font-size: 0.74rem; color: var(--ink-muted); }
+  .result-card .rc-metrics { display: flex; gap: 1.6rem; }
+  .result-card .rc-n { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+  .result-card .rc-l { font-size: 0.66rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.1rem; }
+
+  /* ── Hover tooltip for charts ─────────── */
+  .tip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.55rem; border-radius: 6px; opacity: 0; transition: opacity 0.12s; z-index: 200; white-space: nowrap; transform: translate(-50%, -135%); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+  .tip.on { opacity: 1; }
+  [data-tip] { cursor: pointer; transition: opacity 0.15s; }
+  [data-tip]:hover { opacity: 0.8; }
+
   /* ── Skills (eng grid) ─────────── */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
   .skill-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
@@ -312,6 +343,7 @@
     .two-col { grid-template-columns: 1fr; }
     .tax-grid { grid-template-columns: 1fr 1fr; }
     .chart-card { grid-template-columns: 1fr; }
+    .result-card .rc-head { border-right: none; padding-right: 0; }
     .skills-grid { grid-template-columns: 1fr; }
     .edu-grid { grid-template-columns: 1fr; }
     .ba-row { grid-template-columns: 72px 1fr auto; }
@@ -562,7 +594,7 @@
               <line x1="280" y1="272" x2="280" y2="298" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
               <line x1="340" y1="320" x2="390" y2="320" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
             </svg>
-            <figcaption><span class="lang-en"><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</span><span class="lang-zh"><strong>Router → 变量抽取 → SQL Builder → 8 路并行执行 → Merge。</strong> LLM 只在 Stage 1 起作用；SQL 拼装与执行都是确定性的。此为生产流水线的脱敏重绘（不含内部表名）。</span></figcaption>
+            <figcaption><b class="fig-n">Fig. 1</b><span class="lang-en"><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</span><span class="lang-zh"><strong>Router → 变量抽取 → SQL Builder → 8 路并行执行 → Merge。</strong> LLM 只在 Stage 1 起作用；SQL 拼装与执行都是确定性的。此为生产流水线的脱敏重绘（不含内部表名）。</span></figcaption>
           </figure>
 
           <h4 class="block-label" style="margin-top:1.4rem;"><span class="lang-en">Query latency: ~300 s → ~2 s</span><span class="lang-zh">查询延迟：~300 秒 → ~2 秒</span></h4>
@@ -643,8 +675,17 @@
         </div>
         <div class="project-body">
           <p><span class="lang-en">In a battle-royale RL environment, most teams trained 70M-step neural-net agents. I wrote a <strong>code-as-policy</strong> agent by hand and, through black-box behavioral analysis and ablation, found the blind spots in the trained NN's lead-the-shot prediction.</span><span class="lang-zh">在一个吃鸡式 RL 环境里，多数队伍训练 70M 步的神经网络 Agent。我手写了一个 <strong>code-as-policy</strong> Agent，通过黑盒行为分析和消融实验，找到了训练好的 NN 在"提前量射击"预测上的盲区。</span></p>
-          <div class="pill-row">
-            <span class="pill win"><span class="lang-en">Tied 1st on average placement vs a 70M-step trained NN</span><span class="lang-zh">平均名次与 70M 步训练的 NN 并列第一</span></span>
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-tag">Tournament result</span>
+              <span class="rc-big">Tied&nbsp;#1</span>
+              <span class="rc-note">of 6 agents · 50 games</span>
+            </div>
+            <div class="rc-metrics">
+              <div class="rc-m"><div class="rc-n">9</div><div class="rc-l">Wins</div></div>
+              <div class="rc-m"><div class="rc-n">3.14</div><div class="rc-l">Avg place</div></div>
+              <div class="rc-m"><div class="rc-n">43%</div><div class="rc-l">1v1 vs 70M NN</div></div>
+            </div>
           </div>
 
           <video class="demo-vid" autoplay muted loop playsinline preload="metadata" poster="surviv-poster.jpg">
@@ -655,28 +696,15 @@
           <div class="chart-card">
             <div class="chart-box">
               <h4><span class="lang-en">Tournament — 50 games</span><span class="lang-zh">锦标赛 — 50 局</span></h4>
-              <svg viewBox="0 0 300 170" role="img" aria-label="Win counts and average placement">
-                <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
-                <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
-                <g font-family="DM Sans" font-size="10" fill="#78716c">
-                  <text x="36" y="34" text-anchor="end">12</text>
-                  <text x="36" y="84" text-anchor="end">6</text>
-                  <text x="36" y="132" text-anchor="end">0</text>
-                </g>
-                <rect x="62" y="55" width="46" height="75" rx="3" fill="#1e3a5f"/>
-                <text x="85" y="49" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#1e3a5f" font-weight="600">9</text>
-                <text x="85" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c" font-weight="600">PanHao</text>
-                <text x="85" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.14 avg</text>
-                <rect x="132" y="55" width="46" height="75" rx="3" fill="#94a3b8"/>
-                <text x="155" y="49" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#64748b" font-weight="600">9</text>
-                <text x="155" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c">SM</text>
-                <text x="155" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.14 avg</text>
-                <rect x="202" y="38" width="46" height="92" rx="3" fill="#94a3b8"/>
-                <text x="225" y="32" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#64748b" font-weight="600">11</text>
-                <text x="225" y="145" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#44403c">Evan&nbsp;NN</text>
-                <text x="225" y="158" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">3.16 avg</text>
-              </svg>
-              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><span class="lang-en">Bars = wins. Average placement (more robust to luck in battle royale) is tied: 3.14 / 3.14 / 3.16.</span><span class="lang-zh">柱状 = 胜场。平均名次（吃鸡里更抗运气波动）三方并列：3.14 / 3.14 / 3.16。</span></p>
+              <table class="rtable">
+                <thead><tr><th>Agent</th><th>Wins</th><th>Avg place</th></tr></thead>
+                <tbody>
+                  <tr class="hl"><td>PanHao</td><td class="num">9</td><td class="num">3.14</td></tr>
+                  <tr><td>SM</td><td class="num">9</td><td class="num">3.14</td></tr>
+                  <tr><td>Evan NN</td><td class="num">11</td><td class="num">3.16</td></tr>
+                </tbody>
+              </table>
+              <p class="fig-cap"><b class="fig-n">Table 1</b><span class="lang-en">Lower average placement is better — PanHao ties for 1st on placement (more robust to luck than raw wins).</span><span class="lang-zh">平均名次越低越好 —— PanHao 在名次上并列第一（比胜场更抗运气）。</span></p>
             </div>
             <div class="chart-box">
               <h4><span class="lang-en">Ablation — win rate vs NN by engage distance</span><span class="lang-zh">消融 — 不同交战距离下对 NN 的胜率</span></h4>
@@ -688,20 +716,20 @@
                   <text x="36" y="84" text-anchor="end">25%</text>
                   <text x="36" y="132" text-anchor="end">0</text>
                 </g>
-                <rect x="56" y="74" width="38" height="56" rx="3" fill="#cbd5e1"/>
+                <rect x="56" y="74" width="38" height="56" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.40 · 28% win vs NN"/>
                 <text x="75" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">28</text>
                 <text x="75" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.40</text>
-                <rect x="110" y="68" width="38" height="62" rx="3" fill="#cbd5e1"/>
+                <rect x="110" y="68" width="38" height="62" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.30 · 31% win vs NN"/>
                 <text x="129" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">31</text>
                 <text x="129" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.30</text>
-                <rect x="164" y="44" width="38" height="86" rx="3" fill="#6d28d9"/>
+                <rect x="164" y="44" width="38" height="86" rx="3" fill="#6d28d9" data-tip="ENGAGE_DIST 0.22 · 43% win vs NN · best"/>
                 <text x="183" y="38" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6d28d9" font-weight="700">43</text>
                 <text x="183" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#5b21b6" font-weight="600">0.22 ★</text>
-                <rect x="218" y="56" width="38" height="74" rx="3" fill="#cbd5e1"/>
+                <rect x="218" y="56" width="38" height="74" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.15 · 37% win vs NN"/>
                 <text x="237" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">37</text>
                 <text x="237" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.15</text>
               </svg>
-              <p style="font-size:0.72rem;color:var(--ink-muted);margin-top:0.4rem;line-height:1.4;"><code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> <span class="lang-en">is where the NN's lead-the-shot becomes unreliable at close range.</span><span class="lang-zh">正是 NN 的提前量射击在近距离失准的临界点。</span></p>
+              <p class="fig-cap"><b class="fig-n">Fig. 2</b><span class="lang-en">Hover a bar. <code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> is where the NN's lead-the-shot becomes unreliable at close range.</span><span class="lang-zh">悬停柱子查看。<code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> 正是 NN 的提前量射击在近距离失准的临界点。</span></p>
             </div>
           </div>
 
@@ -1158,6 +1186,7 @@
 </div><!-- /view-research -->
 
 <footer><div class="container"><p>&copy; 2026 Hao Pan</p></div></footer>
+<div class="tip" id="tip" role="status" aria-hidden="true"></div>
 
 <script>
 (function () {
@@ -1270,6 +1299,20 @@
       t.addEventListener('click', function () { requestAnimationFrame(revealInView); });
     });
     window.addEventListener('hashchange', function () { requestAnimationFrame(revealInView); });
+  }
+
+  // ── chart hover tooltip (inspect a value) ──
+  var tip = document.getElementById('tip');
+  if (tip) {
+    document.querySelectorAll('[data-tip]').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        tip.textContent = el.getAttribute('data-tip');
+        tip.style.left = e.clientX + 'px';
+        tip.style.top = e.clientY + 'px';
+        tip.classList.add('on');
+      });
+      el.addEventListener('mouseleave', function () { tip.classList.remove('on'); });
+    });
   }
 })();
 </script>
