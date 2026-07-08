@@ -111,6 +111,10 @@
   .project-body { padding: 1.1rem 1.5rem 1.5rem; }
   .project-body > p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.65; }
 
+  .live-demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+  .live-demo-grid .project-card { margin-bottom: 0; }
+  .live-demo-note { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.8rem; }
+
   .pill-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.9rem 0 0; }
   .pill { font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem; border-radius: 999px; letter-spacing: 0.01em; }
   .pill.win { background: var(--green-pale); color: var(--green); }
@@ -345,6 +349,7 @@
     .chart-card { grid-template-columns: 1fr; }
     .result-card .rc-head { border-right: none; padding-right: 0; }
     .skills-grid { grid-template-columns: 1fr; }
+    .live-demo-grid { grid-template-columns: 1fr; }
     .edu-grid { grid-template-columns: 1fr; }
     .ba-row { grid-template-columns: 72px 1fr auto; }
     nav .container { gap: 1.2rem; }
@@ -417,6 +422,48 @@
       <a href="#e-contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
     </div>
   </nav>
+
+  <section id="e-live-demos">
+    <div class="container">
+      <p class="section-label">Live Demos</p>
+      <h2>Runnable AI Demos</h2>
+      <p class="lead" style="font-size:0.92rem;"><span class="lang-en">Two runnable AI systems that make my LLM application work easier to inspect.</span><span class="lang-zh">两个可运行的 AI 系统，方便直接检查我的 LLM 应用层工作。</span></p>
+      <!-- TODO: Add real product screenshots later when matching screenshots are available. -->
+      <div class="live-demo-grid">
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-8"/></svg></div>
+            <div class="project-titles"><h3>Data Agent Sandbox</h3><p class="project-meta">Public BI Agent Governance Sandbox</p></div>
+          </div>
+          <div class="project-body">
+            <p>A runnable sandbox that turns business questions into deterministic data-agent workflows with synthetic data, SQL validation, local execution, trace, and guardrails.</p>
+            <div class="proj-links">
+              <a class="proj-link" href="https://data-agent-sandbox.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="proj-link" href="https://github.com/HaoPan036/Data-Agent-Sandbox" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <div class="tags"><span class="tag">Data Agent</span><span class="tag">Text-to-SQL</span><span class="tag">SQL Validation</span><span class="tag">Trace</span><span class="tag">Governance</span></div>
+            <p class="live-demo-note">Synthetic data only.</p>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-icon obsidian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div class="project-titles"><h3>ContextCue</h3><p class="project-meta">Personal Context Control Plane</p></div>
+          </div>
+          <div class="project-body">
+            <p>A privacy-controlled context layer that turns scattered personal and project context into scoped, evidence-backed memory for AI-assisted work.</p>
+            <div class="proj-links">
+              <a class="proj-link" href="https://contex-cue.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
+              <a class="proj-link" href="https://github.com/HaoPan036/ContexCue/" target="_blank" rel="noopener">GitHub</a>
+            </div>
+            <div class="tags"><span class="tag">Context Engineering</span><span class="tag">Scoped Memory</span><span class="tag">Evidence</span><span class="tag">TTL</span><span class="tag">Privacy</span></div>
+            <p class="live-demo-note">Synthetic demo only.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="e-focus">
     <div class="container">
