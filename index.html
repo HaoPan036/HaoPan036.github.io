@@ -1,1428 +1,1113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hao Pan — Portfolio</title>
-<meta name="description" content="Hao Pan — Data Agent / LLM Application Engineer and applied-AI / HCI researcher. Two views: Engineering (production agent reliability) and Research (AI tools that scaffold reflection).">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231e3a5f'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='15' fill='white' text-anchor='middle' font-weight='700'%3EHP%3C/text%3E%3C/svg%3E">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://haopan036.github.io/">
-<meta property="og:title" content="Hao Pan — Data Agent / LLM Application Engineer">
-<meta property="og:description" content="I make LLM-powered data agents production-reliable: Skill engineering, constraint design, and failure-mode analysis for real BI workflows.">
-<meta property="og:image" content="https://haopan036.github.io/og.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hao Pan — Data Agent / LLM Application Engineer">
-<meta name="twitter:description" content="I make LLM-powered data agents production-reliable: Skill engineering, constraint design, failure-mode analysis.">
-<meta name="twitter:image" content="https://haopan036.github.io/og.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --ink: #1c1917; --ink-soft: #44403c; --ink-muted: #78716c;
-    --accent: #1e3a5f; --accent-light: #2d5a8e; --accent-pale: #e8f0fa;
-    --surface: #fafaf9; --surface-warm: #f5f5f4; --surface-card: #ffffff;
-    --border: #e7e5e4; --border-accent: #c2d6eb;
-    --tag-bg: #eef3f9; --tag-text: #1e3a5f;
-    --green: #166534; --green-pale: #ecfdf5; --amber: #92400e; --amber-pale: #fffbeb;
-    --red: #b91c1c; --red-pale: #fef2f2;
-    --serif: 'Source Serif 4', Georgia, serif;
-    --sans: 'DM Sans', -apple-system, sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-    --shadow: 0 2px 18px rgba(30, 58, 95, 0.06);
-    --max-w: 820px;
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: var(--surface); -webkit-font-smoothing: antialiased; }
-  ::selection { background: var(--accent); color: #fff; }
-  a { color: var(--accent-light); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
-  a:hover { border-bottom-color: var(--accent-light); }
-  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
-
-  /* ── View switching ─────────────── */
-  .view { display: none; }
-  .view.active { display: block; }
-
-  /* ── Tab bar (shared) ─────────────── */
-  .tabbar { padding: 1.4rem 0 0; }
-  .mode-toggle { display: inline-flex; background: var(--surface-warm); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
-  .mode-toggle .tab { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; padding: 0.32rem 0.95rem; border-radius: 999px; color: var(--ink-muted); border-bottom: none; transition: all 0.2s; cursor: pointer; user-select: none; }
-  .mode-toggle .tab.active { background: var(--accent); color: #fff; }
-  .mode-toggle .tab:not(.active):hover { color: var(--accent); }
-
-  header { padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--border); }
-  header h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 0.25rem; }
-  .tagline { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 1rem; }
-  .role-tagline { font-size: 1rem; color: var(--accent); font-weight: 500; margin-bottom: 0.3rem; }
-  .subtagline { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1rem; max-width: 640px; }
-  .links { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.84rem; }
-  .links a { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--ink-muted); border-bottom: none; }
-  .links a:hover { color: var(--accent); }
-  .links svg { width: 14px; height: 14px; flex-shrink: 0; }
-
-  .stats { display: flex; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; }
-  .stat { flex: 1; background: var(--surface-card); padding: 1rem 0.9rem; text-align: center; }
-  .stat-num { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; color: var(--accent); line-height: 1.15; }
-  .stat-num small { font-size: 0.95rem; }
-  .stat-label { font-size: 0.68rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; line-height: 1.3; }
-
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,249,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0.7rem 0; }
-  nav .container { display: flex; gap: 1.8rem; overflow-x: auto; }
-  nav a { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); white-space: nowrap; border-bottom: none; padding: 0.2rem 0; }
-  nav a:hover { color: var(--accent); }
-
-  section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
-  section:last-of-type { border-bottom: none; }
-  .section-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.4rem; }
-  #view-engineering, #view-research { counter-reset: sec; }
-  section { counter-increment: sec; }
-  .section-label::before { content: counter(sec, decimal-leading-zero); display: block; font-family: var(--serif); font-size: 2rem; font-weight: 600; line-height: 1; letter-spacing: -0.02em; color: var(--accent); opacity: 0.2; margin-bottom: 0.35rem; }
-  h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin-bottom: 1rem; letter-spacing: -0.01em; }
-  h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); }
-  h4.block-label { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.5rem; }
-  .highlight { font-weight: 600; color: var(--accent); }
-  .lead { font-size: 1.02rem; color: var(--ink-soft); line-height: 1.75; max-width: 680px; }
-
-  /* ── Positioning ladder (eng) ─────────── */
-  .ladder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-top: 1.4rem; }
-  .rung { border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; background: var(--surface-card); position: relative; }
-  .rung .rung-tag { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); font-weight: 600; }
-  .rung h4 { font-size: 0.9rem; color: var(--ink); margin: 0.2rem 0 0.3rem; font-family: var(--sans); font-weight: 600; }
-  .rung p { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
-  .rung.me { border-color: var(--accent); border-width: 1.5px; background: var(--accent-pale); }
-  .rung.me .rung-tag { color: var(--accent); }
-  .rung.me::after { content: '\2190 me'; position: absolute; top: 0.7rem; right: 0.9rem; font-size: 0.7rem; font-weight: 700; color: var(--accent); }
-
-  /* ── Project cards ─────────── */
-  .project-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.4rem; transition: border-color 0.25s, box-shadow 0.25s; overflow: hidden; }
-  .project-card:hover { border-color: var(--border-accent); box-shadow: var(--shadow); }
-  .project-header { display: grid; grid-template-columns: 52px 1fr; gap: 1rem; padding: 1.4rem 1.5rem 0; align-items: start; }
-  .project-icon { width: 52px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .project-icon svg { width: 26px; height: 26px; }
-  .project-icon.diana, .project-icon.shopee { background: #fff7ed; color: #c2410c; }
-  .project-icon.flow, .project-icon.edu { background: #eff6ff; color: #1d4ed8; }
-  .project-icon.multi, .project-icon.agent { background: #ecfdf5; color: #059669; }
-  .project-icon.surviv, .project-icon.obsidian { background: #f5f3ff; color: #6d28d9; }
-  .project-icon.bazi { background: #fdf2f8; color: #be185d; }
-  .project-titles h3 { line-height: 1.3; }
-  .project-meta { font-size: 0.8rem; color: var(--ink-muted); font-style: italic; margin-top: 0.15rem; }
-  .project-body { padding: 1.1rem 1.5rem 1.5rem; }
-  .project-body > p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.65; }
-
-  .live-demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-  .live-demo-grid .project-card { margin-bottom: 0; }
-  .live-demo-note { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.8rem; }
-
-  .pill-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.9rem 0 0; }
-  .pill { font-size: 0.7rem; font-weight: 600; padding: 0.22rem 0.6rem; border-radius: 999px; letter-spacing: 0.01em; }
-  .pill.win { background: var(--green-pale); color: var(--green); }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
-  .tag { font-size: 0.68rem; font-weight: 500; padding: 0.15rem 0.5rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 3px; }
-
-  /* ── Two column bullets ─────────── */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem; }
-  .col-block h4 { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.4rem; }
-  .col-block ul { list-style: none; padding: 0; }
-  .col-block li { position: relative; padding-left: 0.95rem; margin-bottom: 0.35rem; font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
-  .col-block li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.45; }
-  .col-block li code { font-family: var(--mono); font-size: 0.76rem; background: var(--surface-warm); padding: 0.05rem 0.3rem; border-radius: 3px; color: var(--accent); }
-
-  /* ── Before / after metric bars (eng) ─────────── */
-  .ba { background: var(--surface-warm); border-radius: 8px; padding: 1.1rem 1.2rem; margin-top: 1rem; }
-  .ba-row { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
-  .ba-row:last-child { margin-bottom: 0; }
-  .ba-label { font-size: 0.76rem; color: var(--ink-soft); font-weight: 500; text-align: right; }
-  .ba-track { height: 22px; border-radius: 5px; position: relative; background: transparent; }
-  .ba-fill { height: 100%; border-radius: 5px; width: var(--w, 0); }
-  .ba-fill.before { background: linear-gradient(90deg, #c2410c, #ea7c4a); }
-  .ba-fill.after { background: linear-gradient(90deg, #166534, #4ade80); }
-  .ba-val { font-family: var(--mono); font-size: 0.78rem; font-weight: 500; color: var(--ink); white-space: nowrap; }
-  .ba-note { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.7rem; line-height: 1.45; }
-
-  /* ── Caveat / honesty note (eng) ─────────── */
-  .caveat { display: flex; gap: 0.55rem; align-items: start; background: var(--amber-pale); border: 1px solid #fde68a; border-radius: 7px; padding: 0.65rem 0.9rem; margin-top: 0.9rem; font-size: 0.8rem; line-height: 1.5; color: #78350f; }
-  .caveat svg { flex-shrink: 0; margin-top: 2px; color: var(--amber); }
-
-  /* ── Critical-bug highlight (eng) ─────────── */
-  .bug-box { background: var(--surface-card); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 0 7px 7px 0; padding: 0.85rem 1.1rem; margin-top: 1rem; }
-  .bug-box .bug-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red); }
-  .bug-box h4 { font-family: var(--sans); font-size: 0.85rem; color: var(--ink); margin: 0.2rem 0 0.35rem; }
-  .bug-box p { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.55; }
-  .bug-box code { font-family: var(--mono); font-size: 0.74rem; background: var(--surface-warm); padding: 0.05rem 0.3rem; border-radius: 3px; }
-
-  /* ── Architecture figure (eng) ─────────── */
-  .figure { border: 1px solid var(--border); border-radius: 8px; background: var(--surface-card); padding: 1.1rem 1.2rem 0.9rem; margin-top: 1rem; overflow-x: auto; }
-  .figure svg { display: block; width: 100%; height: auto; min-width: 540px; }
-  .figure figcaption { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.6rem; line-height: 1.45; }
-  .figure figcaption strong { color: var(--ink-soft); }
-
-  /* ── Failure taxonomy grid (eng) ─────────── */
-  .tax-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
-  .tax-item { font-size: 0.78rem; color: var(--ink-soft); background: var(--surface-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; display: flex; align-items: center; gap: 0.45rem; line-height: 1.3; }
-  .tax-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.4; flex-shrink: 0; }
-  .tax-item.crit { border-color: #fecaca; background: var(--red-pale); color: #7f1d1d; }
-  .tax-item.crit .dot { background: var(--red); opacity: 1; }
-
-  /* ── Ablation / chart (eng) ─────────── */
-  .chart-card { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem; }
-  .chart-box { background: var(--surface-warm); border-radius: 8px; padding: 1rem 1.1rem; }
-  .chart-box h4 { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.7rem; }
-  .chart-box svg { width: 100%; height: auto; }
-  .demo-vid { width: 100%; display: block; border-radius: 8px; border: 1px solid var(--border); margin-top: 1rem; background: #1a1e26; }
-
-  /* ── Results table (paper-style) ─────────── */
-  .rtable { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.84rem; }
-  .rtable th { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); font-weight: 600; text-align: right; padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--border); }
-  .rtable th:first-child { text-align: left; }
-  .rtable td { padding: 0.5rem 0.55rem; border-bottom: 1px solid var(--border); color: var(--ink-soft); text-align: right; }
-  .rtable td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
-  .rtable td.num { font-family: var(--mono); font-size: 0.82rem; }
-  .rtable tr:last-child td { border-bottom: none; }
-  .rtable tr.hl td { background: var(--accent-pale); }
-  .rtable tr.hl td:first-child, .rtable tr.hl td.num { color: var(--accent); font-weight: 700; }
-
-  /* ── Figure caption / number ─────────── */
-  .fig-cap { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.6rem; line-height: 1.45; }
-  b.fig-n { font-family: var(--mono); color: var(--accent); font-weight: 700; font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase; margin-right: 0.4rem; }
-
-  /* ── Result card (hero metric) ─────────── */
-  .result-card { display: flex; align-items: center; flex-wrap: wrap; gap: 0.9rem 1.6rem; background: var(--surface-card); border: 1px solid var(--border-accent); border-radius: 10px; padding: 1.1rem 1.4rem; margin-top: 1rem; box-shadow: var(--shadow); }
-  .result-card .rc-head { display: flex; flex-direction: column; gap: 0.12rem; padding-right: 1.5rem; border-right: 1px solid var(--border); }
-  .result-card .rc-tag { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); font-weight: 700; }
-  .result-card .rc-big { font-family: var(--serif); font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
-  .result-card .rc-note { font-size: 0.74rem; color: var(--ink-muted); }
-  .result-card .rc-metrics { display: flex; gap: 1.6rem; }
-  .result-card .rc-n { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
-  .result-card .rc-l { font-size: 0.66rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.1rem; }
-
-  /* ── Hover tooltip for charts ─────────── */
-  .tip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.55rem; border-radius: 6px; opacity: 0; transition: opacity 0.12s; z-index: 200; white-space: nowrap; transform: translate(-50%, -135%); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
-  .tip.on { opacity: 1; }
-  [data-tip] { cursor: pointer; transition: opacity 0.15s; }
-  [data-tip]:hover { opacity: 0.8; }
-
-  /* ── Skills (eng grid) ─────────── */
-  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-  .skill-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
-  .skill-card h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
-  .skill-card h4 svg { width: 14px; height: 14px; }
-  .skill-card p { font-size: 0.84rem; color: var(--ink-soft); line-height: 1.55; }
-  .skill-card code { font-family: var(--mono); font-size: 0.76rem; }
-  .skill-card.develop { border-style: dashed; background: var(--surface-warm); }
-  .skill-card.develop h4 { color: var(--ink-muted); }
-
-  /* ── Honors (eng) ─────────── */
-  .honor-list { margin-top: 1rem; display: grid; gap: 0.7rem; }
-  .honor { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start; background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1.1rem; }
-  .honor .medal { font-size: 1.1rem; line-height: 1.4; }
-  .honor h4 { font-family: var(--sans); font-size: 0.88rem; font-weight: 600; color: var(--ink); }
-  .honor .honor-meta { font-size: 0.74rem; color: var(--ink-muted); font-weight: 400; }
-  .honor p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.2rem; }
-
-  /* ── Education ─────────── */
-  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-  .edu-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
-  .edu-card h4 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
-  .edu-card .edu-school { font-size: 0.82rem; color: var(--accent); font-weight: 500; }
-  .edu-card .edu-date { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.1rem; }
-  .edu-card .edu-note { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; margin-top: 0.3rem; }
-
-  /* ── Contact ─────────── */
-  .contact-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; text-align: center; }
-  .contact-block p { color: var(--ink-soft); margin-bottom: 0.8rem; font-size: 0.95rem; }
-  .contact-links { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; }
-  .contact-links a { font-weight: 500; color: var(--accent); }
-
-  /* ══════ RESEARCH-VIEW-SPECIFIC ══════ */
-  .profile-statement { font-size: 1rem; color: var(--ink-soft); line-height: 1.75; max-width: 640px; }
-  .interest-visual { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin: 1.5rem 0; background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .interest-side { padding: 1.5rem; }
-  .interest-side h4 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; font-weight: 600; }
-  .interest-side p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.6; }
-  .interest-left h4 { color: var(--green); }
-  .interest-right h4 { color: var(--amber); }
-  .interest-arrow { display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; }
-
-  .lesson-bar { display: flex; align-items: start; gap: 0.6rem; background: var(--surface-warm); border-left: 3px solid var(--accent); padding: 0.7rem 1rem; margin-top: 0.8rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; line-height: 1.55; color: var(--ink-soft); }
-  .lesson-bar svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
-
-  .rq-box { background: var(--accent); padding: 1.3rem 1.6rem; margin: 1.2rem 0; border-radius: 8px; }
-  .rq-box p { font-family: var(--serif); font-size: 1rem; font-style: italic; color: #fff; line-height: 1.6; }
-
-  .study-flow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.2rem 0; }
-  .flow-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-card); }
-  .flow-card-top { padding: 0.8rem 1rem 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
-  .flow-num { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .flow-card-top strong { font-size: 0.82rem; color: var(--ink); }
-  .flow-card-body { padding: 0 1rem 0.8rem; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; }
-  .flow-card-visual { height: 60px; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--border); background: var(--surface-warm); }
-
-  .measures-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1rem 0; }
-  .measure-item { background: var(--surface-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; display: flex; align-items: start; gap: 0.6rem; }
-  .measure-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--accent-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .measure-icon svg { width: 16px; height: 16px; color: var(--accent); }
-  .measure-text strong { display: block; font-size: 0.78rem; color: var(--accent); margin-bottom: 0.1rem; }
-  .measure-text span { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.45; }
-
-  .skills-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-
-  .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-  .mini-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; transition: border-color 0.25s; }
-  .mini-card:hover { border-color: var(--border-accent); }
-  .mini-card h4 { font-family: var(--sans); font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
-  .mini-card h4 svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--accent); }
-  .mini-card p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; margin-bottom: 0.5rem; }
-  .mini-card .mini-tags { display: flex; flex-wrap: wrap; gap: 0.25rem; }
-  .mini-card .mini-tag { font-size: 0.62rem; padding: 0.1rem 0.4rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 3px; }
-  .mini-card a.repo-link { font-size: 0.78rem; font-weight: 500; color: var(--accent-light); display: inline-flex; align-items: center; gap: 0.25rem; border-bottom: none; }
-  .mini-card a.repo-link:hover { border-bottom: 1px solid var(--accent-light); }
-  .mini-card a.repo-link svg { width: 12px; height: 12px; }
-
-  /* ── Engineering language toggle ─────────── */
-  .lang-toggle { position: absolute; top: 1.1rem; right: 1.5rem; display: inline-flex; background: var(--surface-warm); border: 1px solid var(--border); border-radius: 999px; padding: 2px; z-index: 5; }
-  .lang-toggle .lc { font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.62rem; border-radius: 999px; color: var(--ink-muted); cursor: pointer; user-select: none; }
-  .lang-toggle .lc.active { background: var(--accent); color: #fff; }
-  .site-header { padding: 2.2rem 0 1.8rem; }
-  .site-header .mode-toggle { margin-top: 1.3rem; }
-  .eng-intro { position: relative; padding: 1.5rem 0 0.2rem; }
-  #view-engineering[data-lang="en"] .lang-zh { display: none; }
-  #view-engineering[data-lang="zh"] .lang-en { display: none; }
-
-  /* ── Hero thesis diagram ─────────── */
-  .hero-flow { margin-top: 1.4rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-card); padding: 1rem 1.1rem; overflow-x: auto; }
-  .hero-flow svg { display: block; width: 100%; height: auto; min-width: 520px; }
-
-  /* ── Skill proficiency bars ─────────── */
-  .bars { margin-top: 1rem; display: grid; gap: 0.8rem; }
-  .bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; }
-  .bar-head .bk { font-size: 0.85rem; color: var(--ink); font-weight: 500; }
-  .bar-head .tier { font-size: 0.66rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-  .bar-track { height: 8px; background: var(--surface-warm); border-radius: 99px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
-  .bar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.25rem; line-height: 1.4; }
-
-  /* ── Project links / status chips ─────────── */
-  .proj-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-  .proj-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.76rem; font-weight: 600; padding: 0.32rem 0.72rem; border-radius: 6px; background: var(--accent); color: #fff; border-bottom: none; }
-  .proj-link:hover { background: var(--accent-light); border-bottom: none; }
-  .proj-link svg { width: 13px; height: 13px; }
-  .proj-chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 500; padding: 0.32rem 0.72rem; border-radius: 6px; background: var(--surface-warm); color: var(--ink-muted); border: 1px solid var(--border); }
-
-  /* ── Open-source strip ─────────── */
-  .oss-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem; margin-top: 1rem; }
-  .oss-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1rem; background: var(--surface-card); transition: border-color 0.2s; }
-  .oss-card:hover { border-color: var(--border-accent); }
-  .oss-card h4 { font-family: var(--sans); font-size: 0.84rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.35rem; }
-  .oss-card h4 svg { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
-  .oss-card p { font-size: 0.76rem; color: var(--ink-soft); line-height: 1.45; margin-bottom: 0.45rem; }
-  .oss-card a.oss-go { font-size: 0.74rem; font-weight: 600; color: var(--accent-light); border-bottom: none; display: inline-flex; align-items: center; gap: 0.25rem; }
-  .oss-card a.oss-go svg { width: 12px; height: 12px; }
-
-  @media (max-width: 640px) {
-    .oss-grid { grid-template-columns: 1fr; }
-    .lang-toggle { position: static; margin: 0 0 0.9rem; }
-    .eng-intro { position: static; }
-  }
-
-  /* ── Motion / animations ─────────── */
-  @media (prefers-reduced-motion: no-preference) {
-    .ba-fill { width: 0; transition: width 1.1s cubic-bezier(0.2, 0.7, 0.2, 1); }
-    .ba.in .ba-fill { width: var(--w, 0); }
-    @keyframes flowdash { to { stroke-dashoffset: -22; } }
-    .figure svg line, .hero-flow svg line { stroke-dasharray: 4 7; animation: flowdash 1.3s linear infinite; }
-    .reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.visible { opacity: 1; transform: none; }
-  }
-
-  footer { padding: 1.5rem 0; text-align: center; font-size: 0.75rem; color: var(--ink-muted); }
-
-  @media (max-width: 640px) {
-    header h1 { font-size: 1.7rem; }
-    .stats { flex-wrap: wrap; }
-    .stat { flex: 1 1 40%; }
-    .ladder { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; }
-    .tax-grid { grid-template-columns: 1fr 1fr; }
-    .chart-card { grid-template-columns: 1fr; }
-    .result-card .rc-head { border-right: none; padding-right: 0; }
-    .skills-grid { grid-template-columns: 1fr; }
-    .live-demo-grid { grid-template-columns: 1fr; }
-    .edu-grid { grid-template-columns: 1fr; }
-    .ba-row { grid-template-columns: 72px 1fr auto; }
-    nav .container { gap: 1.2rem; }
-    .interest-visual { grid-template-columns: 1fr; }
-    .interest-arrow { transform: rotate(90deg); padding: 0.5rem; }
-    .study-flow { grid-template-columns: 1fr; }
-    .measures-grid { grid-template-columns: 1fr; }
-    .skills-visual { grid-template-columns: 1fr; }
-    .skill-card.develop { grid-column: span 1; }
-    .mini-grid { grid-template-columns: 1fr; }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hao Pan — Data Agent / LLM Application Engineer</title>
+  <meta name="description" content="Hao Pan builds constrained, auditable data agents and trustworthy applied-AI systems. Explore 18 engineering, ML, and human-AI projects.">
+  <link rel="canonical" href="https://haopan036.github.io/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23365a50'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='15' fill='white' text-anchor='middle' font-weight='700'%3EHP%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://haopan036.github.io/">
+  <meta property="og:title" content="Hao Pan — Reliable AI begins after the model">
+  <meta property="og:description" content="Data-agent reliability, deterministic workflows, applied AI, and human-AI systems.">
+  <meta property="og:image" content="https://haopan036.github.io/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hao Pan — Reliable AI begins after the model">
+  <meta name="twitter:description" content="Data-agent reliability, deterministic workflows, applied AI, and human-AI systems.">
+  <meta name="twitter:image" content="https://haopan036.github.io/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f3f5f1;
+      --paper: #fbfcf9;
+      --soft: #e5ebe7;
+      --ink: #1c2422;
+      --muted: #65706c;
+      --jade: #55776b;
+      --jade-dark: #365a50;
+      --line: #c7cfca;
+      --line-dark: #9faca6;
+      --max: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "DM Sans", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.dialog-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, summary { font: inherit; }
+    button, a, summary { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--jade);
+      outline-offset: 4px;
+    }
+    .skip {
+      position: fixed; z-index: 100; top: 12px; left: 12px;
+      padding: 11px 14px; color: var(--paper); background: var(--ink);
+      transform: translateY(-150%); transition: transform .16s ease;
+    }
+    .skip:focus { transform: translateY(0); }
+    .header {
+      position: sticky; z-index: 30; top: 0;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      min-height: 82px; padding: 0 5vw;
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(16px);
+    }
+    .brand { font-weight: 700; letter-spacing: -.03em; }
+    .brand-dot {
+      display: inline-block; width: 6px; height: 6px; margin-left: 4px;
+      border-radius: 50%; background: var(--jade); vertical-align: middle;
+    }
+    .nav { display: flex; gap: 30px; }
+    .nav a, .mono, .eyebrow, .section-label, .card-meta, .proof, .timeline-time {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nav a { padding: 12px 0; color: var(--muted); }
+    .nav a:hover { color: var(--ink); }
+    .lang {
+      display: flex; justify-self: end; padding: 3px;
+      border: 1px solid var(--line); border-radius: 999px; background: var(--paper);
+    }
+    .lang button {
+      min-width: 38px; min-height: 34px; border: 0; border-radius: 999px;
+      color: var(--muted); background: transparent; cursor: pointer;
+      font-family: "JetBrains Mono", monospace; font-size: .67rem;
+    }
+    .lang button[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
+    section { scroll-margin-top: 82px; }
+    .hero {
+      position: relative; display: grid; min-height: calc(100svh - 82px);
+      place-items: center; overflow: clip; padding: 78px 5vw 155px;
+      border-bottom: 1px solid var(--line);
+    }
+    .orbit {
+      position: absolute; top: 50%; left: 50%; width: min(74vw, 900px);
+      aspect-ratio: 1; pointer-events: none; transform: translate(-50%, -53%);
+    }
+    .ring, .axis { position: absolute; display: block; }
+    .ring {
+      top: 50%; left: 50%; border: 1px solid color-mix(in srgb, var(--jade) 13%, transparent);
+      border-radius: 50%; transform: translate(-50%, -50%);
+    }
+    .ring:nth-child(1) { width: 100%; height: 100%; }
+    .ring:nth-child(2) { width: 76%; height: 76%; }
+    .ring:nth-child(3) { width: 48%; height: 48%; }
+    .axis { background: color-mix(in srgb, var(--jade) 9%, transparent); }
+    .axis-x { top: 50%; width: 100%; height: 1px; }
+    .axis-y { left: 50%; width: 1px; height: 100%; }
+    .hero-copy {
+      position: relative; z-index: 2; display: flex; width: min(100%, 1050px);
+      flex-direction: column; align-items: center; text-align: center;
+    }
+    .eyebrow, .section-label, .card-meta { margin: 0; color: var(--jade-dark); font-weight: 600; }
+    h1 {
+      max-width: 1050px; margin: 24px 0 0;
+      font-size: clamp(3.8rem, 7.2vw, 7.5rem); font-weight: 700;
+      letter-spacing: -.078em; line-height: .94; text-wrap: balance;
+    }
+    .hero-lede {
+      max-width: 700px; margin: 30px 0 0; color: var(--muted);
+      font-size: clamp(1.05rem, 1.4vw, 1.26rem); line-height: 1.65; text-wrap: balance;
+    }
+    .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+    .btn {
+      display: inline-flex; min-height: 48px; align-items: center; justify-content: center;
+      gap: 18px; padding: 0 22px; border: 1px solid var(--ink); border-radius: 999px;
+      color: var(--ink); background: color-mix(in srgb, var(--paper) 80%, transparent);
+      cursor: pointer; font-family: "JetBrains Mono", monospace; font-size: .73rem;
+      font-weight: 600; transition: transform .16s ease, background .16s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--paper); }
+    .btn-primary { color: var(--paper); background: var(--ink); }
+    .btn-primary:hover { background: var(--jade-dark); }
+    .hero-proof {
+      display: flex; align-items: center; gap: 16px; margin-top: 28px; padding: 12px 15px;
+      border: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 84%, transparent);
+      box-shadow: 0 12px 34px rgba(28,36,34,.05);
+    }
+    .hero-proof span { color: var(--muted); }
+    .hero-proof strong { font-size: .93rem; }
+    .work { position: relative; z-index: 3; padding: 0 5vw 120px; background: var(--paper); }
+    .shell { width: min(100%, var(--max)); margin: 0 auto; }
+    .featured {
+      position: relative; margin-bottom: 18px; padding: 32px 36px 40px;
+      color: var(--paper); border: 1px solid var(--ink); background: var(--ink);
+      box-shadow: 0 24px 70px rgba(28,36,34,.12); transform: translateY(-70px);
+    }
+    .card-top {
+      display: flex; justify-content: space-between; gap: 24px; padding-bottom: 24px;
+      border-bottom: 1px solid currentColor; opacity: .72;
+    }
+    .featured-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 9vw; padding-top: 44px; }
+    .featured h2 {
+      margin: 16px 0 0; font-size: clamp(3rem, 5.2vw, 5.8rem);
+      letter-spacing: -.06em; line-height: 1;
+    }
+    .featured-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+    .featured-copy p { max-width: 470px; margin: 0; color: #c8d2ce; font-size: 1.1rem; line-height: 1.62; }
+    .featured-copy strong { margin-top: 20px; }
+    .detail-btn {
+      display: inline-flex; min-height: 44px; align-items: center; gap: 20px; margin-top: 28px;
+      padding: 0; border: 0; border-bottom: 1px solid currentColor; color: inherit;
+      background: transparent; cursor: pointer; font-family: "JetBrains Mono", monospace;
+      font-size: .72rem; font-weight: 600;
+    }
+    .support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: -28px; }
+    .support-card, .project-card {
+      border: 1px solid var(--line); background: var(--paper);
+      box-shadow: 0 18px 55px rgba(28,36,34,.06);
+    }
+    .support-card { display: flex; min-height: 330px; flex-direction: column; padding: 28px 30px; }
+    .support-card:nth-child(2) { background: var(--soft); }
+    .support-card h3, .project-card h3 {
+      margin: 34px 0 0; font-size: clamp(1.8rem, 2.8vw, 3rem);
+      letter-spacing: -.05em; line-height: 1.04;
+    }
+    .support-card p, .project-card p { color: var(--muted); line-height: 1.6; }
+    .support-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-top: auto; }
+    .support-bottom strong { max-width: 240px; }
+    .library { padding: 125px 5vw; border-top: 1px solid var(--line); }
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 36px;
+      margin-bottom: 66px;
+    }
+    .section-head h2, .timeline-head h2 {
+      max-width: 740px; margin: 20px 0 0; font-size: clamp(2.8rem, 5vw, 5.8rem);
+      letter-spacing: -.065em; line-height: .98; text-wrap: balance;
+    }
+    .section-head > p { max-width: 430px; margin: 0; color: var(--muted); line-height: 1.6; }
+    .project-group + .project-group { margin-top: 80px; }
+    .group-title {
+      display: flex; justify-content: space-between; gap: 20px; margin: 0 0 20px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--line-dark);
+    }
+    .group-title h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+    .group-title span { color: var(--muted); }
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .project-card { display: flex; min-height: 300px; flex-direction: column; padding: 24px; }
+    .project-card h3 { margin-top: 30px; font-size: clamp(1.45rem, 2.2vw, 2.25rem); }
+    .project-card p { margin: 18px 0 0; font-size: .95rem; }
+    .project-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 26px; }
+    .proof { max-width: 190px; color: var(--ink); font-weight: 600; line-height: 1.55; }
+    .project-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+    .project-links a { border-bottom: 1px solid currentColor; font-family: "JetBrains Mono", monospace; font-size: .69rem; }
+    .timeline { padding: 125px 5vw; border-top: 1px solid var(--line); background: var(--paper); }
+    .timeline-layout { display: grid; grid-template-columns: .65fr 1.35fr; gap: 9vw; }
+    .timeline-head { position: sticky; top: 120px; align-self: start; }
+    .timeline-list { border-top: 1px solid var(--line-dark); }
+    .timeline-item { border-bottom: 1px solid var(--line); }
+    .timeline-item summary {
+      display: grid; min-height: 110px; grid-template-columns: 130px 1fr auto;
+      align-items: center; gap: 24px; cursor: pointer; list-style: none;
+    }
+    .timeline-item summary::-webkit-details-marker { display: none; }
+    .timeline-role { display: grid; gap: 6px; }
+    .timeline-role strong { font-size: 1.08rem; }
+    .timeline-role span { color: var(--muted); font-size: .9rem; }
+    .timeline-toggle { color: var(--muted); }
+    .timeline-close { display: none; }
+    .timeline-item[open] .timeline-more { display: none; }
+    .timeline-item[open] .timeline-close { display: inline; }
+    .timeline-item > p { max-width: 650px; margin: -4px 0 0 154px; padding: 0 0 30px; color: var(--muted); line-height: 1.65; }
+    .about { padding: 125px 5vw; border-top: 1px solid var(--line); }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 10vw; }
+    .about-copy { max-width: 700px; margin: 28px 0 0; font-size: clamp(1.5rem, 2.6vw, 2.6rem); letter-spacing: -.045em; line-height: 1.3; }
+    .contact {
+      display: flex; min-height: 350px; flex-direction: column; align-items: flex-start;
+      justify-content: space-between; padding: 34px; color: var(--paper); background: var(--jade-dark);
+    }
+    .contact p { margin: 0; color: #cfdbd6; }
+    .contact h2 { margin: 0; font-size: clamp(2.5rem, 4.2vw, 4.7rem); letter-spacing: -.06em; line-height: 1; }
+    .contact .btn-primary { color: var(--ink); background: var(--paper); }
+    footer {
+      display: flex; justify-content: space-between; gap: 20px; padding: 28px 5vw;
+      color: var(--muted); border-top: 1px solid var(--line);
+      font-family: "JetBrains Mono", monospace; font-size: .65rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+    dialog {
+      width: min(760px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+      margin: auto; padding: 0; overflow: hidden; color: var(--ink);
+      border: 1px solid var(--ink); border-radius: 0; background: var(--paper);
+      box-shadow: 0 40px 120px rgba(20,28,26,.34);
+    }
+    dialog::backdrop { background: rgba(20,28,26,.6); backdrop-filter: blur(6px); }
+    .dialog-panel { max-height: calc(100dvh - 34px); overflow-y: auto; }
+    .dialog-head {
+      position: sticky; z-index: 2; top: 0; display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 22px; padding: 26px 28px 22px;
+      border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 94%, transparent);
+      backdrop-filter: blur(12px);
+    }
+    .dialog-head h2 { margin: 10px 0 0; font-size: clamp(2rem, 5vw, 3.7rem); letter-spacing: -.06em; line-height: 1; }
+    .dialog-close {
+      display: grid; width: 46px; height: 46px; place-items: center; flex: 0 0 auto;
+      border: 1px solid var(--line); border-radius: 50%; background: transparent;
+      cursor: pointer; font-size: 1.7rem;
+    }
+    .dialog-body { padding: 32px 28px 28px; }
+    .dialog-summary { margin: 0; color: var(--muted); font-size: 1.1rem; line-height: 1.65; }
+    .dialog-proof { display: inline-block; margin-top: 20px; padding: 10px 12px; border: 1px solid var(--line); background: var(--bg); }
+    .dialog-section { margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .dialog-section h3 { margin: 0; }
+    .dialog-section ul { display: grid; gap: 14px; margin: 20px 0 0; padding-left: 20px; }
+    .dialog-section li { color: var(--muted); line-height: 1.58; }
+    .dialog-note { margin: 28px 0 0; padding: 16px; color: var(--muted); border-left: 3px solid var(--jade); background: var(--soft); line-height: 1.58; }
+    .dialog-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .dialog-media { width: 100%; margin-top: 28px; border: 1px solid var(--line); background: var(--ink); }
+    @media (max-width: 980px) {
+      .header { grid-template-columns: 1fr auto; }
+      .nav { display: none; }
+      .lang { grid-column: 2; }
+      .featured-grid, .timeline-layout, .about-grid { grid-template-columns: 1fr; }
+      .featured-copy { margin-top: 30px; }
+      .timeline-head { position: static; }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-head { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 680px) {
+      .header { min-height: 70px; padding: 0 20px; }
+      .hero { min-height: calc(100svh - 70px); padding: 72px 20px 130px; }
+      .orbit { width: 760px; }
+      h1 { font-size: clamp(3.25rem, 15vw, 5.25rem); }
+      .hero-lede { font-size: 1rem; line-height: 1.55; }
+      .hero-proof { width: min(100%, 330px); align-items: flex-start; flex-direction: column; gap: 5px; }
+      .work { padding: 0 20px 90px; }
+      .featured { padding: 24px 22px 28px; transform: translateY(-50px); }
+      .featured h2 { font-size: clamp(2.8rem, 13vw, 4.2rem); }
+      .support-grid, .project-grid { grid-template-columns: 1fr; }
+      .support-card { min-height: 300px; padding: 24px 22px; }
+      .library, .timeline, .about { padding: 90px 20px; }
+      .project-group + .project-group { margin-top: 58px; }
+      .project-card { min-height: 270px; }
+      .timeline-item summary { min-height: 126px; grid-template-columns: 1fr auto; gap: 8px 16px; padding: 18px 0; }
+      .timeline-time { grid-column: 1; }
+      .timeline-role { grid-column: 1; }
+      .timeline-toggle { grid-row: 1 / span 2; grid-column: 2; }
+      .timeline-item > p { margin: -4px 46px 0 0; padding-bottom: 24px; }
+      .contact { min-height: 320px; padding: 26px 22px; }
+      footer { align-items: flex-start; flex-direction: column; padding: 24px 20px; }
+      .dialog-head { padding: 22px 20px 18px; }
+      .dialog-body { padding: 26px 20px 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ══════════ SHARED TAB BAR ══════════ -->
-<!-- ══════════════════════════════════════════ -->
-<!-- ════════════ SHARED HEADER ════════════════ -->
-<!-- ══════════════════════════════════════════ -->
-<header class="site-header">
-  <div class="container">
-    <h1>Hao Pan</h1>
-    <p class="tagline">Master of Computing in Applied AI, Nanyang Technological University</p>
-    <div class="links">
-      <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="mailto:hao036@e.ntu.edu.sg">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        hao036@e.ntu.edu.sg
-      </a>
+  <a class="skip" href="#work" data-en="Skip to work" data-zh="跳到项目">Skip to work</a>
+  <header class="header">
+    <a class="brand" href="#top" aria-label="Hao Pan home">Hao Pan<span class="brand-dot" aria-hidden="true"></span></a>
+    <nav class="nav" aria-label="Portfolio">
+      <a href="#work" data-en="Work" data-zh="精选">Work</a>
+      <a href="#projects" data-en="Projects" data-zh="全部项目">Projects</a>
+      <a href="#experience" data-en="Experience" data-zh="经历">Experience</a>
+      <a href="mailto:hao036@e.ntu.edu.sg" data-en="Contact" data-zh="联系">Contact</a>
+    </nav>
+    <div class="lang" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="zh" aria-pressed="false">中</button>
     </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Students Taught</div></div>
-      <div class="stat"><div class="stat-num" style="font-size:1.1rem;">Top 0.2%</div><div class="stat-label">China National Scholarship</div></div>
-      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Skills shipped<br>to production BI</div></div>
-      <div class="stat"><div class="stat-num">9</div><div class="stat-label">NL2SQL failure<br>modes mapped</div></div>
-    </div>
-    <div class="mode-toggle" role="tablist" aria-label="Portfolio view">
-      <span class="tab active" data-view="engineering" role="tab" tabindex="0">Engineering</span>
-      <span class="tab" data-view="research" role="tab" tabindex="0">Research</span>
-    </div>
-  </div>
-</header>
+  </header>
 
-<!-- ════════════ ENGINEERING VIEW ════════════ -->
-<div class="view active" id="view-engineering">
-
-  <div class="container eng-intro">
-    <div class="lang-toggle"><span class="lc active" data-lang="en">EN</span><span class="lc" data-lang="zh">中</span></div>
-      <p class="role-tagline"><span class="lang-en">Data Agent / LLM Application Engineer</span><span class="lang-zh">数据 Agent / LLM 应用工程师</span></p>
-      <p class="subtagline"><span class="lang-en">I make LLM-powered data agents <span class="highlight">production-reliable</span> — not training models or building platforms, but designing the constraints, Skills, and failure-mode guardrails that keep agents trustworthy inside real BI workflows.</span><span class="lang-zh">我让 LLM 驱动的数据 Agent <span class="highlight">在生产环境里稳定可靠</span>——不训练模型、也不造平台，而是设计约束、Skill 与失败模式护栏，让 Agent 在真实 BI 工作流里值得信任。</span></p>
-  </div>
-
-  <nav>
-    <div class="container">
-      <a href="#e-focus"><span class="lang-en">Focus</span><span class="lang-zh">定位</span></a>
-      <a href="#e-diana"><span class="lang-en">Diana Agent</span><span class="lang-zh">Diana Agent</span></a>
-      <a href="#e-workflow"><span class="lang-en">SQL Workflow</span><span class="lang-zh">SQL 工作流</span></a>
-      <a href="#e-multiagent"><span class="lang-en">Multi-Agent</span><span class="lang-zh">多 Agent</span></a>
-      <a href="#e-surviv"><span class="lang-en">Surviv</span><span class="lang-zh">Surviv</span></a>
-      <a href="#e-calories"><span class="lang-en">Sim2Real ML</span><span class="lang-zh">Sim2Real ML</span></a>
-      <a href="#e-skills"><span class="lang-en">Skills</span><span class="lang-zh">技能</span></a>
-      <a href="#e-honors"><span class="lang-en">Honors</span><span class="lang-zh">荣誉</span></a>
-      <a href="#e-contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
-    </div>
-  </nav>
-
-  <section id="e-live-demos">
-    <div class="container">
-      <p class="section-label">Live Demos</p>
-      <h2>Runnable AI Demos</h2>
-      <p class="lead" style="font-size:0.92rem;"><span class="lang-en">Two runnable AI systems that make my LLM application work easier to inspect.</span><span class="lang-zh">两个可运行的 AI 系统，方便直接检查我的 LLM 应用层工作。</span></p>
-      <!-- TODO: Add real product screenshots later when matching screenshots are available. -->
-      <div class="live-demo-grid">
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-8"/></svg></div>
-            <div class="project-titles"><h3>Data Agent Sandbox</h3><p class="project-meta">Public BI Agent Governance Sandbox</p></div>
-          </div>
-          <div class="project-body">
-            <p>A runnable sandbox that turns business questions into deterministic data-agent workflows with synthetic data, SQL validation, local execution, trace, and guardrails.</p>
-            <div class="proj-links">
-              <a class="proj-link" href="https://data-agent-sandbox.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
-              <a class="proj-link" href="https://github.com/HaoPan036/Data-Agent-Sandbox" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <div class="tags"><span class="tag">Data Agent</span><span class="tag">Text-to-SQL</span><span class="tag">SQL Validation</span><span class="tag">Trace</span><span class="tag">Governance</span></div>
-            <p class="live-demo-note">Synthetic data only.</p>
-          </div>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="orbit" aria-hidden="true">
+        <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+        <span class="axis axis-x"></span><span class="axis axis-y"></span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow" data-en="Data Agent · LLM Application Engineer" data-zh="数据 Agent · LLM 应用工程师">Data Agent · LLM Application Engineer</p>
+        <h1 id="hero-title" data-en="Reliable AI begins after the model." data-zh="可靠的 AI，从模型之后开始。">Reliable AI begins after the model.</h1>
+        <p class="hero-lede" data-en="I turn expert workflows into constrained, auditable AI systems—fast enough to use, explicit enough to trust." data-zh="我把专家工作流转化为受约束、可审计的 AI 系统：足够快，也足够透明，值得信任。">I turn expert workflows into constrained, auditable AI systems—fast enough to use, explicit enough to trust.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#work"><span data-en="View selected work" data-zh="查看精选项目">View selected work</span><span aria-hidden="true">↓</span></a>
+          <a class="btn" href="#projects"><span data-en="Browse all 18 projects" data-zh="浏览全部 18 个项目">Browse all 18 projects</span><span aria-hidden="true">↘</span></a>
         </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-icon obsidian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-            <div class="project-titles"><h3>ContextCue</h3><p class="project-meta">Personal Context Control Plane</p></div>
-          </div>
-          <div class="project-body">
-            <p>A privacy-controlled context layer that turns scattered personal and project context into scoped, evidence-backed memory for AI-assisted work.</p>
-            <div class="proj-links">
-              <a class="proj-link" href="https://contex-cue.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
-              <a class="proj-link" href="https://github.com/HaoPan036/ContexCue/" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <div class="tags"><span class="tag">Context Engineering</span><span class="tag">Scoped Memory</span><span class="tag">Evidence</span><span class="tag">TTL</span><span class="tag">Privacy</span></div>
-            <p class="live-demo-note">Synthetic demo only.</p>
-          </div>
+        <div class="hero-proof">
+          <span class="mono" data-en="Recurring A/B-test analysis" data-zh="重复性 A/B 测试分析">Recurring A/B-test analysis</span>
+          <strong data-en="30–45 min → 2–3 min" data-zh="30–45 分钟 → 2–3 分钟">30–45 min → 2–3 min</strong>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="e-focus">
-    <div class="container">
-      <p class="section-label"><span class="lang-en">What I do</span><span class="lang-zh">我做什么</span></p>
-      <h2><span class="lang-en">The application layer is where agents break</span><span class="lang-zh">Agent 出问题，往往在应用层</span></h2>
-      <p class="lead"><span class="lang-en">A capable LLM doesn't equal a solved problem — in between sits a large amount of <span class="highlight">constraint engineering</span>. As a BI Engineer Intern at <span class="highlight">Shopee</span>, my work lives in that gap: turning an analyst's tacit logic into auditable Skills, locking down the steps where free generation silently produces plausible-but-wrong numbers, and keeping a human in the loop where judgment is needed.</span><span class="lang-zh">一个强大的 LLM 不等于问题被解决——中间隔着大量的<span class="highlight">约束工程</span>。作为 <span class="highlight">Shopee</span> 的 BI 工程师实习生，我的工作就在这道缝里：把分析师的隐性逻辑变成可审计的 Skill，锁死那些"自由生成会悄悄给出看似合理却错误数字"的环节，并在需要判断的地方保留人工介入。</span></p>
-
-      <div class="hero-flow">
-        <svg viewBox="0 0 680 120" role="img" aria-label="From a capable LLM through constraint engineering to a reliable production agent">
-          <defs><marker id="harr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1 L8 5 L2 9" fill="none" stroke="#78716c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-          <rect x="14" y="42" width="150" height="46" rx="8" fill="#f5f5f4" stroke="#a8a29e"/>
-          <text x="89" y="69" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="600" fill="#44403c">Capable LLM</text>
-          <text x="180" y="73" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="#a8a29e">+</text>
-          <text x="318" y="26" text-anchor="middle" font-family="DM Sans" font-size="10" font-weight="600" fill="#1e3a5f">where I work</text>
-          <rect x="196" y="33" width="244" height="64" rx="9" fill="#1e3a5f"/>
-          <text x="318" y="60" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="700" fill="#fff">Constraint engineering</text>
-          <text x="318" y="79" text-anchor="middle" font-family="DM Sans" font-size="10.5" fill="#c2d6eb">Skills · invariants · HITL · failure modes</text>
-          <line x1="440" y1="65" x2="466" y2="65" stroke="#78716c" stroke-width="1.5" marker-end="url(#harr)"/>
-          <rect x="470" y="42" width="196" height="46" rx="8" fill="#ecfdf5" stroke="#059669"/>
-          <text x="568" y="62" text-anchor="middle" font-family="DM Sans" font-size="13" font-weight="600" fill="#065f46">Reliable agent</text>
-          <text x="568" y="79" text-anchor="middle" font-family="DM Sans" font-size="10.5" fill="#059669">in production</text>
-        </svg>
-        <p class="bar-sub" style="text-align:center;margin-top:0.55rem;"><span class="lang-en">A capable model is the input, not the outcome.</span><span class="lang-zh">强模型只是输入，不是结果。</span></p>
-      </div>
-
-      <div class="ladder">
-        <div class="rung">
-          <div class="rung-tag">L1 · <span class="lang-en">User</span><span class="lang-zh">用户</span></div>
-          <h4><span class="lang-en">Uses the agent</span><span class="lang-zh">使用 Agent</span></h4>
-          <p><span class="lang-en">Asks questions, writes simple prompts. Treats the agent as a black box.</span><span class="lang-zh">提问、写简单 prompt，把 Agent 当黑盒。</span></p>
-        </div>
-        <div class="rung me">
-          <div class="rung-tag">L2 · <span class="lang-en">Application Engineer</span><span class="lang-zh">应用工程师</span></div>
-          <h4><span class="lang-en">Makes it reliable</span><span class="lang-zh">让它可靠</span></h4>
-          <p><span class="lang-en">Designs Skill constraints, maps failure modes, aligns capability boundaries with PMs, migrates analyst work onto the agent.</span><span class="lang-zh">设计 Skill 约束、梳理失败模式、与 PM 对齐能力边界，把分析师的工作迁移到 Agent 上。</span></p>
-        </div>
-        <div class="rung">
-          <div class="rung-tag">L3 · <span class="lang-en">Platform Developer</span><span class="lang-zh">平台开发者</span></div>
-          <h4><span class="lang-en">Builds the agent</span><span class="lang-zh">构建 Agent</span></h4>
-          <p><span class="lang-en">Implements the retriever / planner / executor of the agent platform itself.</span><span class="lang-zh">实现 Agent 平台本身的 retriever / planner / executor。</span></p>
+    <section class="work" id="work" aria-label="Selected work">
+      <div class="shell">
+        <article class="featured" id="e-diana">
+          <div class="card-top card-meta"><span data-en="Selected system" data-zh="精选系统">Selected system</span><span>01</span></div>
+          <div class="featured-grid">
+            <div>
+              <p class="card-meta" data-en="Internal · Data-agent reliability" data-zh="内部项目 · 数据 Agent 可靠性">Internal · Data-agent reliability</p>
+              <h2>Diana Data Agent</h2>
+            </div>
+            <div class="featured-copy">
+              <p data-en="Turns recurring A/B-test analysis into auditable, repeatable production Skills." data-zh="把重复的 A/B 测试分析变成可审计、可复现的生产 Skill。">Turns recurring A/B-test analysis into auditable, repeatable production Skills.</p>
+              <strong class="proof" data-en="3 production Skills · 9 failure modes · 14 lint rules" data-zh="3 个生产 Skill · 9 类失败模式 · 14 条 lint 规则">3 production Skills · 9 failure modes · 14 lint rules</strong>
+              <button class="detail-btn" type="button" data-project="diana" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="View case study" data-zh="查看案例">View case study</span><span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+        </article>
+        <div class="support-grid">
+          <article class="support-card" id="e-workflow">
+            <div class="card-top card-meta"><span data-en="Internal · Deterministic workflow" data-zh="内部项目 · 确定性工作流">Internal · Deterministic workflow</span><span>02</span></div>
+            <h3>AB-Test Text-to-SQL Workflow</h3>
+            <p data-en="Natural-language input, deterministic SQL assembly and execution across eight regions." data-zh="自然语言输入，在 8 个区域进行确定性的 SQL 拼装与执行。">Natural-language input, deterministic SQL assembly and execution across eight regions.</p>
+            <div class="support-bottom">
+              <strong class="proof" data-en="8 regions · ~300 s → ~2 s" data-zh="8 个区域 · 约 300 秒 → 约 2 秒">8 regions · ~300 s → ~2 s</strong>
+              <button class="detail-btn" type="button" data-project="workflow" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="View details" data-zh="查看详情">View details</span><span aria-hidden="true">↗</span></button>
+            </div>
+          </article>
+          <article class="support-card" id="e-multiagent">
+            <div class="card-top card-meta"><span data-en="Team project · Agent systems" data-zh="团队项目 · Agent 系统">Team project · Agent systems</span><span>03</span></div>
+            <h3>Multi-Agent Literature Monitoring</h3>
+            <p data-en="An evidence-aware research monitor with orchestration, critique, revision, and human checkpoints." data-zh="一个包含编排、批评、修订与人工检查点的证据感知研究监控系统。">An evidence-aware research monitor with orchestration, critique, revision, and human checkpoints.</p>
+            <div class="support-bottom">
+              <strong class="proof" data-en="18/18 smoke tests · ~3,990 owned LOC" data-zh="18/18 冒烟测试 · 约 3,990 行本人模块">18/18 smoke tests · ~3,990 owned LOC</strong>
+              <button class="detail-btn" type="button" data-project="multiagent" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="View details" data-zh="查看详情">View details</span><span aria-hidden="true">↗</span></button>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="e-diana">
-    <div class="container">
-      <p class="section-label">Hero project · Shopee</p>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon diana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <div class="project-titles"><h3><span class="lang-en">Diana &mdash; Skill Engineering for an LLM Data Agent</span><span class="lang-zh">Diana &mdash; LLM 数据 Agent 的 Skill 工程</span></h3><p class="project-meta"><span class="lang-en">BI Engineer Intern · Buyer &amp; Marketing BI Team · Feb 2026&ndash;Present</span><span class="lang-zh">BI 工程师实习 · Buyer &amp; Marketing BI 团队 · 2026.02 至今</span></p></div>
-        </div>
-        <div class="project-body">
-          <p><span class="lang-en">Diana is an internal LLM-powered data agent. The platform belongs to another team; <strong>I own the application-constraint layer</strong> &mdash; designing the Skills (runbooks) that let analysts hand recurring AB-test analyses to the agent and trust the numbers it returns.</span><span class="lang-zh">Diana 是一个内部的 LLM 数据 Agent。平台由另一个团队开发；<strong>我负责应用约束层</strong>&mdash;&mdash;设计 Skill（runbook），让分析师把重复的 AB 测试分析交给 Agent，并能信任它返回的数字。</span></p>
-
-          <div class="ba">
-            <div class="ba-row">
-              <span class="ba-label">Manual analysis</span>
-              <span class="ba-track"><span class="ba-fill before" style="--w:100%"></span></span>
-              <span class="ba-val">30&ndash;45 min</span>
-            </div>
-            <div class="ba-row">
-              <span class="ba-label">Diana Skill</span>
-              <span class="ba-track"><span class="ba-fill after" style="--w:7%"></span></span>
-              <span class="ba-val">2&ndash;3 min</span>
-            </div>
-            <p class="ba-note"><span class="lang-en">Before: hand-write SQL, switch between two data sources, edit region / date / group_id, run each region, assemble a comparison table. After: fill a form &rarr; Skill auto-runs &rarr; structured report.</span><span class="lang-zh">迁移前：手写 SQL、在两种数据源间切换、改 region / date / group_id、逐个 region 跑、再拼成对比表。迁移后：填表单 &rarr; Skill 自动执行 &rarr; 结构化报告。</span></p>
-          </div>
-          <div class="caveat">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span><span class="lang-en">Honest framing: the saving comes from <strong>automating the analyst's manual workflow</strong>, not from making any single query faster. The Skill makes the agent's reasoning auditable and repeatable.</span><span class="lang-zh">诚实地说：提速来自<strong>把分析师的手工流程自动化</strong>，而不是让某条查询本身更快。Skill 让 Agent 的推理可审计、可复现。</span></span>
-          </div>
-
-          <div class="two-col">
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">What I built</span><span class="lang-zh">我做了什么</span></h4>
-              <ul>
-                <li><span class="lang-en"><strong>3 production Skills</strong>: Me-Page traffic, PDP ads-voucher CR, PDP OPU &amp; GMV</span><span class="lang-zh"><strong>3 个生产 Skill</strong>：Me-Page 流量、PDP 广告 voucher 转化率、PDP OPU &amp; GMV</span></li>
-                <li><span class="lang-en">5-section runbook structure: inputs &rarr; procedure &rarr; SQL template &rarr; output schema &rarr; pre-return checklist</span><span class="lang-zh">5 段式 runbook 结构：输入 &rarr; 流程 &rarr; SQL 模板 &rarr; 输出 schema &rarr; 返回前检查</span></li>
-                <li><span class="lang-en">Hardcoded invariants &amp; locked denominators over free-form generation</span><span class="lang-zh">用硬编码不变量与锁定分母，取代自由生成</span></li>
-                <li><span class="lang-en">A Skill-generator (v1&rarr;v2&rarr;v3) with <strong>14 lint rules</strong> to make authoring self-checking</span><span class="lang-zh">一个 Skill 生成器（v1&rarr;v2&rarr;v3），内置 <strong>14 条 lint 规则</strong>让撰写自带校验</span></li>
-              </ul>
-            </div>
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">Why it's reliable</span><span class="lang-zh">为什么可靠</span></h4>
-              <ul>
-                <li><span class="lang-en">Runbook style is <em>followed top-to-bottom</em>; prose style gets partially skipped</span><span class="lang-zh">Runbook 式会被<em>自上而下执行</em>；散文式会被部分跳过</span></li>
-                <li><span class="lang-en">Enum-constrained outputs (<code>Literal</code> + <code>__post_init__</code> validation)</span><span class="lang-zh">枚举约束输出（<code>Literal</code> + <code>__post_init__</code> 校验）</span></li>
-                <li><span class="lang-en"><code>LEFT JOIN</code> + <code>COALESCE</code> so denominators can't silently shrink</span><span class="lang-zh"><code>LEFT JOIN</code> + <code>COALESCE</code>，分母不会被悄悄缩小</span></li>
-                <li><span class="lang-en">Black-box evaluation feeds a 9-mode failure taxonomy back into design</span><span class="lang-zh">黑盒评测把 9 类失败模式反馈回设计</span></li>
-              </ul>
-            </div>
-          </div>
-
-          <h4 class="block-label" style="margin-top:1.4rem;"><span class="lang-en">NL2SQL failure taxonomy — designed around, not hoped away</span><span class="lang-zh">NL2SQL 失败模式分类 —— 主动设计规避，而非寄望它不发生</span></h4>
-          <div class="tax-grid">
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Schema-linking error</span><span class="lang-zh">Schema 链接错误</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Metric-definition error</span><span class="lang-zh">指标定义错误</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Missing filter</span><span class="lang-zh">缺失过滤条件</span></div>
-            <div class="tax-item crit"><span class="dot"></span><span class="lang-en">Wrong denominator (silent)</span><span class="lang-zh">分母错误（静默）</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Invalid scope</span><span class="lang-zh">范围无效</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Empty-result fallback</span><span class="lang-zh">空结果兜底</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">SQL syntax / truncation</span><span class="lang-zh">SQL 语法 / 截断</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Unstable output</span><span class="lang-zh">输出不稳定</span></div>
-            <div class="tax-item"><span class="dot"></span><span class="lang-en">Skill skipping / scope mismatch</span><span class="lang-zh">跳过 Skill / 范围不匹配</span></div>
-          </div>
-
-          <div class="bug-box">
-            <span class="bug-tag"><span class="lang-en">Most dangerous failure &mdash; and how I caught it</span><span class="lang-zh">最危险的失败 —— 以及我怎么抓到它</span></span>
-            <h4><span class="lang-en">The silent <code>LEFT JOIN &rarr; INNER JOIN</code> collapse</span><span class="lang-zh">静默的 <code>LEFT JOIN &rarr; INNER JOIN</code> 塌缩</span></h4>
-            <p><span class="lang-en">An early SQL referenced a left-joined column in <code>WHERE</code>. When the key was <code>NULL</code>, <code>NULL IN (...)</code> dropped the row &mdash; turning the <code>LEFT JOIN</code> into an <code>INNER JOIN</code>, shrinking the denominator and <em>inflating conversion rate</em>. A syntax error screams; a wrong denominator looks perfectly normal and quietly poisons the decision. I made the join invariant explicit so it can't regress.</span><span class="lang-zh">早期一条 SQL 在 <code>WHERE</code> 里引用了被 left-join 的列。当键为 <code>NULL</code> 时，<code>NULL IN (...)</code> 会丢弃该行 &mdash; 于是 <code>LEFT JOIN</code> 退化成 <code>INNER JOIN</code>，分母变小、<em>转化率被抬高</em>。语法错误会报警；分母错误看起来完全正常，却悄悄污染决策。我把这个 join 不变量显式化，让它无法回退。</span></p>
-          </div>
-
-          <div class="proj-links"><span class="proj-chip">🔒 <span class="lang-en">Internal · Shopee (code not public)</span><span class="lang-zh">内部项目 · Shopee（代码不公开）</span></span></div>
-          <div class="tags"><span class="tag">LLM Agents</span><span class="tag">NL2SQL</span><span class="tag">Skill / Runbook Design</span><span class="tag">Constraint Engineering</span><span class="tag">Reliability</span><span class="tag">Presto SQL</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-workflow">
-    <div class="container">
-      <p class="section-label">Project · Shopee</p>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon flow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg></div>
-          <div class="project-titles"><h3><span class="lang-en">AB-Test Text-to-SQL Workflow</span><span class="lang-zh">AB 测试 Text-to-SQL 工作流</span></h3><p class="project-meta"><span class="lang-en">Multi-region traffic &amp; funnel analysis pipeline</span><span class="lang-zh">多区域流量与漏斗分析流水线</span></p></div>
-        </div>
-        <div class="project-body">
-          <p><span class="lang-en">A deterministic low-code workflow for AB-test analysis across 8 regions. The key engineering judgment: <strong>shrink the LLM's job to Stage&nbsp;1</strong> (variable extraction) and make everything downstream deterministic &mdash; flexible enough to take natural language, reliable enough for production.</span><span class="lang-zh">一个覆盖 8 个区域的确定性低代码工作流。关键的工程判断：<strong>把 LLM 的职责收缩到 Stage&nbsp;1</strong>（变量抽取），下游全部确定性执行&mdash;&mdash;既能接收自然语言，又足够可靠可上生产。</span></p>
-
-          <figure class="figure">
-            <svg viewBox="0 0 720 360" role="img" aria-label="Four-stage AB-test workflow architecture">
-              <defs>
-                <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1 L8 5 L2 9" fill="none" stroke="#78716c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-              </defs>
-              <text x="12" y="40" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 1 — PARSE</text>
-              <text x="12" y="128" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 2 — ASSEMBLE SQL</text>
-              <text x="12" y="216" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 3 — EXECUTE × 8 REGIONS (PARALLEL)</text>
-              <text x="12" y="320" font-family="DM Sans" font-size="11" fill="#a8a29e" font-weight="600">STAGE 4 — MERGE &amp; OUTPUT</text>
-
-              <g font-family="DM Sans" font-size="12">
-                <rect x="40" y="50" width="92" height="40" rx="7" fill="#f5f5f4" stroke="#a8a29e"/><text x="86" y="74" text-anchor="middle" fill="#44403c" font-weight="500">User query</text>
-                <rect x="156" y="50" width="120" height="40" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="216" y="68" text-anchor="middle" fill="#5b21b6" font-weight="600">Router</text><text x="216" y="82" text-anchor="middle" fill="#7c3aed" font-size="10">structured output</text>
-                <rect x="300" y="50" width="150" height="40" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="375" y="68" text-anchor="middle" fill="#5b21b6" font-weight="600">Variable Extractor</text><text x="375" y="82" text-anchor="middle" fill="#7c3aed" font-size="10">11 variables · LLM only here</text>
-              </g>
-              <line x1="132" y1="70" x2="154" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="276" y1="70" x2="298" y2="70" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="375" y1="92" x2="375" y2="136" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-
-              <g font-family="DM Sans" font-size="12">
-                <rect x="250" y="138" width="120" height="38" rx="7" fill="#ecfdf5" stroke="#059669"/><text x="310" y="161" text-anchor="middle" fill="#065f46" font-weight="500">SQL template (KB)</text>
-                <rect x="392" y="138" width="120" height="38" rx="7" fill="#f5f3ff" stroke="#6d28d9"/><text x="452" y="155" text-anchor="middle" fill="#5b21b6" font-weight="600">SQL Builder</text><text x="452" y="169" text-anchor="middle" fill="#7c3aed" font-size="10">bind placeholders</text>
-              </g>
-              <line x1="370" y1="157" x2="390" y2="157" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="452" y1="176" x2="452" y2="206" stroke="#78716c" stroke-width="1.5"/>
-              <line x1="85" y1="206" x2="480" y2="206" stroke="#78716c" stroke-width="1.5"/>
-
-              <g font-family="DM Sans" font-size="11">
-                <rect x="40" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="85" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">SG executor</text><text x="85" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
-                <rect x="150" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="195" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">TH executor</text><text x="195" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
-                <rect x="260" y="226" width="90" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="305" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">VN executor</text><text x="305" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
-                <text x="392" y="254" fill="#a8a29e" font-size="16" font-weight="700">· · ·</text>
-                <rect x="430" y="226" width="100" height="46" rx="7" fill="#fef2f2" stroke="#b91c1c"/><text x="480" y="245" text-anchor="middle" fill="#7f1d1d" font-weight="600">+5 regions</text><text x="480" y="261" text-anchor="middle" fill="#991b1b" font-size="10">run SQL</text>
-              </g>
-              <line x1="85" y1="206" x2="85" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="195" y1="206" x2="195" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="305" y1="206" x2="305" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="480" y1="206" x2="480" y2="224" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-
-              <g font-family="DM Sans" font-size="12">
-                <rect x="220" y="300" width="120" height="40" rx="7" fill="#f5f5f4" stroke="#a8a29e"/><text x="280" y="324" text-anchor="middle" fill="#44403c" font-weight="500">Merge (unifier)</text>
-                <rect x="392" y="300" width="140" height="40" rx="7" fill="#e8f0fa" stroke="#1e3a5f"/><text x="462" y="318" text-anchor="middle" fill="#1e3a5f" font-weight="600">Google Sheet</text><text x="462" y="332" text-anchor="middle" fill="#2d5a8e" font-size="10">structured report</text>
-              </g>
-              <line x1="280" y1="272" x2="280" y2="298" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-              <line x1="340" y1="320" x2="390" y2="320" stroke="#78716c" stroke-width="1.5" marker-end="url(#arr)"/>
-            </svg>
-            <figcaption><b class="fig-n">Fig. 1</b><span class="lang-en"><strong>Router → Variable Extractor → SQL Builder → 8 parallel executors → Merge.</strong> The LLM acts only in Stage 1; SQL assembly and execution are deterministic. Sanitized recreation of the production pipeline (no internal table names).</span><span class="lang-zh"><strong>Router → 变量抽取 → SQL Builder → 8 路并行执行 → Merge。</strong> LLM 只在 Stage 1 起作用；SQL 拼装与执行都是确定性的。此为生产流水线的脱敏重绘（不含内部表名）。</span></figcaption>
-          </figure>
-
-          <h4 class="block-label" style="margin-top:1.4rem;"><span class="lang-en">Query latency: ~300 s → ~2 s</span><span class="lang-zh">查询延迟：~300 秒 → ~2 秒</span></h4>
-          <div class="ba">
-            <div class="ba-row">
-              <span class="ba-label">Raw-table scan</span>
-              <span class="ba-track"><span class="ba-fill before" style="--w:100%"></span></span>
-              <span class="ba-val">~300 s (timeouts)</span>
-            </div>
-            <div class="ba-row">
-              <span class="ba-label">Pre-agg mart</span>
-              <span class="ba-track"><span class="ba-fill after" style="--w:1.5%"></span></span>
-              <span class="ba-val">~2 s</span>
-            </div>
-            <p class="ba-note"><span class="lang-en">Earlier filtering, fewer redundant joins, and migrating expensive raw-table queries onto pre-aggregated data marts.</span><span class="lang-zh">更早过滤、减少无效 join，并把昂贵的原始表查询迁移到预聚合数据集市。</span></p>
-          </div>
-          <div class="caveat">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span><span class="lang-en">Honest framing: this speedup is <strong>data modeling &amp; query optimization</strong> (pre-agg marts, predicate pushdown, join control) &mdash; <em>not</em> the LLM. The agent automates the analysis chain; it does not accelerate the database.</span><span class="lang-zh">诚实地说：这个提速来自<strong>数据建模与查询优化</strong>（预聚合集市、谓词下推、join 控制）&mdash;&mdash;<em>不是</em> LLM。Agent 自动化的是分析链路，并不加速数据库本身。</span></span>
-          </div>
-
-          <div class="proj-links"><span class="proj-chip">🔒 <span class="lang-en">Internal · Shopee (code not public)</span><span class="lang-zh">内部项目 · Shopee（代码不公开）</span></span></div>
-          <div class="tags"><span class="tag">Presto / Trino</span><span class="tag">Data Modeling</span><span class="tag">Pre-Aggregation</span><span class="tag">Workflow Orchestration</span><span class="tag">Parallel Execution</span><span class="tag">Agent vs Workflow Trade-off</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-multiagent">
-    <div class="container">
-      <p class="section-label">Project · NTU CA6123</p>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon multi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <div class="project-titles"><h3><span class="lang-en">Multi-Agent Literature Monitoring System</span><span class="lang-zh">多 Agent 文献监控系统</span></h3><p class="project-meta"><span class="lang-en">Google ADK · Gemini · 4-person team · Apr&ndash;May 2026</span><span class="lang-zh">Google ADK · Gemini · 4 人团队 · 2026.04&ndash;05</span></p></div>
-        </div>
-        <div class="project-body">
-          <p><span class="lang-en">A multi-agent system that monitors frontier-AI research and produces personalized digests. I owned the <strong>orchestrator architecture and the design decisions</strong>; I picked up Google ADK from scratch for it.</span><span class="lang-zh">一个监控前沿 AI 研究、生成个性化摘要的多 Agent 系统。我负责 <strong>orchestrator 架构与设计决策</strong>；为此从零上手了 Google ADK。</span></p>
-          <div class="two-col">
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">Architecture (mine)</span><span class="lang-zh">架构（我做的）</span></h4>
-              <ul>
-                <li><span class="lang-en">ADK chosen over LangChain/LangGraph after a trade-off study</span><span class="lang-zh">经权衡后选 ADK 而非 LangChain/LangGraph</span></li>
-                <li><span class="lang-en"><code>SequentialAgent</code> + <code>LoopAgent</code> orchestrator with a critic-revision loop</span><span class="lang-zh"><code>SequentialAgent</code> + <code>LoopAgent</code> 编排，含 critic-revision 循环</span></li>
-                <li><span class="lang-en">2 human-in-the-loop checkpoints: after planning, after synthesis</span><span class="lang-zh">2 个人工介入检查点：规划后、综合后</span></li>
-                <li><span class="lang-en">Dual storage: SQLite (state) + ChromaDB (semantic recall)</span><span class="lang-zh">双存储：SQLite（状态）+ ChromaDB（语义召回）</span></li>
-                <li><span class="lang-en">Observability: traced decorator, per-step cost tracking</span><span class="lang-zh">可观测性：traced 装饰器、逐步成本追踪</span></li>
-              </ul>
-            </div>
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">By the numbers</span><span class="lang-zh">关键数字</span></h4>
-              <ul>
-                <li><span class="lang-en">~<strong>3,990 LOC</strong> in my modules (orchestrator 642, schemas 498, storage 544, observability 330)</span><span class="lang-zh">我负责的模块约 <strong>3,990 行</strong>（orchestrator 642、schemas 498、storage 544、observability 330）</span></li>
-                <li><span class="lang-en"><strong>18/18</strong> stdlib smoke tests pass + full pytest</span><span class="lang-zh"><strong>18/18</strong> 冒烟测试通过 + 完整 pytest</span></li>
-                <li><span class="lang-en">7 test files · ~1,285 LOC of tests</span><span class="lang-zh">7 个测试文件 · 约 1,285 行测试</span></li>
-                <li><span class="lang-en">11 dataclass contracts with runtime <code>__post_init__</code> validation</span><span class="lang-zh">11 个 dataclass 契约，运行时 <code>__post_init__</code> 校验</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="caveat">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
-            <span><span class="lang-en">Per the course acknowledgement, an AI coding assistant generated boilerplate scaffolding. The <strong>architecture, ADK composition, schema-design principles, and orchestrator critic loop are my own</strong>; PR history documents the decisions.</span><span class="lang-zh">按课程声明，AI 编码助手生成了样板脚手架。<strong>架构、ADK 组合、schema 设计原则与 orchestrator critic 循环都是我自己做的</strong>；PR 历史记录了这些决策。</span></span>
-          </div>
-          <div class="proj-links"><a class="proj-link" href="https://github.com/HaoPan036/CA6123-frontier-lit-agent" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a><span class="proj-chip">👥 <span class="lang-en">Team project</span><span class="lang-zh">团队项目</span></span></div>
-          <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Google ADK</span><span class="tag">Gemini</span><span class="tag">ChromaDB</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Human-in-the-Loop</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-surviv">
-    <div class="container">
-      <p class="section-label">Project · NTU RL Lab</p>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon surviv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-          <div class="project-titles"><h3><span class="lang-en">Hand-Coded Adversarial Agent &mdash; "Design beats scale"</span><span class="lang-zh">手写对抗 Agent &mdash; "设计胜过堆量"</span></h3><p class="project-meta"><span class="lang-en">Pure Python (stdlib only) · ~600 LOC · May 2026</span><span class="lang-zh">纯 Python（仅标准库）· 约 600 行 · 2026.05</span></p></div>
-        </div>
-        <div class="project-body">
-          <p><span class="lang-en">In a battle-royale RL environment, most teams trained 70M-step neural-net agents. I wrote a <strong>code-as-policy</strong> agent by hand and, through black-box behavioral analysis and ablation, found the blind spots in the trained NN's lead-the-shot prediction.</span><span class="lang-zh">在一个吃鸡式 RL 环境里，多数队伍训练 70M 步的神经网络 Agent。我手写了一个 <strong>code-as-policy</strong> Agent，通过黑盒行为分析和消融实验，找到了训练好的 NN 在"提前量射击"预测上的盲区。</span></p>
-          <div class="result-card">
-            <div class="rc-head">
-              <span class="rc-tag">Tournament result</span>
-              <span class="rc-big">Tied&nbsp;#1</span>
-              <span class="rc-note">of 6 agents · 50 games</span>
-            </div>
-            <div class="rc-metrics">
-              <div class="rc-m"><div class="rc-n">9</div><div class="rc-l">Wins</div></div>
-              <div class="rc-m"><div class="rc-n">3.14</div><div class="rc-l">Avg place</div></div>
-              <div class="rc-m"><div class="rc-n">43%</div><div class="rc-l">1v1 vs 70M NN</div></div>
-            </div>
-          </div>
-
-          <video class="demo-vid" autoplay muted loop playsinline preload="metadata" poster="surviv-poster.jpg">
-            <source src="surviv-demo.mp4" type="video/mp4">
-          </video>
-          <p class="bar-sub" style="margin-top:0.4rem;"><span class="lang-en">Live match — 6 agents, shrinking poison zone. PanHao (gold) is hand-coded; no neural net.</span><span class="lang-zh">实时对战 —— 6 个 agent、毒圈收缩。PanHao（金色）是纯手写策略，无神经网络。</span></p>
-
-          <div class="chart-card">
-            <div class="chart-box">
-              <h4><span class="lang-en">Tournament — 50 games</span><span class="lang-zh">锦标赛 — 50 局</span></h4>
-              <table class="rtable">
-                <thead><tr><th>Agent</th><th>Wins</th><th>Avg place</th></tr></thead>
-                <tbody>
-                  <tr class="hl"><td>PanHao</td><td class="num">9</td><td class="num">3.14</td></tr>
-                  <tr><td>SM</td><td class="num">9</td><td class="num">3.14</td></tr>
-                  <tr><td>Evan NN</td><td class="num">11</td><td class="num">3.16</td></tr>
-                </tbody>
-              </table>
-              <p class="fig-cap"><b class="fig-n">Table 1</b><span class="lang-en">Lower average placement is better — PanHao ties for 1st on placement (more robust to luck than raw wins).</span><span class="lang-zh">平均名次越低越好 —— PanHao 在名次上并列第一（比胜场更抗运气）。</span></p>
-            </div>
-            <div class="chart-box">
-              <h4><span class="lang-en">Ablation — win rate vs NN by engage distance</span><span class="lang-zh">消融 — 不同交战距离下对 NN 的胜率</span></h4>
-              <svg viewBox="0 0 300 170" role="img" aria-label="Win rate by ENGAGE_DIST">
-                <line x1="40" y1="10" x2="40" y2="130" stroke="#d6d3d1" stroke-width="1"/>
-                <line x1="40" y1="130" x2="290" y2="130" stroke="#d6d3d1" stroke-width="1"/>
-                <g font-family="DM Sans" font-size="10" fill="#78716c">
-                  <text x="36" y="34" text-anchor="end">50%</text>
-                  <text x="36" y="84" text-anchor="end">25%</text>
-                  <text x="36" y="132" text-anchor="end">0</text>
-                </g>
-                <rect x="56" y="74" width="38" height="56" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.40 · 28% win vs NN"/>
-                <text x="75" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">28</text>
-                <text x="75" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.40</text>
-                <rect x="110" y="68" width="38" height="62" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.30 · 31% win vs NN"/>
-                <text x="129" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">31</text>
-                <text x="129" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.30</text>
-                <rect x="164" y="44" width="38" height="86" rx="3" fill="#6d28d9" data-tip="ENGAGE_DIST 0.22 · 43% win vs NN · best"/>
-                <text x="183" y="38" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6d28d9" font-weight="700">43</text>
-                <text x="183" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#5b21b6" font-weight="600">0.22 ★</text>
-                <rect x="218" y="56" width="38" height="74" rx="3" fill="#cbd5e1" data-tip="ENGAGE_DIST 0.15 · 37% win vs NN"/>
-                <text x="237" y="50" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">37</text>
-                <text x="237" y="145" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#78716c">0.15</text>
-              </svg>
-              <p class="fig-cap"><b class="fig-n">Fig. 2</b><span class="lang-en">Hover a bar. <code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> is where the NN's lead-the-shot becomes unreliable at close range.</span><span class="lang-zh">悬停柱子查看。<code style="font-family:var(--mono);">ENGAGE_DIST = 0.22</code> 正是 NN 的提前量射击在近距离失准的临界点。</span></p>
-            </div>
-          </div>
-
-          <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:1.1rem;line-height:1.6;"><span class="lang-en">The same thesis as Diana, in a different domain: in a narrow regime, <span class="highlight">domain-specific constraint design often beats scaling generic ML</span>. Not anti-ML — Diana itself is built on an LLM — but "having a model" isn't "solving the problem."</span><span class="lang-zh">与 Diana 同一个论点，换了个领域：在窄场景里，<span class="highlight">领域特定的约束设计往往胜过堆通用 ML</span>。这不是反对 ML&mdash;&mdash;Diana 本身就建在 LLM 之上&mdash;&mdash;而是说"有了模型"不等于"解决了问题"。</span></p>
-          <div class="proj-links"><a class="proj-link" href="https://github.com/HaoPan036/surviv-code-as-policies" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></div>
-          <div class="tags"><span class="tag">Code-as-Policy</span><span class="tag">Ablation</span><span class="tag">Black-box Analysis</span><span class="tag">Pure Python</span><span class="tag">Failure Documentation</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-calories">
-    <div class="container">
-      <p class="section-label"><span class="lang-en">Project · Machine Learning</span><span class="lang-zh">项目 · 机器学习</span></p>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon diana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="project-titles"><h3><span class="lang-en">Sim2Real Calorie Prediction &mdash; physics beats complexity</span><span class="lang-zh">Sim2Real 卡路里预测 &mdash; 物理建模胜过模型复杂度</span></h3><p class="project-meta"><span class="lang-en">Physics-informed ML pipeline · Python, scikit-learn</span><span class="lang-zh">物理信息 ML 流水线 · Python, scikit-learn</span></p></div>
-        </div>
-        <div class="project-body">
-          <p><span class="lang-en">Models trained on gym data fail on real daily activity &mdash; the <strong>Sim2Real gap</strong>. I turned a biased 973-sample seed set into a 20k physics-consistent synthetic set that generalizes to 15k unseen real-world samples.</span><span class="lang-zh">在健身房数据上训练的模型，用到真实日常活动会失效&mdash;&mdash;这就是 <strong>Sim2Real 差距</strong>。我把有偏的 973 条种子数据扩成 2 万条物理一致的合成数据，使其能泛化到 1.5 万条未见过的真实数据。</span></p>
-
-          <div class="result-card">
-            <div class="rc-head">
-              <span class="rc-tag">External R² · real-world</span>
-              <span class="rc-big">&minus;14.38 → 0.79</span>
-              <span class="rc-note">baseline fail → Sim2Real SOTA</span>
-            </div>
-            <div class="rc-metrics">
-              <div class="rc-m"><div class="rc-n">973 → 20k</div><div class="rc-l">samples</div></div>
-              <div class="rc-m"><div class="rc-n">15k</div><div class="rc-l">real validation</div></div>
-            </div>
-          </div>
-
-          <table class="rtable">
-            <thead><tr><th>Model</th><th>Internal CV</th><th>External (real)</th></tr></thead>
-            <tbody>
-              <tr><td>Baseline RF (raw)</td><td class="num">0.95</td><td class="num">&minus;14.38</td></tr>
-              <tr class="hl"><td>Sim2Real · Linear Reg</td><td class="num">0.67</td><td class="num">0.79</td></tr>
-            </tbody>
-          </table>
-          <p class="fig-cap"><b class="fig-n">Table 2</b><span class="lang-en">A linear model with physics-based features beat random forest on real-world data &mdash; design over complexity.</span><span class="lang-zh">带物理特征的线性模型在真实数据上击败随机森林 &mdash; 设计胜过复杂度。</span></p>
-
-          <div class="two-col">
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">What I did</span><span class="lang-zh">我做了什么</span></h4>
-              <ul>
-                <li><span class="lang-en">Data expansion: bootstrapped 973 → 20k with noise injection</span><span class="lang-zh">数据扩充：973 → 2 万，自助采样 + 噪声注入</span></li>
-                <li><span class="lang-en">Physics re-labeling via the <strong>METs formula</strong> to fix outliers</span><span class="lang-zh">用 <strong>METs 公式</strong>重算标签、修正离群值</span></li>
-                <li><span class="lang-en">Distribution alignment: injected short-duration (0.1&ndash;0.5h) blind spots</span><span class="lang-zh">分布对齐：补入短时长(0.1&ndash;0.5h)盲区样本</span></li>
-                <li><span class="lang-en">Physics feature engineering: <code>Duration×HeartRate</code>, <code>Duration×Weight</code></span><span class="lang-zh">物理特征工程：<code>Duration×HeartRate</code>、<code>Duration×Weight</code></span></li>
-              </ul>
-            </div>
-            <div class="col-block">
-              <h4 class="block-label"><span class="lang-en">Why it matters</span><span class="lang-zh">意义</span></h4>
-              <ul>
-                <li><span class="lang-en">Same thesis as Diana / Surviv: <strong>domain-informed design beats scaling complexity</strong></span><span class="lang-zh">与 Diana / Surviv 同一论点：<strong>领域设计胜过堆复杂度</strong></span></li>
-                <li><span class="lang-en">Honest generalization: validated on truly unseen real data, not just CV</span><span class="lang-zh">对泛化诚实：在真正未见过的真实数据上验证，不只看 CV</span></li>
-                <li><span class="lang-en">End-to-end pipeline: EDA → cleaning → expansion → features → eval</span><span class="lang-zh">端到端流水线：EDA → 清洗 → 扩充 → 特征 → 评估</span></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="proj-links"><a class="proj-link" href="https://github.com/HaoPan036/Burning-your-calories" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></div>
-          <div class="tags"><span class="tag">Physics-Informed ML</span><span class="tag">Sim2Real</span><span class="tag">Feature Engineering</span><span class="tag">Data Pipeline</span><span class="tag">scikit-learn</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-skills">
-    <div class="container">
-      <p class="section-label"><span class="lang-en">Capabilities</span><span class="lang-zh">能力</span></p>
-      <h2><span class="lang-en">Skills</span><span class="lang-zh">技能</span></h2>
-      <div class="bars">
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk">Python</span><span class="tier"><span class="lang-en">Core</span><span class="lang-zh">核心</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
-          <p class="bar-sub"><span class="lang-en">Primary language — data work and agent application code.</span><span class="lang-zh">主力语言——数据工作与 Agent 应用代码。</span></p>
-        </div>
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk">SQL · Presto / Hive / MySQL</span><span class="tier"><span class="lang-en">Core</span><span class="lang-zh">核心</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
-          <p class="bar-sub"><span class="lang-en">Data modeling, query optimization, AB-test &amp; funnel analysis.</span><span class="lang-zh">数据建模、查询优化、AB 测试与漏斗分析。</span></p>
-        </div>
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk"><span class="lang-en">LLM / Agent systems</span><span class="lang-zh">LLM / Agent 系统</span></span><span class="tier"><span class="lang-en">Strong</span><span class="lang-zh">熟练</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-          <p class="bar-sub"><span class="lang-en">Skill / runbook design · prompting · structured output · RAG · multi-agent orchestration.</span><span class="lang-zh">Skill / runbook 设计 · prompt · 结构化输出 · RAG · 多 Agent 编排。</span></p>
-        </div>
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk"><span class="lang-en">Data modeling &amp; query optimization</span><span class="lang-zh">数据建模与查询优化</span></span><span class="tier"><span class="lang-en">Strong</span><span class="lang-zh">熟练</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
-          <p class="bar-sub"><span class="lang-en">Pre-aggregation, predicate pushdown, join control on Presto.</span><span class="lang-zh">预聚合、谓词下推、Presto join 控制。</span></p>
-        </div>
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk"><span class="lang-en">Agent frameworks · ADK / LangGraph</span><span class="lang-zh">Agent 框架 · ADK / LangGraph</span></span><span class="tier"><span class="lang-en">Working</span><span class="lang-zh">可用</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
-          <p class="bar-sub"><span class="lang-en">Tools &amp; frameworks: Google ADK, Gemini, ChromaDB, SQLite, Langfuse, PyTorch, Git, Linux.</span><span class="lang-zh">工具与框架：Google ADK、Gemini、ChromaDB、SQLite、Langfuse、PyTorch、Git、Linux。</span></p>
-        </div>
-        <div class="bar-item">
-          <div class="bar-head"><span class="bk">C++ · Shell</span><span class="tier"><span class="lang-en">Working</span><span class="lang-zh">可用</span></span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
-        </div>
-      </div>
-      <p class="bar-sub" style="margin-top:0.8rem;"><span class="lang-en">Self-assessed — Core: daily depth · Strong: production-comfortable · Working: functional.</span><span class="lang-zh">自评——核心：日常深度 · 熟练：可上生产 · 可用：能用。</span></p>
-
-      <h4 class="block-label" style="margin-top:1.8rem;"><span class="lang-en">Open-source &amp; personal projects</span><span class="lang-zh">开源与个人项目</span></h4>
-      <div class="oss-grid">
-        <div class="oss-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Mini-GPT</h4>
-          <p><span class="lang-en">Decoder-only Transformer from scratch in PyTorch — causal attention, LayerNorm, training loop.</span><span class="lang-zh">用 PyTorch 从零实现 decoder-only Transformer——因果注意力、LayerNorm、训练循环。</span></p>
-          <a class="oss-go" href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener">GitHub &rarr;</a>
-        </div>
-        <div class="oss-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> EvoRed</h4>
-          <p><span class="lang-en">Evolutionary red-teaming for LLMs — evolves adversarial prompts against a model, with a defense module.</span><span class="lang-zh">面向 LLM 的进化式红队 —— 对模型进化对抗性 prompt，并含防御模块。</span></p>
-          <a class="oss-go" href="https://github.com/HaoPan036/EvoRed" target="_blank" rel="noopener">GitHub &rarr;</a>
-        </div>
-        <div class="oss-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Data Labeling</h4>
-          <p><span class="lang-en">Semi-automated labeling — 100% accuracy at 84% automation rate.</span><span class="lang-zh">半自动标注——100% 准确率、84% 自动化率。</span></p>
-          <a class="oss-go" href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener">GitHub &rarr;</a>
-        </div>
-        <div class="oss-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg> <span class="lang-en">Obsidian Refactor</span><span class="lang-zh">Obsidian 重构</span></h4>
-          <p><span class="lang-en">Agentic refactor of a multi-year knowledge base — with human review, rollback, and rejecting context-wrong edits (HITL).</span><span class="lang-zh">用 Agent 重构多年知识库——含人工审阅、回滚、拒绝上下文错误的修改（HITL）。</span></p>
-          <span style="font-size:0.72rem;color:var(--ink-muted);">🔒 <span class="lang-en">Personal · not public</span><span class="lang-zh">个人项目 · 未公开</span></span>
-        </div>
-        <div class="oss-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> <span class="lang-en">Bazi Skill</span><span class="lang-zh">八字 Skill</span></h4>
-          <p><span class="lang-en">Structured skill authoring — domain rules + deterministic checks, with outputs tracked against real outcomes. Notably accurate on <strong>self-analysis</strong> (personality / tendencies) over event prediction — an honest read on where the method holds.</span><span class="lang-zh">结构化 Skill 撰写——领域规则 + 确定性校验，输出对照真实结果跟踪。在<strong>自我分析</strong>（性格/倾向）上明显更准，胜过事件预测——对方法边界的诚实判断。</span></p>
-          <span style="font-size:0.72rem;color:var(--ink-muted);">🔒 <span class="lang-en">Personal · not public</span><span class="lang-zh">个人项目 · 未公开</span></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="e-honors">
-    <div class="container">
-      <p class="section-label"><span class="lang-en">Background</span><span class="lang-zh">背景</span></p>
-      <h2><span class="lang-en">Honors &amp; Education</span><span class="lang-zh">荣誉与教育</span></h2>
-      <div class="honor-list">
-        <div class="honor">
-          <span class="medal">🏆</span>
+    <section class="library" id="projects">
+      <div class="shell">
+        <header class="section-head">
           <div>
-            <h4><span class="lang-en">China National Scholarship</span><span class="lang-zh">国家奖学金</span> <span class="honor-meta"><span class="lang-en">— Top 0.2% nationwide, 2022&ndash;23</span><span class="lang-zh">— 全国前 0.2%，2022&ndash;23</span></span></h4>
-            <p><span class="lang-en">Awarded during B.Eng. in Data Science &amp; Big Data Technology, Suzhou University.</span><span class="lang-zh">本科（数据科学与大数据技术，苏州大学）期间获得。</span></p>
+            <p class="section-label" data-en="Complete project catalog" data-zh="完整项目目录">Complete project catalog</p>
+            <h2 data-en="Every project, without the wall of text." data-zh="一个项目都不少，也不再堆满文字。">Every project, without the wall of text.</h2>
+          </div>
+          <p data-en="All 18 project titles stay visible. Open only the technical depth you need." data-zh="18 个项目标题全部可见；需要时再打开技术细节。">All 18 project titles stay visible. Open only the technical depth you need.</p>
+        </header>
+        <section class="project-group" id="e-live-demos">
+          <div class="group-title"><h3 data-en="Runnable systems" data-zh="可运行系统">Runnable systems</h3><span class="mono">02</span></div>
+          <div class="project-grid">
+            <article class="project-card">
+              <p class="card-meta" data-en="Live demo · Synthetic data" data-zh="在线演示 · 合成数据">Live demo · Synthetic data</p>
+              <h3>Data Agent Sandbox</h3>
+              <p data-en="A public governance sandbox for deterministic data-agent workflows, SQL validation, traces, and guardrails." data-zh="一个公开的数据 Agent 治理沙盒，包含确定性工作流、SQL 校验、trace 与护栏。">A public governance sandbox for deterministic data-agent workflows, SQL validation, traces, and guardrails.</p>
+              <div class="project-links"><a href="https://data-agent-sandbox.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a><a href="https://github.com/HaoPan036/Data-Agent-Sandbox" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Runnable · Synthetic data only" data-zh="可运行 · 仅使用合成数据">Runnable · Synthetic data only</strong><button class="detail-btn" type="button" data-project="sandbox" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Live demo · Context engineering" data-zh="在线演示 · 上下文工程">Live demo · Context engineering</p>
+              <h3>ContextCue</h3>
+              <p data-en="A privacy-controlled context layer that turns scattered information into scoped, evidence-backed AI memory." data-zh="一个隐私可控的上下文层，把分散信息变成有范围、有证据的 AI 记忆。">A privacy-controlled context layer that turns scattered information into scoped, evidence-backed AI memory.</p>
+              <div class="project-links"><a href="https://contex-cue.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a><a href="https://github.com/HaoPan036/ContexCue/" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Scoped memory · TTL · Privacy" data-zh="范围控制 · TTL · 隐私">Scoped memory · TTL · Privacy</strong><button class="detail-btn" type="button" data-project="contextcue" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="project-group">
+          <div class="group-title"><h3 data-en="Applied agents, ML & data systems" data-zh="应用 Agent、机器学习与数据系统">Applied agents, ML & data systems</h3><span class="mono">07</span></div>
+          <div class="project-grid">
+            <article class="project-card" id="e-surviv">
+              <p class="card-meta" data-en="Public source · Code-as-policy" data-zh="公开源码 · Code-as-policy">Public source · Code-as-policy</p>
+              <h3 data-en="Hand-Coded Adversarial Agent" data-zh="手写对抗 Agent">Hand-Coded Adversarial Agent</h3>
+              <p data-en="A pure-Python battle-royale agent designed through black-box analysis and ablation—not neural-network training." data-zh="一个通过黑盒分析与消融设计的纯 Python 吃鸡 Agent，而非神经网络训练。">A pure-Python battle-royale agent designed through black-box analysis and ablation—not neural-network training.</p>
+              <div class="project-links"><a href="https://github.com/HaoPan036/surviv-code-as-policies" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Tied #1 / 6 · 43% vs 70M-step NN" data-zh="6 个 Agent 中并列第 1 · 对 70M 步 NN 胜率 43%">Tied #1 / 6 · 43% vs 70M-step NN</strong><button class="detail-btn" type="button" data-project="surviv" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details + video" data-zh="详情 + 视频">Details + video</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card" id="e-calories">
+              <p class="card-meta" data-en="Public source · Physics-informed ML" data-zh="公开源码 · 物理信息 ML">Public source · Physics-informed ML</p>
+              <h3 data-en="Sim2Real Calorie Prediction" data-zh="Sim2Real 卡路里预测">Sim2Real Calorie Prediction</h3>
+              <p data-en="A physics-informed data pipeline that closes the gap between gym training data and real daily activity." data-zh="一个物理信息数据流水线，用来缩小健身房训练数据与真实日常活动之间的差距。">A physics-informed data pipeline that closes the gap between gym training data and real daily activity.</p>
+              <div class="project-links"><a href="https://github.com/HaoPan036/Burning-your-calories" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="External R² −14.38 → 0.79" data-zh="外部 R² −14.38 → 0.79">External R² −14.38 → 0.79</strong><button class="detail-btn" type="button" data-project="calories" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Public source · LLM internals" data-zh="公开源码 · LLM 原理">Public source · LLM internals</p>
+              <h3>Mini-GPT</h3>
+              <p data-en="A decoder-only Transformer built from scratch in PyTorch, including causal attention and a training loop." data-zh="用 PyTorch 从零实现的 decoder-only Transformer，包含因果注意力与训练循环。">A decoder-only Transformer built from scratch in PyTorch, including causal attention and a training loop.</p>
+              <div class="project-links"><a href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Transformer from scratch" data-zh="从零实现 Transformer">Transformer from scratch</strong><button class="detail-btn" type="button" data-project="minigpt" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Public source · LLM red-teaming" data-zh="公开源码 · LLM 红队">Public source · LLM red-teaming</p>
+              <h3>EvoRed</h3>
+              <p data-en="An evolutionary red-team system that evolves adversarial prompts and includes a defense module." data-zh="一个进化式红队系统，演化对抗提示并包含防御模块。">An evolutionary red-team system that evolves adversarial prompts and includes a defense module.</p>
+              <div class="project-links"><a href="https://github.com/HaoPan036/EvoRed" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Attack evolution + defense" data-zh="攻击演化 + 防御">Attack evolution + defense</strong><button class="detail-btn" type="button" data-project="evored" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Public source · Data quality" data-zh="公开源码 · 数据质量">Public source · Data quality</p>
+              <h3 data-en="Semi-Automated Data Labeling" data-zh="半自动数据标注">Semi-Automated Data Labeling</h3>
+              <p data-en="A human-guided labeling pipeline that automates confident cases while preserving review for uncertain ones." data-zh="一个人机协同标注流水线，自动处理高置信样本，并保留不确定样本供人工审阅。">A human-guided labeling pipeline that automates confident cases while preserving review for uncertain ones.</p>
+              <div class="project-links"><a href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="100% accuracy · 84% automation" data-zh="100% 准确率 · 84% 自动化">100% accuracy · 84% automation</strong><button class="detail-btn" type="button" data-project="labeling" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Competition engineering · Data pipeline" data-zh="竞赛工程 · 数据流水线">Competition engineering · Data pipeline</p>
+              <h3 data-en="Huawei ICT TB-Scale Pipeline" data-zh="华为 ICT TB 级流水线">Huawei ICT TB-Scale Pipeline</h3>
+              <p data-en="A PySpark, Hive, and MySQL data pipeline built for the Huawei ICT Competition global final." data-zh="为华为 ICT 大赛全球总决赛构建的 PySpark、Hive 与 MySQL 数据流水线。">A PySpark, Hive, and MySQL data pipeline built for the Huawei ICT Competition global final.</p>
+              <div class="project-foot"><strong class="proof" data-en="40% lower query latency · Global 3rd prize" data-zh="查询延迟降低 40% · 全球三等奖">40% lower query latency · Global 3rd prize</strong><button class="detail-btn" type="button" data-project="huawei" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Competition engineering · Robotics" data-zh="竞赛工程 · 机器人">Competition engineering · Robotics</p>
+              <h3 data-en="RAICOM Autonomous Indoor UAV" data-zh="RAICOM 室内自主无人机">RAICOM Autonomous Indoor UAV</h3>
+              <p data-en="An autonomous indoor UAV system using ROS, scenario decomposition, and obstacle avoidance." data-zh="一个使用 ROS、场景分解与避障的室内自主无人机系统。">An autonomous indoor UAV system using ROS, scenario decomposition, and obstacle avoidance.</p>
+              <div class="project-foot"><strong class="proof" data-en="Project lead · National 3rd prize" data-zh="项目负责人 · 全国三等奖">Project lead · National 3rd prize</strong><button class="detail-btn" type="button" data-project="raicom" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="project-group" id="research">
+          <div class="group-title"><h3 data-en="Human–AI, learning & knowledge" data-zh="人机协作、学习与知识">Human–AI, learning & knowledge</h3><span class="mono">06</span></div>
+          <div class="project-grid">
+            <article class="project-card">
+              <p class="card-meta" data-en="Teaching · Applied AI education" data-zh="教学 · 应用 AI 教育">Teaching · Applied AI education</p>
+              <h3 data-en="AI / Python Teaching Scaffolds" data-zh="AI / Python 教学支架">AI / Python Teaching Scaffolds</h3>
+              <p data-en="Curricula, active-learning activities, and reflection-oriented prompt rubrics for applied ML and GenAI." data-zh="面向应用机器学习与生成式 AI 的课程、主动学习活动与反思型提示量规。">Curricula, active-learning activities, and reflection-oriented prompt rubrics for applied ML and GenAI.</p>
+              <div class="project-foot"><strong class="proof" data-en="300+ students · Jinken College" data-zh="300+ 名学生 · 金肯职业技术学院">300+ students · Jinken College</strong><button class="detail-btn" type="button" data-project="teaching" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Private · Agentic knowledge work" data-zh="私有项目 · Agent 知识工作">Private · Agentic knowledge work</p>
+              <h3 data-en="Obsidian Knowledge-System Refactor" data-zh="Obsidian 知识系统重构">Obsidian Knowledge-System Refactor</h3>
+              <p data-en="An agentic refactor of a multi-year knowledge base with inspection, rollback, and human review." data-zh="对多年知识库进行 Agent 式重构，并保留检查、回滚与人工审阅。">An agentic refactor of a multi-year knowledge base with inspection, rollback, and human review.</p>
+              <div class="project-foot"><strong class="proof" data-en="Hundreds of notes · Human review" data-zh="数百条笔记 · 人工审阅">Hundreds of notes · Human review</strong><button class="detail-btn" type="button" data-project="obsidian" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Private · Interpretive AI" data-zh="私有项目 · 解释型 AI">Private · Interpretive AI</p>
+              <h3 data-en="Bazi Interpretation Skill" data-zh="八字解读 Skill">Bazi Interpretation Skill</h3>
+              <p data-en="A structured Skill combining domain rules, deterministic checks, and outcome tracking." data-zh="一个结合领域规则、确定性检查与结果跟踪的结构化 Skill。">A structured Skill combining domain rules, deterministic checks, and outcome tracking.</p>
+              <div class="project-foot"><strong class="proof" data-en="Bounded claim · Self-analysis > event prediction" data-zh="能力边界 · 自我分析优于事件预测">Bounded claim · Self-analysis &gt; event prediction</strong><button class="detail-btn" type="button" data-project="bazi" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Concept · AI-assisted learning" data-zh="概念原型 · AI 辅助学习">Concept · AI-assisted learning</p>
+              <h3>Synapse</h3>
+              <p data-en="A concept prototype that generates notes, knowledge graphs, and quizzes from video lectures." data-zh="一个从视频课程生成笔记、知识图谱与测验的概念原型。">A concept prototype that generates notes, knowledge graphs, and quizzes from video lectures.</p>
+              <div class="project-foot"><strong class="proof" data-en="Notes · Knowledge graphs · Quizzes" data-zh="笔记 · 知识图谱 · 测验">Notes · Knowledge graphs · Quizzes</strong><button class="detail-btn" type="button" data-project="synapse" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card">
+              <p class="card-meta" data-en="Concept · Accessibility" data-zh="概念项目 · 无障碍">Concept · Accessibility</p>
+              <h3 data-en="Yuehuo AI Disability Assistance" data-zh="悦活 AI 助残方案">Yuehuo AI Disability Assistance</h3>
+              <p data-en="An AI assistance concept grounded in user research and data-driven needs analysis for disabled users." data-zh="一个基于用户研究与数据驱动需求分析的 AI 助残概念方案。">An AI assistance concept grounded in user research and data-driven needs analysis for disabled users.</p>
+              <div class="project-foot"><strong class="proof" data-en="User research · Needs validation" data-zh="用户研究 · 需求验证">User research · Needs validation</strong><button class="detail-btn" type="button" data-project="yuehuo" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+            <article class="project-card" id="r-research">
+              <p class="card-meta" data-en="Research in progress · HCI" data-zh="研究进行中 · HCI">Research in progress · HCI</p>
+              <h3 data-en="AI Feedback Format & Durable Learning" data-zh="AI 反馈形式与持久学习">AI Feedback Format &amp; Durable Learning</h3>
+              <p data-en="A research sketch comparing direct explanation, Socratic scaffolding, and self-evaluation-first interfaces." data-zh="一个比较直接解释、苏格拉底式支架与先自我评估界面的研究构想。">A research sketch comparing direct explanation, Socratic scaffolding, and self-evaluation-first interfaces.</p>
+              <div class="project-foot"><strong class="proof" data-en="3 interface conditions · No results yet" data-zh="3 种界面条件 · 尚无结果">3 interface conditions · No results yet</strong><button class="detail-btn" type="button" data-project="research" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="timeline" id="experience">
+      <div class="shell timeline-layout">
+        <header class="timeline-head">
+          <p class="section-label" data-en="Experience" data-zh="经历">Experience</p>
+          <h2 data-en="Experience & milestones" data-zh="经历与里程碑">Experience & milestones</h2>
+        </header>
+        <div class="timeline-list">
+          <details class="timeline-item">
+            <summary><span class="timeline-time">Feb 2026—Present</span><span class="timeline-role"><strong data-en="BI Engineer Intern" data-zh="BI 工程实习生">BI Engineer Intern</strong><span>Shopee · Buyer &amp; Marketing BI</span></span><span class="timeline-toggle mono"><span class="timeline-more" data-en="Details +" data-zh="详情 +">Details +</span><span class="timeline-close" data-en="Close −" data-zh="收起 −">Close −</span></span></summary>
+            <p data-en="Designing production Skills, deterministic A/B-test workflows, and query optimizations for an internal LLM-powered data agent." data-zh="为内部 LLM 数据 Agent 设计生产 Skill、确定性 A/B 测试工作流与查询优化。">Designing production Skills, deterministic A/B-test workflows, and query optimizations for an internal LLM-powered data agent.</p>
+          </details>
+          <details class="timeline-item">
+            <summary><span class="timeline-time">Nov 2025—Jan 2027</span><span class="timeline-role"><strong data-en="M.Comp. in Applied AI" data-zh="应用 AI 理学硕士">M.Comp. in Applied AI</strong><span>Nanyang Technological University · CCDS</span></span><span class="timeline-toggle mono"><span class="timeline-more" data-en="Details +" data-zh="详情 +">Details +</span><span class="timeline-close" data-en="Close −" data-zh="收起 −">Close −</span></span></summary>
+            <p data-en="Graduate work across multi-agent systems, trustworthy AI applications, and human–AI learning research in Singapore." data-zh="在新加坡开展多 Agent 系统、可信 AI 应用与人机学习研究。">Graduate work across multi-agent systems, trustworthy AI applications, and human–AI learning research in Singapore.</p>
+          </details>
+          <details class="timeline-item">
+            <summary><span class="timeline-time">Aug 2024</span><span class="timeline-role"><strong data-en="Autonomous UAV Project Lead" data-zh="自主无人机项目负责人">Autonomous UAV Project Lead</strong><span>RAICOM National Robotics Finals</span></span><span class="timeline-toggle mono"><span class="timeline-more" data-en="Details +" data-zh="详情 +">Details +</span><span class="timeline-close" data-en="Close −" data-zh="收起 −">Close −</span></span></summary>
+            <p data-en="Led an indoor UAV system using ROS, scenario decomposition, and obstacle avoidance; national third prize." data-zh="主导基于 ROS、场景分解与避障的室内无人机系统，获全国三等奖。">Led an indoor UAV system using ROS, scenario decomposition, and obstacle avoidance; national third prize.</p>
+          </details>
+          <details class="timeline-item">
+            <summary><span class="timeline-time">Jun 2022</span><span class="timeline-role"><strong data-en="TB-scale Data Pipeline" data-zh="TB 级数据流水线">TB-scale Data Pipeline</strong><span>Huawei ICT Competition · Global Final</span></span><span class="timeline-toggle mono"><span class="timeline-more" data-en="Details +" data-zh="详情 +">Details +</span><span class="timeline-close" data-en="Close −" data-zh="收起 −">Close −</span></span></summary>
+            <p data-en="Built a PySpark, Hive, and MySQL pipeline that reduced query latency by 40%; global-final third prize." data-zh="构建 PySpark、Hive 与 MySQL 流水线，将查询延迟降低 40%，获全球总决赛三等奖。">Built a PySpark, Hive, and MySQL pipeline that reduced query latency by 40%; global-final third prize.</p>
+          </details>
+          <details class="timeline-item">
+            <summary><span class="timeline-time">Sep 2019—Jun 2023</span><span class="timeline-role"><strong data-en="B.Eng. Data Science & Big Data" data-zh="数据科学与大数据工学学士">B.Eng. Data Science & Big Data</strong><span>Suzhou University</span></span><span class="timeline-toggle mono"><span class="timeline-more" data-en="Details +" data-zh="详情 +">Details +</span><span class="timeline-close" data-en="Close −" data-zh="收起 −">Close −</span></span></summary>
+            <p data-en="Awarded the China National Scholarship, placing in the top 0.2% nationwide in 2022–23." data-zh="获 2022–23 年国家奖学金，全国前 0.2%。">Awarded the China National Scholarship, placing in the top 0.2% nationwide in 2022–23.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="shell about-grid">
+        <div>
+          <p class="section-label" data-en="About" data-zh="关于">About</p>
+          <p class="about-copy" data-en="I work at the application layer: translating expert workflows into AI systems that are inspectable, testable, and trustworthy. My projects span data agents, deterministic workflows, applied ML, education, and human–AI collaboration." data-zh="我专注 AI 应用层：把专家工作流转化为可检查、可测试、值得信任的系统。项目覆盖数据 Agent、确定性工作流、应用机器学习、教育与人机协作。">I work at the application layer: translating expert workflows into AI systems that are inspectable, testable, and trustworthy. My projects span data agents, deterministic workflows, applied ML, education, and human–AI collaboration.</p>
+          <div class="actions" style="justify-content:flex-start">
+            <a class="btn" href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn" href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn ↗</a>
           </div>
         </div>
-        <div class="honor">
-          <span class="medal">🥉</span>
-          <div>
-            <h4><span class="lang-en">Huawei ICT Competition — Global Final, 3rd Prize</span><span class="lang-zh">华为 ICT 大赛 — 全球总决赛三等奖</span> <span class="honor-meta"><span class="lang-en">— Cloud Track, Top 5% globally, Jun 2022</span><span class="lang-zh">— 云赛道，全球前 5%，2022.06</span></span></h4>
-            <p><span class="lang-en">Built a PySpark / Hive / MySQL big-data pipeline on TB-scale datasets; reduced query latency by <strong>40%</strong>.</span><span class="lang-zh">在 TB 级数据上构建 PySpark / Hive / MySQL 大数据流水线；查询延迟降低 <strong>40%</strong>。</span></p>
-          </div>
-        </div>
-        <div class="honor">
-          <span class="medal">🥉</span>
-          <div>
-            <h4><span class="lang-en">RAICOM 2024 National Robotics Finals, 3rd Prize</span><span class="lang-zh">RAICOM 2024 全国机器人大赛总决赛三等奖</span> <span class="honor-meta"><span class="lang-en">— Aerial Reconnaissance, Aug 2024</span><span class="lang-zh">— 空中侦察赛项，2024.08</span></span></h4>
-            <p><span class="lang-en">Led an autonomous indoor UAV project using ROS, scenario decomposition, and obstacle avoidance.</span><span class="lang-zh">主导一个基于 ROS 的室内自主无人机项目，含场景分解与避障。</span></p>
-          </div>
+        <div class="contact">
+          <p class="mono" data-en="Building an AI workflow that has to be right?" data-zh="正在构建一个必须正确的 AI 工作流？">Building an AI workflow that has to be right?</p>
+          <h2 data-en="Let’s make it trustworthy." data-zh="让它值得信任。">Let’s make it trustworthy.</h2>
+          <a class="btn btn-primary" href="mailto:hao036@e.ntu.edu.sg"><span data-en="Start a conversation" data-zh="开始交流">Start a conversation</span><span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <div class="edu-grid">
-        <div class="edu-card">
-          <h4><span class="lang-en">M.Comp. in Applied AI</span><span class="lang-zh">应用人工智能 理学硕士</span></h4>
-          <p class="edu-school">Nanyang Technological University</p>
-          <p class="edu-date"><span class="lang-en">Nov 2025 – Jan 2027 · Singapore · CCDS</span><span class="lang-zh">2025.11 – 2027.01 · 新加坡 · CCDS</span></p>
-        </div>
-        <div class="edu-card">
-          <h4><span class="lang-en">B.Eng. Data Science &amp; Big Data</span><span class="lang-zh">工学学士 数据科学与大数据</span></h4>
-          <p class="edu-school">Suzhou University</p>
-          <p class="edu-date"><span class="lang-en">Sep 2019 – Jun 2023 · China</span><span class="lang-zh">2019.09 – 2023.06 · 中国</span></p>
-        </div>
+    </section>
+  </main>
+
+  <footer><span data-en="Singapore · Open to applied-AI roles" data-zh="新加坡 · 开放应用 AI 机会">Singapore · Open to applied-AI roles</span><span>© 2026 Hao Pan</span></footer>
+
+  <dialog id="project-dialog" aria-labelledby="dialog-title">
+    <article class="dialog-panel">
+      <header class="dialog-head">
+        <div><p class="card-meta" id="dialog-category"></p><h2 id="dialog-title"></h2></div>
+        <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close">×</button></form>
+      </header>
+      <div class="dialog-body">
+        <p class="dialog-summary" id="dialog-summary"></p>
+        <strong class="dialog-proof proof" id="dialog-proof"></strong>
+        <section class="dialog-section"><h3 data-en="What I designed" data-zh="我的设计">What I designed</h3><ul id="dialog-list"></ul></section>
+        <video class="dialog-media" id="dialog-media" controls playsinline preload="metadata" poster="surviv-poster.jpg" hidden><source src="surviv-demo.mp4" type="video/mp4"></video>
+        <p class="dialog-note" id="dialog-note" hidden></p>
+        <div class="dialog-links" id="dialog-links"></div>
       </div>
-    </div>
-  </section>
+    </article>
+  </dialog>
 
-  <section id="e-contact">
-    <div class="container">
-      <p class="section-label"><span class="lang-en">Get In Touch</span><span class="lang-zh">联系我</span></p>
-      <h2><span class="lang-en">Contact</span><span class="lang-zh">联系</span></h2>
-      <div class="contact-block">
-        <p><span class="lang-en">Based in Singapore — open to Data Agent / LLM Application Engineer roles.</span><span class="lang-zh">坐标新加坡 —— 求 Data Agent / LLM 应用工程师岗位。</span></p>
-        <div class="contact-links">
-          <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
-          <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /view-engineering -->
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ════════════ RESEARCH VIEW ═══════════════ -->
-<!-- ══════════════════════════════════════════ -->
-<div class="view" id="view-research">
-
-  <nav>
-    <div class="container">
-      <a href="#r-profile">Profile</a>
-      <a href="#r-projects">Projects</a>
-      <a href="#r-more">More</a>
-      <a href="#r-education">Education</a>
-      <a href="#r-research">Research</a>
-      <a href="#r-skills">Skills</a>
-      <a href="#r-contact">Contact</a>
-    </div>
-  </nav>
-
-  <section id="r-profile">
-    <div class="container">
-      <p class="section-label">About</p>
-      <h2>Profile</h2>
-      <p class="profile-statement">My recurring interest is <span class="highlight">how AI tools can support reflection, learning, and expertise development without hiding the reasoning process from the user</span>. I am seeking research collaboration to turn applied observations into rigorous HCI research.</p>
-      <div class="interest-visual">
-        <div class="interest-side interest-left">
-          <h4>&#10022; When AI helps</h4>
-          <p>Users see structure they couldn't see before. AI scaffolds reflection, self-evaluation, and contextual judgment.</p>
-        </div>
-        <div class="interest-arrow">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="24" r="23" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="3 3"/>
-            <text x="24" y="28" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" fill="#1e3a5f">vs</text>
-          </svg>
-        </div>
-        <div class="interest-side interest-right">
-          <h4>&#9888; When AI harms</h4>
-          <p>AI moves faster than the user can reflect. Fluent output bypasses the cognitive work required for genuine learning.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="r-projects">
-    <div class="container">
-      <p class="section-label">Portfolio</p>
-      <h2>Projects</h2>
-
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div><h3>AI / Python Teaching &amp; Learning Scaffolds</h3><p class="project-meta">Jinken Vocational &amp; Technical College — 300+ students</p></div>
-        </div>
-        <div class="project-body">
-          <div class="two-col">
-            <div class="col-block"><h4>What I Built</h4><ul><li>AI &amp; Python curricula for applied ML and GenAI</li><li>Prompt-design rubrics for reflective AI use</li><li>Socratic active-learning approach (hit theoretical limits)</li></ul></div>
-            <div class="col-block"><h4>Research Relevance</h4><ul><li>Motivates core question on feedback format &amp; durable learning</li><li>Access to realistic learning scenarios for future studies</li><li>Connects to metacognition &amp; cognitive scaffolding</li></ul></div>
-          </div>
-          <div class="lesson-bar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span>Students received fluent AI explanations yet retained little conceptual understanding — learning was bypassed.</span>
-          </div>
-          <div class="tags"><span class="tag">AI Education</span><span class="tag">Scaffolding</span><span class="tag">Metacognition</span><span class="tag">Feedback Design</span></div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon obsidian"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-          <div><h3>Obsidian Knowledge-System Refactor</h3><p class="project-meta">Claude + Antigravity — multi-year personal knowledge system</p></div>
-        </div>
-        <div class="project-body">
-          <div class="two-col">
-            <div class="col-block"><h4>What I Built</h4><ul><li>LLM agent refactored hundreds of notes in context</li><li>Surfaced hidden inconsistencies &amp; overlapping templates</li><li>Automated diary → weekly review extraction pipeline</li></ul></div>
-            <div class="col-block"><h4>Research Relevance</h4><ul><li>Agentic AI for reflective knowledge work</li><li>Interfaces for inspection, rollback, &amp; user judgment</li><li>Cognitive scaffolding &amp; safe human–AI collaboration</li></ul></div>
-          </div>
-          <div class="lesson-bar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span>The most critical moments were human decisions — reviewing plans, restoring from backup, rejecting technically correct but contextually wrong suggestions.</span>
-          </div>
-          <div class="tags"><span class="tag">Agentic AI</span><span class="tag">Knowledge Management</span><span class="tag">Human-AI Collaboration</span><span class="tag">Reflection</span></div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon shopee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <div><h3>Shopee LLM-Powered Data Analyst Agent</h3><p class="project-meta">BI Engineer Intern · reduced a recurring analysis from 30&ndash;45 min to 2&ndash;3 min</p></div>
-        </div>
-        <div class="project-body">
-          <div class="two-col">
-            <div class="col-block"><h4>What I Built</h4><ul><li>Constrained Skills/runbooks from tacit analyst logic</li><li>Structured authoring for domain knowledge capture</li><li>Mapped 6 failure modes → redesigned for human-in-the-loop</li></ul></div>
-            <div class="col-block"><h4>Research Relevance</h4><ul><li>AI supporting experts without replacing judgment</li><li>Expertise capture &amp; workflow scaffolding</li><li>Reliability &amp; human-in-the-loop AI</li></ul></div>
-          </div>
-          <div class="tags"><span class="tag">LLM Agents</span><span class="tag">Expertise Capture</span><span class="tag">Skill Authoring</span><span class="tag">Reliability</span></div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon bazi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-          <div><h3>Bazi Interpretation Skill — Accuracy Testing</h3><p class="project-meta">Cultural AI application — tested predictions against real outcomes among friends</p></div>
-        </div>
-        <div class="project-body">
-          <div class="two-col">
-            <div class="col-block"><h4>What I Built</h4><ul><li>Skill combining domain rules, workflow logic &amp; deterministic checks</li><li>Tracked prediction accuracy against real-life events</li><li>Failure analysis: where it was wrong, and what a human would have caught</li></ul></div>
-            <div class="col-block"><h4>Research Relevance</h4><ul><li>Skill authoring as knowledge externalization</li><li>Empirical testing against ground truth</li><li>Human judgment in interpretive domains</li></ul></div>
-          </div>
-          <div class="tags"><span class="tag">Domain Knowledge</span><span class="tag">Accuracy Testing</span><span class="tag">Skill Authoring</span><span class="tag">Human-in-the-Loop</span></div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-icon agent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <div><h3>Multi-Agent Literature Monitoring System</h3><p class="project-meta">CA6123 course project — 4-person team</p></div>
-        </div>
-        <div class="project-body">
-          <div class="two-col">
-            <div class="col-block"><h4>What I Built</h4><ul><li>Multi-agent system for frontier AI research monitoring</li><li>Orchestrator with critic-revision &amp; observability</li><li>18/18 smoke tests + full pytest pass</li></ul></div>
-            <div class="col-block"><h4>Research Relevance</h4><ul><li>Hands-on agent prototyping &amp; system design</li><li>LLM interfaces &amp; human-in-the-loop systems</li></ul></div>
-          </div>
-          <div class="tags"><span class="tag">Multi-Agent</span><span class="tag">Orchestration</span><span class="tag">Observability</span><span class="tag">Prototyping</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="r-more">
-    <div class="container">
-      <p class="section-label">GitHub &amp; Earlier Work</p>
-      <h2>More Projects</h2>
-      <div class="mini-grid">
-
-        <div class="mini-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Synapse</h4>
-          <p>Concept prototype: auto-generates notes, knowledge graphs &amp; quizzes from video lectures. Relevant to AI-assisted learning research.</p>
-          <div class="mini-tags"><span class="mini-tag">AI + Education</span><span class="mini-tag">Knowledge Graphs</span><span class="mini-tag">Quizzes</span></div>
-        </div>
-
-        <div class="mini-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Mini-GPT</h4>
-          <p>Decoder-only Transformer built from scratch in PyTorch — causal attention, LayerNorm, training pipeline. Demonstrates understanding of LLM internals.</p>
-          <div class="mini-tags"><span class="mini-tag">PyTorch</span><span class="mini-tag">Transformers</span><span class="mini-tag">From Scratch</span></div>
-          <br><a class="repo-link" href="https://github.com/HaoPan036/Mini-GPT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
-        </div>
-
-        <div class="mini-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Yuehuo AI Disability Assistance</h4>
-          <p>AI solution to improve functioning for disabled users. Validated through user research and data-driven needs analysis.</p>
-          <div class="mini-tags"><span class="mini-tag">HCI</span><span class="mini-tag">Accessibility</span><span class="mini-tag">User Research</span></div>
-        </div>
-
-        <div class="mini-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg> Semi-Automated Data Labeling</h4>
-          <p>Production-ready labeling system achieving 100% accuracy with 84% automation rate. Shows rigorous engineering methodology.</p>
-          <div class="mini-tags"><span class="mini-tag">Data Quality</span><span class="mini-tag">Automation</span><span class="mini-tag">Python</span></div>
-          <br><a class="repo-link" href="https://github.com/HaoPan036/Semi-automated-data-labeling" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="r-education">
-    <div class="container">
-      <p class="section-label">Background</p>
-      <h2>Education</h2>
-      <div class="edu-grid">
-        <div class="edu-card">
-          <h4>Master of Computing in Applied AI</h4>
-          <p class="edu-school">Nanyang Technological University</p>
-          <p class="edu-date">Nov 2025 – Jan 2027 · Singapore</p>
-          <p class="edu-note">College of Computing and Data Science (CCDS)</p>
-        </div>
-        <div class="edu-card">
-          <h4>B.Eng. Data Science &amp; Big Data Technology</h4>
-          <p class="edu-school">Suzhou University</p>
-          <p class="edu-date">Sep 2019 – Jun 2023 · China</p>
-          <p class="edu-note">🏆 China National Scholarship (Top 0.2% nationwide)</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="r-research">
-    <div class="container">
-      <p class="section-label">Research</p>
-      <h2>Research Sketch</h2>
-      <p style="font-size: 0.85rem; color: var(--ink-muted); font-style: italic; margin-bottom: 1.2rem;">Early-stage proposal for discussion</p>
-
-      <div class="rq-box">
-        <p>When students use AI tools for learning, how does the format of AI-generated feedback — direct explanation vs. scaffolded self-evaluation prompt — affect conceptual retention and metacognitive awareness?</p>
-      </div>
-
-      <h3 style="margin-top: 1.5rem;">Motivation</h3>
-      <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">Teaching 300+ students, I saw fluent AI explanations help complete tasks while bypassing the cognitive effort needed for durable understanding. If the <em>form and timing</em> of intervention shapes receptivity, can interface design make learners do the cognitive work required to actually learn?</p>
-
-      <h3 style="margin-top: 1.5rem;">Three Interface Conditions</h3>
-      <div class="study-flow">
-        <div class="flow-card">
-          <div class="flow-card-top"><span class="flow-num">1</span><strong>Direct Explanation</strong></div>
-          <div class="flow-card-body">Complete answer delivered immediately.</div>
-          <div class="flow-card-visual">
-            <svg width="140" height="36" viewBox="0 0 140 36">
-              <rect x="4" y="4" width="50" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-              <text x="29" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#1e3a5f">Question</text>
-              <line x1="58" y1="18" x2="78" y2="18" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#a1)"/>
-              <rect x="82" y="4" width="50" height="28" rx="4" fill="#1e3a5f"/>
-              <text x="107" y="22" text-anchor="middle" font-family="DM Sans" font-size="8" fill="#fff">Answer</text>
-              <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#1e3a5f" stroke-width="1"/></marker></defs>
-            </svg>
-          </div>
-        </div>
-        <div class="flow-card">
-          <div class="flow-card-top"><span class="flow-num">2</span><strong>Socratic Scaffolding</strong></div>
-          <div class="flow-card-body">Guided questions before revealing answer.</div>
-          <div class="flow-card-visual">
-            <svg width="140" height="36" viewBox="0 0 140 36">
-              <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-              <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
-              <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-              <rect x="46" y="4" width="34" height="28" rx="4" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1" stroke-dasharray="3 2"/>
-              <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1d4ed8">Guide</text>
-              <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-              <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
-              <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
-            </svg>
-          </div>
-        </div>
-        <div class="flow-card">
-          <div class="flow-card-top"><span class="flow-num">3</span><strong>Self-Evaluation First</strong></div>
-          <div class="flow-card-body">Learner predicts &amp; rates confidence first.</div>
-          <div class="flow-card-visual">
-            <svg width="140" height="36" viewBox="0 0 140 36">
-              <rect x="2" y="4" width="34" height="28" rx="4" fill="#e8f0fa" stroke="#1e3a5f" stroke-width="1"/>
-              <text x="19" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#1e3a5f">Q</text>
-              <line x1="38" y1="18" x2="44" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-              <rect x="46" y="4" width="34" height="28" rx="4" fill="#fef3c7" stroke="#92400e" stroke-width="1" stroke-dasharray="3 2"/>
-              <text x="63" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#92400e">Reflect</text>
-              <line x1="82" y1="18" x2="88" y2="18" stroke="#1e3a5f" stroke-width="1"/>
-              <rect x="90" y="4" width="46" height="28" rx="4" fill="#1e3a5f"/>
-              <text x="113" y="22" text-anchor="middle" font-family="DM Sans" font-size="7" fill="#fff">Answer</text>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <h3 style="margin-top: 1.5rem;">Measures</h3>
-      <div class="measures-grid">
-        <div class="measure-item">
-          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-          <div class="measure-text"><strong>Conceptual Retention</strong><span>Immediate &amp; delayed post-tests</span></div>
-        </div>
-        <div class="measure-item">
-          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-          <div class="measure-text"><strong>Metacognitive Accuracy</strong><span>Predicted vs. actual performance</span></div>
-        </div>
-        <div class="measure-item">
-          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div class="measure-text"><strong>Learning Process</strong><span>Interaction logs, time-on-task, help-seeking</span></div>
-        </div>
-        <div class="measure-item">
-          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <div class="measure-text"><strong>User Experience</strong><span>Effort, usefulness, frustration, trust</span></div>
-        </div>
-      </div>
-
-      <h3 style="margin-top: 1.5rem;">Expected Contribution</h3>
-      <p style="font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-top: 0.4rem;">An <strong>interface design pattern</strong> for LLM-based learning tools that balances answer quality with learner reflection, self-evaluation, and durable understanding.</p>
-    </div>
-  </section>
-
-  <section id="r-skills">
-    <div class="container">
-      <p class="section-label">Capabilities</p>
-      <h2>Skills</h2>
-      <div class="skills-visual">
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Programming</h4>
-          <p>Python, SQL (Presto / Hive / MySQL), C++, Shell</p>
-        </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/></svg> LLM / AI Systems</h4>
-          <p>Prompt engineering, RAG, agent orchestration, skill/runbook design</p>
-        </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Prototyping</h4>
-          <p>Workflow automation, dashboards, agentic coding, data pipelines</p>
-        </div>
-        <div class="skill-card">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Education</h4>
-          <p>Curriculum design, assessment, AI-assisted learning observations</p>
-        </div>
-        <div class="skill-card develop" style="grid-column: span 2;">
-          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> To Develop</h4>
-          <p>Formal user-study design, questionnaires &amp; interviews, statistical analysis for HCI, publication writing</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="r-contact">
-    <div class="container">
-      <p class="section-label">Get In Touch</p>
-      <h2>Contact</h2>
-      <div class="contact-block">
-        <p>Based in Singapore — happy to meet for a conversation.</p>
-        <div class="contact-links">
-          <a href="mailto:hao036@e.ntu.edu.sg">hao036@e.ntu.edu.sg</a>
-          <a href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /view-research -->
-
-<footer><div class="container"><p>&copy; 2026 Hao Pan</p></div></footer>
-<div class="tip" id="tip" role="status" aria-hidden="true"></div>
-
-<script>
-(function () {
-  var VIEWS = { engineering: 'view-engineering', research: 'view-research' };
-  var tabs = document.querySelectorAll('.mode-toggle .tab');
-
-  function setView(name, scrollTop) {
-    if (!VIEWS[name]) name = 'engineering';
-    for (var key in VIEWS) {
-      document.getElementById(VIEWS[key]).classList.toggle('active', key === name);
-    }
-    tabs.forEach(function (t) { t.classList.toggle('active', t.dataset.view === name); });
-    if (scrollTop) window.scrollTo(0, 0);
-  }
-
-  function viewForHash(h) {
-    if (h === 'research' || h.indexOf('r-') === 0) return 'research';
-    return 'engineering'; // default landing — change to 'research' to flip
-  }
-
-  function route() {
-    var h = (location.hash || '').slice(1);
-    setView(viewForHash(h));
-    if (h && document.getElementById(h)) {
-      document.getElementById(h).scrollIntoView();
-    }
-  }
-
-  tabs.forEach(function (t) {
-    function go() {
-      var name = t.dataset.view;
-      setView(name, true);
-      history.replaceState(null, '', '#' + name);
-    }
-    t.addEventListener('click', go);
-    t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
-  });
-
-  window.addEventListener('hashchange', route);
-  route();
-
-  // language toggle (Engineering view only)
-  var engView = document.getElementById('view-engineering');
-  var langChips = document.querySelectorAll('.lang-toggle .lc');
-  function setLang(l) {
-    if (l !== 'zh') l = 'en';
-    engView.setAttribute('data-lang', l);
-    langChips.forEach(function (c) { c.classList.toggle('active', c.dataset.lang === l); });
-    try { localStorage.setItem('engLang', l); } catch (e) {}
-  }
-  langChips.forEach(function (c) {
-    c.addEventListener('click', function () { setLang(c.dataset.lang); });
-  });
-  var savedLang = 'en';
-  try { savedLang = localStorage.getItem('engLang') || 'en'; } catch (e) {}
-  setLang(savedLang);
-
-  // ── motion: count-up stats + bars-on-scroll ──
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!reduceMotion) {
-    document.querySelectorAll('.site-header .stat-num').forEach(function (el) {
-      var m = el.textContent.trim().match(/^(\d+)(\D*)$/);
-      if (!m) return; // skip non-numeric like "Top 0.2%"
-      var target = parseInt(m[1], 10), suffix = m[2], dur = 900, t0 = null;
-      el.textContent = '0' + suffix;
-      function step(ts) {
-        if (!t0) t0 = ts;
-        var p = Math.min((ts - t0) / dur, 1), eased = p * (2 - p);
-        el.textContent = Math.round(target * eased) + suffix;
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = target + suffix;
+  <script>
+    var PROJECTS = {
+      diana: {
+        category: { en: "Internal · Data-agent reliability", zh: "内部项目 · 数据 Agent 可靠性" },
+        title: { en: "Diana Data Agent", zh: "Diana 数据 Agent" },
+        summary: {
+          en: "An internal LLM-powered data agent that turns recurring analyst work into auditable, repeatable production Skills.",
+          zh: "一个内部 LLM 数据 Agent，把重复的分析师工作转化为可审计、可复现的生产 Skill。"
+        },
+        proof: { en: "3 production Skills · 9 failure modes · 14 lint rules", zh: "3 个生产 Skill · 9 类失败模式 · 14 条 lint 规则" },
+        details: {
+          en: [
+            "Owned the application-constraint layer while another team owned the underlying agent platform.",
+            "Built production Skills for Me-Page traffic, PDP ads-voucher conversion, and PDP OPU & GMV.",
+            "Standardized every Skill as inputs → procedure → SQL template → output schema → pre-return checklist.",
+            "Made silent failures explicit, including denominator shrinkage caused by a LEFT JOIN collapsing into an INNER JOIN."
+          ],
+          zh: [
+            "底层 Agent 平台由其他团队负责；我负责应用约束层。",
+            "构建 Me-Page 流量、PDP 广告 voucher 转化率、PDP OPU & GMV 三个生产 Skill。",
+            "把每个 Skill 标准化为输入 → 流程 → SQL 模板 → 输出 schema → 返回前检查。",
+            "显式处理静默失败，包括 LEFT JOIN 退化为 INNER JOIN 导致分母缩小。"
+          ]
+        },
+        note: {
+          en: "Internal Shopee system; code is not public. The 30–45 → 2–3 minute improvement comes from automating the analyst workflow, not making one database query faster.",
+          zh: "Shopee 内部系统，代码不公开。30–45 分钟降至 2–3 分钟来自分析工作流自动化，而不是让某一条数据库查询变快。"
+        }
+      },
+      workflow: {
+        category: { en: "Internal · Deterministic workflow", zh: "内部项目 · 确定性工作流" },
+        title: { en: "AB-Test Text-to-SQL Workflow", zh: "AB 测试 Text-to-SQL 工作流" },
+        summary: {
+          en: "A low-code pipeline that accepts natural language, extracts variables with an LLM, then executes deterministic SQL across eight regions.",
+          zh: "一个低代码流水线：接收自然语言，用 LLM 抽取变量，再在 8 个区域确定性执行 SQL。"
+        },
+        proof: { en: "8 regions · ~300 s/timeouts → ~2 s", zh: "8 个区域 · 约 300 秒/超时 → 约 2 秒" },
+        details: {
+          en: [
+            "Shrank the LLM's job to Stage 1 variable extraction.",
+            "Kept routing, SQL building, parallel execution, and merging deterministic.",
+            "Moved expensive raw-table queries to pre-aggregated marts and controlled filters and joins.",
+            "Separated agent automation from database performance so each claim remains auditable."
+          ],
+          zh: [
+            "把 LLM 的职责收缩到第一阶段的变量抽取。",
+            "路由、SQL 拼装、并行执行与结果合并全部保持确定性。",
+            "把昂贵的原始表查询迁移到预聚合数据集市，并控制过滤与 join。",
+            "区分 Agent 自动化与数据库性能，确保每个结果都可审计。"
+          ]
+        },
+        note: {
+          en: "The ~300 s → ~2 s speedup comes from data modeling and query optimization—not from the LLM.",
+          zh: "约 300 秒降至约 2 秒来自数据建模与查询优化，而不是 LLM。"
+        }
+      },
+      multiagent: {
+        category: { en: "Team project · Agent systems", zh: "团队项目 · Agent 系统" },
+        title: { en: "Multi-Agent Literature Monitoring", zh: "多 Agent 文献监控系统" },
+        summary: {
+          en: "A Google ADK system that monitors frontier-AI research and produces personalized, evidence-aware digests.",
+          zh: "一个使用 Google ADK 监控前沿 AI 研究并生成个性化、证据感知摘要的系统。"
+        },
+        proof: { en: "18/18 smoke tests · ~3,990 LOC in owned modules", zh: "18/18 冒烟测试 · 本人模块约 3,990 行" },
+        details: {
+          en: [
+            "Designed the orchestrator architecture and chose ADK after a framework trade-off study.",
+            "Combined sequential and loop agents with a critic–revision cycle.",
+            "Added two human checkpoints, SQLite state, ChromaDB recall, traces, and step-level cost tracking.",
+            "Implemented runtime-validated dataclass contracts and a full test suite."
+          ],
+          zh: [
+            "经框架权衡后选择 ADK，并设计 orchestrator 架构。",
+            "组合 SequentialAgent、LoopAgent 与 critic–revision 循环。",
+            "加入两个人工检查点、SQLite 状态、ChromaDB 召回、trace 与逐步成本追踪。",
+            "实现运行时校验的数据契约与完整测试。"
+          ]
+        },
+        note: {
+          en: "Four-person NTU CA6123 team project. An AI coding assistant generated boilerplate; architecture, ADK composition, schema principles, and the critic loop are Hao's contributions.",
+          zh: "NTU CA6123 四人团队项目。AI 编码助手生成了部分样板代码；架构、ADK 组合、schema 原则与 critic 循环由 Hao 负责。"
+        },
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/CA6123-frontier-lit-agent", primary: true }
+        ]
+      },
+      sandbox: {
+        category: { en: "Live demo · Data-agent governance", zh: "在线演示 · 数据 Agent 治理" },
+        title: { en: "Data Agent Sandbox", zh: "Data Agent Sandbox" },
+        summary: {
+          en: "A public sandbox for inspecting how business questions become constrained, deterministic data-agent workflows.",
+          zh: "一个公开沙盒，用来检查业务问题如何转化为受约束、确定性的数据 Agent 工作流。"
+        },
+        proof: { en: "SQL validation · Local execution · Trace · Guardrails", zh: "SQL 校验 · 本地执行 · Trace · 护栏" },
+        details: {
+          en: [
+            "Turns business questions into a structured variable contract.",
+            "Builds and validates SQL before local execution.",
+            "Exposes trace and governance checks so the workflow is inspectable."
+          ],
+          zh: [
+            "把业务问题转化为结构化变量契约。",
+            "在本地执行前构建并校验 SQL。",
+            "暴露 trace 与治理检查，让工作流可检查。"
+          ]
+        },
+        note: { en: "Public demo uses synthetic data only.", zh: "公开演示仅使用合成数据。" },
+        links: [
+          { label: { en: "Open live demo", zh: "打开在线演示" }, url: "https://data-agent-sandbox.vercel.app/", primary: true },
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/Data-Agent-Sandbox" }
+        ]
+      },
+      contextcue: {
+        category: { en: "Live demo · Context engineering", zh: "在线演示 · 上下文工程" },
+        title: { en: "ContextCue", zh: "ContextCue" },
+        summary: {
+          en: "A personal context control plane for scoped, evidence-backed AI memory with privacy and expiry controls.",
+          zh: "一个个人上下文控制层，为 AI 记忆提供范围、证据、隐私与过期控制。"
+        },
+        proof: { en: "Scoped memory · Evidence · TTL · Privacy", zh: "范围控制 · 证据 · TTL · 隐私" },
+        details: {
+          en: [
+            "Turns scattered personal and project context into explicit memory scopes.",
+            "Keeps evidence and provenance attached to recalled context.",
+            "Adds TTL and privacy controls instead of treating memory as permanently global."
+          ],
+          zh: [
+            "把分散的个人与项目上下文转化为明确的记忆范围。",
+            "为召回的上下文保留证据与来源。",
+            "加入 TTL 与隐私控制，而不是把记忆永久设为全局。"
+          ]
+        },
+        note: { en: "Public demo uses synthetic context only.", zh: "公开演示仅使用合成上下文。" },
+        links: [
+          { label: { en: "Open live demo", zh: "打开在线演示" }, url: "https://contex-cue.vercel.app/", primary: true },
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/ContexCue/" }
+        ]
+      },
+      surviv: {
+        category: { en: "Public source · Code-as-policy", zh: "公开源码 · Code-as-policy" },
+        title: { en: "Hand-Coded Adversarial Agent", zh: "手写对抗 Agent" },
+        summary: {
+          en: "A pure-Python battle-royale agent built through black-box behavioral analysis and ablation.",
+          zh: "一个通过黑盒行为分析与消融构建的纯 Python 吃鸡 Agent。"
+        },
+        proof: { en: "Tied #1 / 6 · 50 games · 43% vs 70M-step NN", zh: "6 个 Agent 中并列第 1 · 50 局 · 对 70M 步 NN 胜率 43%" },
+        details: {
+          en: [
+            "Implemented roughly 600 lines using only the Python standard library.",
+            "Compared tournament placement and 1v1 behavior against trained neural agents.",
+            "Used ablation to identify the close-range regime where the NN's lead-the-shot prediction became unreliable."
+          ],
+          zh: [
+            "仅使用 Python 标准库实现约 600 行策略。",
+            "与训练后的神经网络 Agent 比较锦标赛名次与 1v1 行为。",
+            "通过消融定位 NN 提前量射击在近距离失准的区间。"
+          ]
+        },
+        note: {
+          en: "The conclusion is domain-specific: in a narrow regime, explicit constraint design can beat scaled generic ML. It is not an anti-ML claim.",
+          zh: "结论只适用于窄场景：显式约束设计可能胜过堆叠通用 ML；这并不是反对机器学习。"
+        },
+        media: true,
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/surviv-code-as-policies", primary: true }
+        ]
+      },
+      calories: {
+        category: { en: "Public source · Physics-informed ML", zh: "公开源码 · 物理信息 ML" },
+        title: { en: "Sim2Real Calorie Prediction", zh: "Sim2Real 卡路里预测" },
+        summary: {
+          en: "A physics-informed pipeline designed to generalize from biased gym data to unseen real-world daily activity.",
+          zh: "一个物理信息流水线，目标是从有偏的健身房数据泛化到未见过的真实日常活动。"
+        },
+        proof: { en: "External R² −14.38 → 0.79 · 973 → 20k samples", zh: "外部 R² −14.38 → 0.79 · 973 → 2 万样本" },
+        details: {
+          en: [
+            "Expanded 973 seed samples to 20,000 with bootstrapping and noise injection.",
+            "Recomputed labels with a METs-based physics formula and added duration × heart-rate and duration × weight features.",
+            "Validated on 15,000 unseen real-world samples instead of relying only on internal cross-validation."
+          ],
+          zh: [
+            "通过自助采样与噪声注入，把 973 条种子样本扩充至 2 万。",
+            "使用 METs 物理公式重算标签，并加入时长×心率、时长×体重特征。",
+            "在 1.5 万条未见真实样本上验证，而不是只依赖内部交叉验证。"
+          ]
+        },
+        note: {
+          en: "A linear model with physics-informed features generalized better than the more complex baseline.",
+          zh: "带物理信息特征的线性模型比更复杂的基线模型泛化得更好。"
+        },
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/Burning-your-calories", primary: true }
+        ]
+      },
+      minigpt: {
+        category: { en: "Public source · LLM internals", zh: "公开源码 · LLM 原理" },
+        title: { en: "Mini-GPT", zh: "Mini-GPT" },
+        summary: {
+          en: "A decoder-only Transformer implemented from scratch in PyTorch to make the model internals concrete.",
+          zh: "用 PyTorch 从零实现 decoder-only Transformer，让模型内部机制更具体可见。"
+        },
+        proof: { en: "Causal attention · LayerNorm · Training loop", zh: "因果注意力 · LayerNorm · 训练循环" },
+        details: {
+          en: [
+            "Implements masked self-attention and decoder blocks.",
+            "Includes LayerNorm, token embeddings, loss calculation, and a training loop.",
+            "Built as a learning artifact rather than a production-scale language model."
+          ],
+          zh: [
+            "实现掩码自注意力与 decoder block。",
+            "包含 LayerNorm、token embedding、损失计算与训练循环。",
+            "定位为学习型实现，而不是生产规模语言模型。"
+          ]
+        },
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/Mini-GPT", primary: true }
+        ]
+      },
+      evored: {
+        category: { en: "Public source · LLM red-teaming", zh: "公开源码 · LLM 红队" },
+        title: { en: "EvoRed", zh: "EvoRed" },
+        summary: {
+          en: "An evolutionary red-team system that searches for adversarial prompts and pairs attack generation with defense.",
+          zh: "一个进化式红队系统，搜索对抗提示，并把攻击生成与防御结合。"
+        },
+        proof: { en: "Evolutionary prompt attacks · Defense module", zh: "进化式提示攻击 · 防御模块" },
+        details: {
+          en: [
+            "Evolves prompt candidates against a target model.",
+            "Scores and selects stronger adversarial candidates over iterations.",
+            "Includes a defense path rather than treating attack discovery as the entire system."
+          ],
+          zh: [
+            "针对目标模型演化提示候选。",
+            "在多轮迭代中评分并选择更强的对抗候选。",
+            "包含防御路径，而不是只做攻击发现。"
+          ]
+        },
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/EvoRed", primary: true }
+        ]
+      },
+      labeling: {
+        category: { en: "Public source · Data quality", zh: "公开源码 · 数据质量" },
+        title: { en: "Semi-Automated Data Labeling", zh: "半自动数据标注" },
+        summary: {
+          en: "A confidence-aware labeling workflow that automates clear cases while retaining human review where uncertainty matters.",
+          zh: "一个置信度感知的标注工作流，自动处理明确样本，并在不确定时保留人工审阅。"
+        },
+        proof: { en: "100% accuracy · 84% automation rate", zh: "100% 准确率 · 84% 自动化率" },
+        details: {
+          en: [
+            "Automates high-confidence labels instead of forcing full manual review.",
+            "Routes uncertain cases back to a human.",
+            "Balances throughput with a strict accuracy target."
+          ],
+          zh: [
+            "自动处理高置信标签，避免全部人工审阅。",
+            "把不确定样本重新交给人工。",
+            "在吞吐量与严格准确率目标之间取得平衡。"
+          ]
+        },
+        links: [
+          { label: { en: "View source", zh: "查看源码" }, url: "https://github.com/HaoPan036/Semi-automated-data-labeling", primary: true }
+        ]
+      },
+      huawei: {
+        category: { en: "Competition engineering · Data systems", zh: "竞赛工程 · 数据系统" },
+        title: { en: "Huawei ICT TB-Scale Pipeline", zh: "华为 ICT TB 级流水线" },
+        summary: {
+          en: "A TB-scale PySpark, Hive, and MySQL pipeline built for the Huawei ICT Competition global final.",
+          zh: "为华为 ICT 大赛全球总决赛构建的 TB 级 PySpark、Hive 与 MySQL 流水线。"
+        },
+        proof: { en: "40% lower query latency · Global 3rd prize", zh: "查询延迟降低 40% · 全球三等奖" },
+        details: {
+          en: [
+            "Built a large-scale data-processing pipeline across PySpark, Hive, and MySQL.",
+            "Reduced query latency by 40%.",
+            "Reached the Cloud Track global final and received third prize."
+          ],
+          zh: [
+            "使用 PySpark、Hive 与 MySQL 构建大规模数据处理流水线。",
+            "将查询延迟降低 40%。",
+            "进入云赛道全球总决赛并获三等奖。"
+          ]
+        }
+      },
+      raicom: {
+        category: { en: "Competition engineering · Robotics", zh: "竞赛工程 · 机器人" },
+        title: { en: "RAICOM Autonomous Indoor UAV", zh: "RAICOM 室内自主无人机" },
+        summary: {
+          en: "An autonomous indoor aerial-reconnaissance system built with ROS, scenario decomposition, and obstacle avoidance.",
+          zh: "一个使用 ROS、场景分解与避障构建的室内自主空中侦察系统。"
+        },
+        proof: { en: "Project lead · National finals 3rd prize", zh: "项目负责人 · 全国总决赛三等奖" },
+        details: {
+          en: [
+            "Led the autonomous indoor UAV project.",
+            "Decomposed the competition scenario into navigation and obstacle-avoidance behaviors.",
+            "Received third prize at the 2024 national finals."
+          ],
+          zh: [
+            "主导室内自主无人机项目。",
+            "把竞赛场景拆解为导航与避障行为。",
+            "获 2024 全国总决赛三等奖。"
+          ]
+        }
+      },
+      teaching: {
+        category: { en: "Teaching · Applied AI education", zh: "教学 · 应用 AI 教育" },
+        title: { en: "AI / Python Teaching Scaffolds", zh: "AI / Python 教学支架" },
+        summary: {
+          en: "Applied-ML and GenAI curricula designed to make learners reflect instead of simply accepting fluent AI answers.",
+          zh: "面向应用机器学习与生成式 AI 的课程设计，目标是让学习者反思，而不是直接接受流畅的 AI 答案。"
+        },
+        proof: { en: "300+ students · Jinken Vocational & Technical College", zh: "300+ 名学生 · 金肯职业技术学院" },
+        details: {
+          en: [
+            "Designed AI and Python curricula for applied ML and GenAI.",
+            "Created reflection-oriented prompt rubrics and active-learning activities.",
+            "Observed that fluent AI explanations can help task completion while bypassing durable conceptual learning."
+          ],
+          zh: [
+            "为应用机器学习与生成式 AI 设计 AI 与 Python 课程。",
+            "创建反思型提示量规与主动学习活动。",
+            "观察到流畅的 AI 解释能帮助完成任务，却可能绕过持久的概念学习。"
+          ]
+        },
+        note: {
+          en: "The current repository verifies the institution and 300+ students, but does not state a formal job title or dates; none are claimed here.",
+          zh: "当前仓库可验证学校与 300+ 名学生，但没有正式职位名称或日期，因此这里不作推断。"
+        }
+      },
+      obsidian: {
+        category: { en: "Private · Agentic knowledge work", zh: "私有项目 · Agent 知识工作" },
+        title: { en: "Obsidian Knowledge-System Refactor", zh: "Obsidian 知识系统重构" },
+        summary: {
+          en: "An agentic refactor of a multi-year personal knowledge system with inspection, rollback, and human judgment.",
+          zh: "对多年个人知识系统进行 Agent 式重构，并保留检查、回滚与人工判断。"
+        },
+        proof: { en: "Hundreds of notes · Human review · Rollback", zh: "数百条笔记 · 人工审阅 · 回滚" },
+        details: {
+          en: [
+            "Refactored hundreds of notes in context.",
+            "Surfaced hidden inconsistencies and overlapping templates.",
+            "Automated diary-to-weekly-review extraction while rejecting context-wrong edits."
+          ],
+          zh: [
+            "在上下文中重构数百条笔记。",
+            "暴露隐藏的不一致与重叠模板。",
+            "自动化日记到周回顾的提取，同时拒绝上下文错误的编辑。"
+          ]
+        },
+        note: { en: "Private personal project; source and knowledge base are not public.", zh: "私有个人项目，源码与知识库不公开。" }
+      },
+      bazi: {
+        category: { en: "Private · Interpretive AI", zh: "私有项目 · 解释型 AI" },
+        title: { en: "Bazi Interpretation Skill", zh: "八字解读 Skill" },
+        summary: {
+          en: "A structured Skill combining domain rules, deterministic checks, and outcome tracking in an interpretive domain.",
+          zh: "在解释型领域中结合领域规则、确定性检查与结果跟踪的结构化 Skill。"
+        },
+        proof: { en: "Rules · Checks · Outcome tracking", zh: "规则 · 检查 · 结果跟踪" },
+        details: {
+          en: [
+            "Externalized domain rules into an explicit workflow.",
+            "Tracked interpretations against real outcomes and documented failures.",
+            "Used human judgment where context-sensitive interpretation could not be safely automated."
+          ],
+          zh: [
+            "把领域规则外化为显式工作流。",
+            "把解读与真实结果对照，并记录失败。",
+            "在上下文敏感、无法安全自动化的地方保留人工判断。"
+          ]
+        },
+        note: {
+          en: "Bounded claim: the method appeared stronger for self-analysis and tendencies than for predicting events. No numerical accuracy claim is made.",
+          zh: "能力边界：该方法在自我分析与倾向上表现更好，而不适合事件预测；这里不声明任何数值准确率。"
+        }
+      },
+      synapse: {
+        category: { en: "Concept · AI-assisted learning", zh: "概念原型 · AI 辅助学习" },
+        title: { en: "Synapse", zh: "Synapse" },
+        summary: {
+          en: "A concept prototype that transforms video lectures into notes, knowledge graphs, and quizzes.",
+          zh: "一个把视频课程转化为笔记、知识图谱与测验的概念原型。"
+        },
+        proof: { en: "Notes · Knowledge graphs · Quizzes", zh: "笔记 · 知识图谱 · 测验" },
+        details: {
+          en: [
+            "Explores automatic structure extraction from lecture video.",
+            "Connects generated notes through a knowledge graph.",
+            "Adds quizzes as an active-recall layer."
+          ],
+          zh: [
+            "探索从课程视频中自动提取结构。",
+            "通过知识图谱连接生成的笔记。",
+            "加入测验作为主动回忆层。"
+          ]
+        },
+        note: { en: "Concept prototype; no public deployment or results are claimed.", zh: "概念原型；不声明公开部署或研究结果。" }
+      },
+      yuehuo: {
+        category: { en: "Concept · Accessibility", zh: "概念项目 · 无障碍" },
+        title: { en: "Yuehuo AI Disability Assistance", zh: "悦活 AI 助残方案" },
+        summary: {
+          en: "An AI assistance concept for disabled users grounded in user research and data-driven needs analysis.",
+          zh: "一个面向残障用户、基于用户研究与数据驱动需求分析的 AI 辅助概念。"
+        },
+        proof: { en: "User research · Needs validation", zh: "用户研究 · 需求验证" },
+        details: {
+          en: [
+            "Started from user needs rather than a predetermined AI feature.",
+            "Used research and data to identify functioning barriers.",
+            "Explored where AI assistance could improve day-to-day independence."
+          ],
+          zh: [
+            "从用户需求出发，而不是预设 AI 功能。",
+            "使用研究与数据识别功能障碍。",
+            "探索 AI 辅助如何改善日常独立性。"
+          ]
+        },
+        note: { en: "Concept-stage project; no public deployment is claimed.", zh: "概念阶段项目；不声明公开部署。" }
+      },
+      research: {
+        category: { en: "Research in progress · Human–AI learning", zh: "研究进行中 · 人机学习" },
+        title: { en: "AI Feedback Format & Durable Learning", zh: "AI 反馈形式与持久学习" },
+        summary: {
+          en: "A research sketch asking whether interface design can preserve cognitive effort when learners use AI explanations.",
+          zh: "一个研究构想：当学习者使用 AI 解释时，界面设计能否保留必要的认知努力？"
+        },
+        proof: { en: "3 interface conditions · Retention + metacognition + UX", zh: "3 种界面条件 · 保持率 + 元认知 + 用户体验" },
+        details: {
+          en: [
+            "Compares Direct Explanation, Socratic Scaffolding, and Self-Evaluation First.",
+            "Measures retention, transfer, metacognitive accuracy, learning process, and user experience.",
+            "Motivated by observing that fluent AI help can complete tasks while bypassing conceptual understanding."
+          ],
+          zh: [
+            "比较直接解释、苏格拉底式支架与先自我评估三种界面条件。",
+            "测量保持、迁移、元认知准确性、学习过程与用户体验。",
+            "动机来自一项观察：流畅的 AI 帮助能完成任务，却可能绕过概念理解。"
+          ]
+        },
+        note: { en: "Early-stage research sketch. No study results are claimed.", zh: "早期研究构想；不声明任何研究结果。" }
       }
-      requestAnimationFrame(step);
-    });
-  }
+    };
 
-  var bars = document.querySelectorAll('.ba');
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    var currentLanguage = localStorage.getItem("portfolioLanguage") === "zh" ? "zh" : "en";
+    var activeProjectId = null;
+    var lastTrigger = null;
+    var dialog = document.getElementById("project-dialog");
+    var closeButton = dialog.querySelector(".dialog-close");
+
+    function localized(value) {
+      return value && typeof value === "object" ? value[currentLanguage] : value;
+    }
+
+    function applyLanguage(language) {
+      currentLanguage = language;
+      localStorage.setItem("portfolioLanguage", language);
+      document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+      document.querySelectorAll("[data-en][data-zh]").forEach(function (element) {
+        element.textContent = language === "zh" ? element.dataset.zh : element.dataset.en;
       });
-    }, { threshold: 0.3 });
-    bars.forEach(function (b) { io.observe(b); });
-  } else {
-    bars.forEach(function (b) { b.classList.add('in'); });
-  }
-
-  // ── reveal-on-scroll (fade-up), SkillOpt-style ──
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-    var revealEls = Array.prototype.slice.call(document.querySelectorAll('section > .container > *'));
-    revealEls.forEach(function (el) { el.classList.add('reveal'); });
-    var ro = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      document.querySelectorAll(".lang button").forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.lang === language));
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealEls.forEach(function (el) { ro.observe(el); });
+      if (activeProjectId) renderDialog(PROJECTS[activeProjectId]);
+    }
 
-    function revealInView() {
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      document.querySelectorAll('.view.active .reveal:not(.visible)').forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add('visible');
+    function renderDialog(project) {
+      document.getElementById("dialog-category").textContent = localized(project.category);
+      document.getElementById("dialog-title").textContent = localized(project.title);
+      document.getElementById("dialog-summary").textContent = localized(project.summary);
+      document.getElementById("dialog-proof").textContent = localized(project.proof);
+
+      var list = document.getElementById("dialog-list");
+      list.replaceChildren();
+      localized(project.details).forEach(function (detail) {
+        var item = document.createElement("li");
+        item.textContent = detail;
+        list.appendChild(item);
+      });
+
+      var note = document.getElementById("dialog-note");
+      var noteText = localized(project.note);
+      note.textContent = noteText || "";
+      note.hidden = !noteText;
+
+      var media = document.getElementById("dialog-media");
+      media.hidden = !project.media;
+      if (!project.media) media.pause();
+
+      var links = document.getElementById("dialog-links");
+      links.replaceChildren();
+      (project.links || []).forEach(function (link) {
+        var anchor = document.createElement("a");
+        anchor.className = link.primary ? "btn btn-primary" : "btn";
+        anchor.href = link.url;
+        anchor.target = "_blank";
+        anchor.rel = "noopener";
+        anchor.textContent = localized(link.label) + " ↗";
+        links.appendChild(anchor);
       });
     }
-    revealInView();
-    document.querySelectorAll('.mode-toggle .tab').forEach(function (t) {
-      t.addEventListener('click', function () { requestAnimationFrame(revealInView); });
-    });
-    window.addEventListener('hashchange', function () { requestAnimationFrame(revealInView); });
-  }
 
-  // ── chart hover tooltip (inspect a value) ──
-  var tip = document.getElementById('tip');
-  if (tip) {
-    document.querySelectorAll('[data-tip]').forEach(function (el) {
-      el.addEventListener('mousemove', function (e) {
-        tip.textContent = el.getAttribute('data-tip');
-        tip.style.left = e.clientX + 'px';
-        tip.style.top = e.clientY + 'px';
-        tip.classList.add('on');
-      });
-      el.addEventListener('mouseleave', function () { tip.classList.remove('on'); });
-    });
-  }
-})();
-</script>
+    function openProject(id, trigger) {
+      var project = PROJECTS[id];
+      if (!project) return;
+      activeProjectId = id;
+      lastTrigger = trigger;
+      renderDialog(project);
+      document.body.classList.add("dialog-open");
+      if (!dialog.open) dialog.showModal();
+      closeButton.focus();
+    }
 
+    document.querySelectorAll("[data-project]").forEach(function (button) {
+      button.addEventListener("click", function () { openProject(button.dataset.project, button); });
+    });
+    document.querySelectorAll(".lang button").forEach(function (button) {
+      button.addEventListener("click", function () { applyLanguage(button.dataset.lang); });
+    });
+    dialog.addEventListener("close", function () {
+      activeProjectId = null;
+      document.body.classList.remove("dialog-open");
+      if (lastTrigger) lastTrigger.focus();
+    });
+    applyLanguage(currentLanguage);
+  </script>
 </body>
 </html>
