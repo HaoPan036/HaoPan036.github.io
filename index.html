@@ -142,9 +142,11 @@
     .shell { width: min(100%, var(--max)); margin: 0 auto; }
     .featured {
       position: relative; margin-bottom: 18px; padding: 32px 36px 40px;
-      color: var(--paper); border: 1px solid var(--ink); background: var(--ink);
-      box-shadow: 0 24px 70px rgba(28,36,34,.12);
+      color: #fff9ed; border: 1px solid #17263d; background: #17263d;
+      box-shadow: 0 24px 70px rgba(23,38,61,.18);
     }
+    .featured .card-meta { color: #f2c66d; }
+    .featured .card-top { border-bottom-color: rgba(255,249,237,.32); opacity: 1; }
     .card-top {
       display: flex; justify-content: space-between; gap: 24px; padding-bottom: 24px;
       border-bottom: 1px solid currentColor; opacity: .72;
@@ -155,7 +157,7 @@
       letter-spacing: -.06em; line-height: 1;
     }
     .featured-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
-    .featured-copy p { max-width: 470px; margin: 0; color: #c8d2ce; font-size: 1.1rem; line-height: 1.62; }
+    .featured-copy p { max-width: 470px; margin: 0; color: #d6dde6; font-size: 1.1rem; line-height: 1.62; }
     .featured-copy strong { margin-top: 20px; }
     .featured-metrics {
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
@@ -163,14 +165,14 @@
     }
     .featured-metric {
       display: flex; min-height: 118px; flex-direction: column; justify-content: space-between;
-      padding: 16px 14px; border: 1px solid rgba(251,252,249,.24);
-      background: rgba(251,252,249,.04);
+      padding: 16px 14px; border: 1px solid rgba(242,198,109,.42);
+      background: rgba(242,198,109,.06);
     }
     .featured-metric strong {
       margin: 0; font-size: clamp(2.2rem, 4.2vw, 4.8rem); letter-spacing: -.07em; line-height: .9;
     }
     .featured-metric span {
-      color: #c8d2ce; font-family: "JetBrains Mono", monospace;
+      color: #d6dde6; font-family: "JetBrains Mono", monospace;
       font-size: .62rem; letter-spacing: .07em; line-height: 1.35; text-transform: uppercase;
     }
     .detail-btn {
@@ -456,7 +458,7 @@
 <body>
   <a class="skip" href="#work" data-en="Skip to work" data-zh="跳到项目">Skip to work</a>
   <header class="header">
-    <a class="brand" href="#top" aria-label="Hao Pan home">Hao Pan<span class="brand-dot" aria-hidden="true"></span></a>
+    <a class="brand" href="#top" aria-label="Hao Pan home" data-label-en="Hao Pan home" data-label-zh="潘昊主页"><span data-en="Hao Pan" data-zh="潘昊">Hao Pan</span><span class="brand-dot" aria-hidden="true"></span></a>
     <nav class="nav" aria-label="Portfolio">
       <a href="#work" data-en="Work" data-zh="精选">Work</a>
       <a href="#projects" data-en="Projects" data-zh="全部项目">Projects</a>
@@ -622,10 +624,11 @@
               <div class="project-foot"><strong class="proof" data-en="Hundreds of notes · Human review" data-zh="数百条笔记 · 人工审阅">Hundreds of notes · Human review</strong><button class="detail-btn" type="button" data-project="obsidian" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
             </article>
             <article class="project-card">
-              <p class="card-meta" data-en="Private · Interpretive AI" data-zh="私有项目 · 解释型 AI">Private · Interpretive AI</p>
-              <h3 data-en="Bazi Interpretation Skill" data-zh="八字解读 Skill">Bazi Interpretation Skill</h3>
-              <p data-en="A structured Skill combining domain rules, deterministic checks, and outcome tracking." data-zh="一个结合领域规则、确定性检查与结果跟踪的结构化 Skill。">A structured Skill combining domain rules, deterministic checks, and outcome tracking.</p>
-              <div class="project-foot"><strong class="proof" data-en="Bounded claim · Self-analysis > event prediction" data-zh="能力边界 · 自我分析优于事件预测">Bounded claim · Self-analysis &gt; event prediction</strong><button class="detail-btn" type="button" data-project="bazi" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+              <p class="card-meta" data-en="Web app · Private beta" data-zh="Web 应用 · 内测阶段">Web app · Private beta</p>
+              <h3 data-en="Clinical Bazi Web" data-zh="结构化八字解读">Clinical Bazi Web</h3>
+              <p data-en="A password-gated web app combining code-based chart calculation, true-solar-time correction, and streaming AI interpretation." data-zh="一个受密码保护的 Web 应用，结合代码排盘、真太阳时校正与 AI 流式解读。">A password-gated web app combining code-based chart calculation, true-solar-time correction, and streaming AI interpretation.</p>
+              <div class="project-links"><a href="https://clinical-bazi-web.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a><a href="https://github.com/HaoPan036/clinical-bazi-web" target="_blank" rel="noopener">GitHub ↗</a></div>
+              <div class="project-foot"><strong class="proof" data-en="Private beta · Password on request" data-zh="内测阶段 · 密码可联系获取">Private beta · Password on request</strong><button class="detail-btn" type="button" data-project="bazi" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
             </article>
             <article class="project-card">
               <p class="card-meta" data-en="Concept · AI-assisted learning" data-zh="概念原型 · AI 辅助学习">Concept · AI-assisted learning</p>
@@ -718,7 +721,7 @@
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#365a50">π</span></span><span class="skill-name">Pi Agent</span><span class="skill-level" data-en="Working" data-zh="可用">Working</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">T→SQL</span></span><span class="skill-name">Text-to-SQL</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#4285f4">ADK</span></span><span class="skill-name">Google ADK</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark hex" style="--mark:#202423">MA</span></span><span class="skill-name">Multi-Agent Systems</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">Web</span></span><span class="skill-name">AI Web Apps</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">Eval</span></span><span class="skill-name">LLM Evaluation</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#55776b">↻</span></span><span class="skill-name">Workflow Automation</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#7554a3">LF</span></span><span class="skill-name">Langfuse</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
@@ -748,7 +751,7 @@
     </section>
   </main>
 
-  <footer><span data-en="Singapore · Open to applied-AI roles" data-zh="新加坡 · 开放应用 AI 机会">Singapore · Open to applied-AI roles</span><span>© 2026 Hao Pan</span></footer>
+  <footer><span data-en="Singapore · Open to applied-AI roles" data-zh="新加坡 · 开放应用 AI 机会">Singapore · Open to applied-AI roles</span><span data-en="© 2026 Hao Pan" data-zh="© 2026 潘昊">© 2026 Hao Pan</span></footer>
 
   <dialog id="project-dialog" aria-labelledby="dialog-title">
     <article class="dialog-panel">
@@ -1122,29 +1125,33 @@
         note: { en: "Private personal project; source and knowledge base are not public.", zh: "私有个人项目，源码与知识库不公开。" }
       },
       bazi: {
-        category: { en: "Private · Interpretive AI", zh: "私有项目 · 解释型 AI" },
-        title: { en: "Bazi Interpretation Skill", zh: "八字解读 Skill" },
+        category: { en: "Web app · Private beta", zh: "Web 应用 · 内测阶段" },
+        title: { en: "Clinical Bazi Web", zh: "结构化八字解读" },
         summary: {
-          en: "A structured Skill combining domain rules, deterministic checks, and outcome tracking in an interpretive domain.",
-          zh: "在解释型领域中结合领域规则、确定性检查与结果跟踪的结构化 Skill。"
+          en: "A password-gated web app combining code-based Bazi chart calculation, true-solar-time correction, and streaming AI interpretation.",
+          zh: "一个受密码保护的 Web 应用，结合代码排盘、真太阳时校正与 AI 流式解读。"
         },
-        proof: { en: "Rules · Checks · Outcome tracking", zh: "规则 · 检查 · 结果跟踪" },
+        proof: { en: "Code-based charting · True solar time · Streaming AI", zh: "代码排盘 · 真太阳时校正 · AI 流式解读" },
         details: {
           en: [
-            "Externalized domain rules into an explicit workflow.",
-            "Tracked interpretations against real outcomes and documented failures.",
-            "Used human judgment where context-sensitive interpretation could not be safely automated."
+            "Calculates structured Bazi chart data in code.",
+            "Applies true-solar-time correction before interpretation.",
+            "Streams AI-assisted interpretation through a focused web interface."
           ],
           zh: [
-            "把领域规则外化为显式工作流。",
-            "把解读与真实结果对照，并记录失败。",
-            "在上下文敏感、无法安全自动化的地方保留人工判断。"
+            "通过代码计算结构化八字排盘数据。",
+            "在解读前进行真太阳时校正。",
+            "通过专注的 Web 界面流式输出 AI 辅助解读。"
           ]
         },
         note: {
-          en: "Bounded claim: the method appeared stronger for self-analysis and tendencies than for predicting events. No numerical accuracy claim is made.",
-          zh: "能力边界：该方法在自我分析与倾向上表现更好，而不适合事件预测；这里不声明任何数值准确率。"
-        }
+          en: "Currently in private beta. Contact me to request the access password.",
+          zh: "目前处于内测阶段，可联系我获取访问密码。"
+        },
+        links: [
+          { label: { en: "Open private beta", zh: "打开内测版" }, url: "https://clinical-bazi-web.vercel.app/", primary: true },
+          { label: { en: "View repository", zh: "查看仓库" }, url: "https://github.com/HaoPan036/clinical-bazi-web" }
+        ]
       },
       synapse: {
         category: { en: "Concept · AI-assisted learning", zh: "概念原型 · AI 辅助学习" },
@@ -1230,6 +1237,9 @@
       document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
       document.querySelectorAll("[data-en][data-zh]").forEach(function (element) {
         element.textContent = language === "zh" ? element.dataset.zh : element.dataset.en;
+      });
+      document.querySelectorAll("[data-label-en][data-label-zh]").forEach(function (element) {
+        element.setAttribute("aria-label", language === "zh" ? element.dataset.labelZh : element.dataset.labelEn);
       });
       document.querySelectorAll(".lang button").forEach(function (button) {
         button.setAttribute("aria-pressed", String(button.dataset.lang === language));
