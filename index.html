@@ -273,9 +273,9 @@
     .journey { padding: 120px 5vw 130px; border-top: 1px solid var(--line); background: var(--bg); }
     .journey-head h2 {
       margin: 16px 0 0; font-size: clamp(3.8rem, 7vw, 7.4rem);
-      font-weight: 500; letter-spacing: -.07em; line-height: .92;
+      font-weight: 700; letter-spacing: -.065em; line-height: .92;
     }
-    .journey-head h2 em { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+    .journey-head h2 em { color: var(--jade-dark); font: inherit; font-style: normal; }
     .journey-track {
       position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(28px, 4vw, 64px); margin-top: 94px;
@@ -296,6 +296,8 @@
       box-shadow: 0 0 0 2px var(--line-dark); transition: background .16s ease, box-shadow .16s ease;
     }
     .journey-item[open] .journey-dot { background: var(--ink); box-shadow: 0 0 0 2px var(--ink); }
+    .journey-item summary strong { transition: color .16s ease; }
+    .journey-item summary:hover strong, .journey-item[open] summary strong { color: var(--jade-dark); }
     .journey-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
     .journey-item time, .journey-kind {
       color: var(--muted); font-family: "JetBrains Mono", monospace;
@@ -332,14 +334,6 @@
     .skill-mark.wordmark { font-size: clamp(.9rem, 1.8vw, 1.45rem); letter-spacing: -.03em; }
     .skill-mark.rounded { border-radius: 24%; color: white; background: var(--mark, var(--jade-dark)); }
     .skill-mark.hex { color: white; background: var(--mark, var(--jade-dark)); clip-path: polygon(25% 7%,75% 7%,100% 50%,75% 93%,25% 93%,0 50%); }
-    .skill-mark.spark { color: #e25a1c; font-size: clamp(2.5rem, 5vw, 4.4rem); }
-    .skill-mark.gemini { color: #7257d8; font-size: clamp(2.6rem, 5vw, 4.6rem); }
-    .skill-mark.chroma { grid-template-columns: repeat(2, 1fr); gap: 4px; }
-    .skill-mark.chroma i { width: 100%; aspect-ratio: 1; border-radius: 50%; }
-    .skill-mark.chroma i:nth-child(1) { background: #ff5a5f; }
-    .skill-mark.chroma i:nth-child(2) { background: #ffbd2e; }
-    .skill-mark.chroma i:nth-child(3) { background: #28c840; }
-    .skill-mark.chroma i:nth-child(4) { background: #5775e5; }
     .skill-name { font-size: .82rem; font-weight: 600; line-height: 1.25; }
     .skill-level {
       color: var(--muted); font-family: "JetBrains Mono", monospace;
@@ -448,7 +442,6 @@
       .skill-orb { max-width: 96px; }
       .skill-mark { font-size: 1.45rem; }
       .skill-mark.wordmark { font-size: .85rem; }
-      .skill-mark.spark, .skill-mark.gemini { font-size: 2.65rem; }
       .contact { min-height: 320px; padding: 26px 22px; }
       footer { align-items: flex-start; flex-direction: column; padding: 24px 20px; }
       .dialog-head { padding: 22px 20px 18px; }
@@ -671,13 +664,13 @@
           </li>
           <li class="honor-row">
             <time datetime="2022">2022–23</time>
-            <div><span class="honor-kicker" data-en="Scholarship" data-zh="奖学金">Scholarship</span><h3 data-en="China National Scholarship" data-zh="国家奖学金">China National Scholarship</h3><p data-en="Suzhou University · B.Eng." data-zh="苏州大学 · 工学学士">Suzhou University · B.Eng.</p></div>
+            <div><span class="honor-kicker" data-en="Scholarship" data-zh="奖学金">Scholarship</span><h3 data-en="China National Scholarship" data-zh="国家奖学金">China National Scholarship</h3><p data-en="Suzhou University · B.Eng." data-zh="Suzhou University · 工学学士">Suzhou University · B.Eng.</p></div>
             <strong class="honor-result" data-en="Top 0.2% nationwide" data-zh="全国前 0.2%">Top 0.2% nationwide</strong>
             <span class="honor-placeholder" aria-hidden="true"></span>
           </li>
           <li class="honor-row">
             <time datetime="2022-06">2022.06</time>
-            <div><span class="honor-kicker" data-en="Competition · Project" data-zh="竞赛 · 项目">Competition · Project</span><h3 data-en="Huawei ICT TB-Scale Pipeline" data-zh="华为 ICT TB 级流水线">Huawei ICT TB-Scale Pipeline</h3><p data-en="Cloud Track · TB-scale data · 40% lower query latency" data-zh="云赛道 · TB 级数据 · 查询延迟降低 40%">Cloud Track · TB-scale data · 40% lower query latency</p></div>
+            <div><span class="honor-kicker" data-en="Competition · Project" data-zh="竞赛 · 项目">Competition · Project</span><h3 data-en="Huawei ICT Competition" data-zh="华为 ICT 大赛">Huawei ICT Competition</h3></div>
             <strong class="honor-result" data-en="Global Final · 3rd Prize · Top 5%" data-zh="全球总决赛 · 三等奖 · 前 5%">Global Final · 3rd Prize · Top 5%</strong>
             <button class="detail-btn" type="button" data-project="huawei" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Project details" data-zh="项目详情">Project details</span><span aria-hidden="true">↗</span></button>
           </li>
@@ -693,8 +686,8 @@
         </header>
         <div class="journey-track">
           <details class="journey-item" open>
-            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2026-02">Feb 2026—Present</time><small class="journey-kind" data-en="Work" data-zh="工作">Work</small></span><strong data-en="AI Data Analyst Intern" data-zh="AI 数据分析实习生">AI Data Analyst Intern</strong><span class="journey-org">Shopee · Buyer &amp; Marketing BI</span></summary>
-            <div class="journey-detail"><p data-en="Production Skills, deterministic A/B-test workflows, and query optimization for an internal LLM-powered data agent." data-zh="为内部 LLM 数据 Agent 设计生产 Skill、确定性 A/B 测试工作流与查询优化。">Production Skills, deterministic A/B-test workflows, and query optimization for an internal LLM-powered data agent.</p></div>
+            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2026-03">Mar 2026—Sep 2026</time><small class="journey-kind" data-en="Work" data-zh="工作">Work</small></span><strong data-en="AI Data Analyst Intern" data-zh="AI 数据分析实习生">AI Data Analyst Intern</strong><span class="journey-org">Shopee · Singapore</span></summary>
+            <div class="journey-detail"><p data-en="Partnered with product managers and regional stakeholders to turn metric definitions and recurring analytics into reusable agent skills, Text-to-SQL and A/B-testing workflows, SQL validators, and evaluation utilities." data-zh="与产品经理及区域业务方合作，将指标定义和重复分析流程转化为可复用的 Agent Skills、Text-to-SQL 与 A/B 测试工作流、SQL 校验器和评估工具。">Partnered with product managers and regional stakeholders to turn metric definitions and recurring analytics into reusable agent skills, Text-to-SQL and A/B-testing workflows, SQL validators, and evaluation utilities.</p></div>
           </details>
           <details class="journey-item">
             <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2025-11">Nov 2025—Jan 2027</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="M.Comp. in Applied AI" data-zh="应用 AI 计算机硕士">M.Comp. in Applied AI</strong><span class="journey-org" data-en="Nanyang Technological University · CCDS" data-zh="南洋理工大学 · CCDS">Nanyang Technological University · CCDS</span></summary>
@@ -705,7 +698,7 @@
             <div class="journey-detail"><p data-en="Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities." data-zh="为 300 多名学生讲授 AI 与 Python，并设计应用机器学习、生成式 AI 课程与主动学习活动。">Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities.</p></div>
           </details>
           <details class="journey-item">
-            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2019-09">Sep 2019—Jun 2023</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="B.Eng. Data Science &amp; Big Data" data-zh="数据科学与大数据工学学士">B.Eng. Data Science &amp; Big Data</strong><span class="journey-org" data-en="Suzhou University" data-zh="苏州大学">Suzhou University</span></summary>
+            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2019-09">Sep 2019—Jun 2023</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="B.Eng. Data Science &amp; Big Data" data-zh="数据科学与大数据工学学士">B.Eng. Data Science &amp; Big Data</strong><span class="journey-org" data-en="Suzhou University" data-zh="Suzhou University">Suzhou University</span></summary>
             <div class="journey-detail"><p data-en="China National Scholarship, placing in the top 0.2% nationwide in 2022–23." data-zh="获 2022–23 年国家奖学金，全国前 0.2%。">China National Scholarship, placing in the top 0.2% nationwide in 2022–23.</p></div>
           </details>
         </div>
@@ -717,17 +710,17 @@
         <header class="skills-head"><p class="section-label" data-en="Capabilities" data-zh="技术能力">Capabilities</p><h2 data-en="Skills" data-zh="技能">Skills</h2></header>
         <ul class="skill-grid" role="list">
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#3776ab">Py</span></span><span class="skill-name">Python</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#4878cf">≋</span></span><span class="skill-name">Presto / Trino</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark" style="color:#00758f">MySQL</span></span><span class="skill-name">MySQL</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark hex" style="--mark:#f2b91d">H</span></span><span class="skill-name">Apache Hive</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark spark">✦</span></span><span class="skill-name">PySpark</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#ee4c2c">◔</span></span><span class="skill-name">PyTorch</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#f7931e">SK</span></span><span class="skill-name">scikit-learn</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark" style="color:#0f80cc">SQL</span></span><span class="skill-name">SQLite</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#4285f4">ADK</span></span><span class="skill-name">Google ADK</span><span class="skill-level" data-en="Working" data-zh="可用">Working</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark gemini">✦</span></span><span class="skill-name">Gemini</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark hex" style="--mark:#202423">LG</span></span><span class="skill-name">LangGraph</span><span class="skill-level" data-en="Working" data-zh="可用">Working</span></li>
-          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark chroma"><i></i><i></i><i></i><i></i></span></span><span class="skill-name">ChromaDB</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#3178c6">TS</span></span><span class="skill-name">TypeScript</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark" style="color:#0f80cc">SQL</span></span><span class="skill-name">SQL</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark hex" style="--mark:#365a50">Ctx</span></span><span class="skill-name">Context Engineering</span><span class="skill-level" data-en="Core" data-zh="核心">Core</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">Skill</span></span><span class="skill-name">Agent Skills</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#55776b">H</span></span><span class="skill-name">Agent Harness</span><span class="skill-level" data-en="Working" data-zh="可用">Working</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#365a50">π</span></span><span class="skill-name">Pi Agent</span><span class="skill-level" data-en="Working" data-zh="可用">Working</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">T→SQL</span></span><span class="skill-name">Text-to-SQL</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#4285f4">ADK</span></span><span class="skill-name">Google ADK</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark hex" style="--mark:#202423">MA</span></span><span class="skill-name">Multi-Agent Systems</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark wordmark">Eval</span></span><span class="skill-name">LLM Evaluation</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
+          <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#55776b">↻</span></span><span class="skill-name">Workflow Automation</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#7554a3">LF</span></span><span class="skill-name">Langfuse</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark rounded" style="--mark:#f05032">Git</span></span><span class="skill-name">Git</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
           <li class="skill-item"><span class="skill-orb" aria-hidden="true"><span class="skill-mark" style="color:#202423">$_</span></span><span class="skill-name">Linux</span><span class="skill-level" data-en="Project-used" data-zh="项目使用">Project-used</span></li>
@@ -1042,23 +1035,21 @@
         ]
       },
       huawei: {
-        category: { en: "Competition engineering · Data systems", zh: "竞赛工程 · 数据系统" },
-        title: { en: "Huawei ICT TB-Scale Pipeline", zh: "华为 ICT TB 级流水线" },
+        category: { en: "Competition · Project", zh: "竞赛 · 项目" },
+        title: { en: "Huawei ICT Competition", zh: "华为 ICT 大赛" },
         summary: {
-          en: "A TB-scale PySpark, Hive, and MySQL pipeline built for the Huawei ICT Competition global final.",
-          zh: "为华为 ICT 大赛全球总决赛构建的 TB 级 PySpark、Hive 与 MySQL 流水线。"
+          en: "A competition project that reached the Huawei ICT Competition global final.",
+          zh: "进入华为 ICT 大赛全球总决赛的竞赛项目。"
         },
-        proof: { en: "40% lower query latency · Global 3rd prize", zh: "查询延迟降低 40% · 全球三等奖" },
+        proof: { en: "Global Final · 3rd Prize · Top 5%", zh: "全球总决赛 · 三等奖 · 前 5%" },
         details: {
           en: [
-            "Built a large-scale data-processing pipeline across PySpark, Hive, and MySQL.",
-            "Reduced query latency by 40%.",
-            "Reached the Cloud Track global final and received third prize."
+            "Advanced to the Huawei ICT Competition global final.",
+            "Received third prize, placing in the top 5%."
           ],
           zh: [
-            "使用 PySpark、Hive 与 MySQL 构建大规模数据处理流水线。",
-            "将查询延迟降低 40%。",
-            "进入云赛道全球总决赛并获三等奖。"
+            "进入华为 ICT 大赛全球总决赛。",
+            "获全球总决赛三等奖，位列前 5%。"
           ]
         }
       },
@@ -1297,6 +1288,9 @@
       button.addEventListener("click", function () { openProject(button.dataset.project, button); });
     });
     document.querySelectorAll(".journey-item").forEach(function (item) {
+      item.addEventListener("mouseenter", function () {
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) item.open = true;
+      });
       item.addEventListener("toggle", function () {
         if (!item.open) return;
         document.querySelectorAll(".journey-item[open]").forEach(function (other) {
