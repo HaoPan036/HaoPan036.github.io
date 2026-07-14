@@ -94,7 +94,7 @@
     .lang button[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
     section { scroll-margin-top: 82px; }
     .hero {
-      position: relative; display: grid; min-height: calc(88svh - 82px);
+      position: relative; display: grid; min-height: calc(100svh - 82px);
       place-items: center; overflow: clip; padding: 70px 5vw 130px;
       border-bottom: 1px solid var(--line);
     }
@@ -143,7 +143,7 @@
     .featured {
       position: relative; margin-bottom: 18px; padding: 32px 36px 40px;
       color: var(--paper); border: 1px solid var(--ink); background: var(--ink);
-      box-shadow: 0 24px 70px rgba(28,36,34,.12); transform: translateY(-70px);
+      box-shadow: 0 24px 70px rgba(28,36,34,.12);
     }
     .card-top {
       display: flex; justify-content: space-between; gap: 24px; padding-bottom: 24px;
@@ -419,12 +419,12 @@
     @media (max-width: 680px) {
       .header { min-height: 70px; padding: 0 20px; }
       .brand { font-size: 1.3rem; }
-      .hero { min-height: calc(82svh - 70px); padding: 60px 20px 105px; }
+      .hero { min-height: calc(100svh - 70px); padding: 60px 20px 105px; }
       .orbit { width: 760px; }
       h1 { font-size: clamp(3.25rem, 15vw, 5.25rem); }
       .hero .eyebrow { max-width: 22rem; font-size: 1.1rem; }
       .work { padding: 0 20px 90px; }
-      .featured { padding: 24px 22px 28px; transform: translateY(-50px); }
+      .featured { padding: 24px 22px 28px; }
       .featured h2 { font-size: clamp(2.8rem, 13vw, 4.2rem); }
       .support-grid, .project-grid { grid-template-columns: 1fr; }
       .support-card { min-height: 300px; padding: 24px 22px; }
