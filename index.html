@@ -138,6 +138,11 @@
     .btn:hover { transform: translateY(-2px); background: var(--paper); }
     .btn-primary { color: var(--paper); background: var(--ink); }
     .btn-primary:hover { background: var(--jade-dark); }
+    .principles { padding: 84px 5vw 92px; border-bottom: 1px solid var(--line); background: var(--bg); }
+    .principles .section-label { margin-bottom: 34px; }
+    .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .principles-grid h3 { margin: 0; font-size: clamp(1.25rem, 1.8vw, 1.7rem); letter-spacing: -.03em; line-height: 1.25; }
+    .principles-grid p { margin: 14px 0 0; color: var(--muted); line-height: 1.62; }
     .work { position: relative; z-index: 3; padding: 0 5vw 120px; background: var(--paper); }
     .shell { width: min(100%, var(--max)); margin: 0 auto; }
     .featured {
@@ -390,6 +395,7 @@
       .header { grid-template-columns: 1fr auto; }
       .nav { display: none; }
       .lang { grid-column: 2; }
+      .principles-grid { grid-template-columns: 1fr; gap: 28px; }
       .featured-grid, .about-grid { grid-template-columns: 1fr; }
       .featured-copy { margin-top: 30px; }
       .project-grid { grid-template-columns: repeat(2, 1fr); }
@@ -419,6 +425,7 @@
       .orbit { width: 760px; }
       h1 { font-size: clamp(3.25rem, 15vw, 5.25rem); }
       .hero .eyebrow { max-width: 22rem; font-size: 1.1rem; }
+      .principles { padding: 60px 20px 66px; }
       .work { padding: 0 20px 90px; }
       .featured { padding: 24px 22px 28px; }
       .featured h2 { font-size: clamp(2.8rem, 13vw, 4.2rem); }
@@ -484,6 +491,26 @@
         <div class="actions">
           <a class="btn btn-primary" href="#work"><span data-en="Selected work" data-zh="精选项目">Selected work</span><span aria-hidden="true">↓</span></a>
           <a class="btn" href="#projects"><span data-en="Projects" data-zh="项目">Projects</span><span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles" aria-labelledby="principles-title">
+      <div class="shell">
+        <h2 id="principles-title" class="section-label" data-en="How I work" data-zh="工作方式">How I work</h2>
+        <div class="principles-grid">
+          <article>
+            <h3 data-en="Find the real problem" data-zh="找到真实问题">Find the real problem</h3>
+            <p data-en="The 30–45-minute A/B readouts at Shopee were never a query-speed problem — they were a standardization problem. Diagnosis comes before solution." data-zh="Shopee 每次 30–45 分钟的 A/B 分析从来不是查询速度问题，而是标准化问题。先诊断，再动手。">The 30–45-minute A/B readouts at Shopee were never a query-speed problem — they were a standardization problem. Diagnosis comes before solution.</p>
+          </article>
+          <article>
+            <h3 data-en="Automate execution, never understanding" data-zh="让渡执行，不让渡理解">Automate execution, never understanding</h3>
+            <p data-en="People may hand execution to AI, but they must still see why. Aesthetics, evaluation, and decisions stay human; uncertain cases go back to a person." data-zh="人可以把执行交给 AI，但必须仍然知道为什么。审美、评估与决策留给人；不确定的样本交回人工。">People may hand execution to AI, but they must still see why. Aesthetics, evaluation, and decisions stay human; uncertain cases go back to a person.</p>
+          </article>
+          <article>
+            <h3 data-en="Constrain what must not fail" data-zh="把不能出错的部分交给约束">Constrain what must not fail</h3>
+            <p data-en="SQL templates, output schemas, lint rules, explicit failure modes — deterministic code guarantees what the model cannot." data-zh="SQL 模板、输出 schema、lint 规则、显式失败模式——确定性代码保证模型无法保证的部分。">SQL templates, output schemas, lint rules, explicit failure modes — deterministic code guarantees what the model cannot.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -628,7 +655,7 @@
               <h3 data-en="Clinical Bazi Web" data-zh="结构化八字解读">Clinical Bazi Web</h3>
               <p data-en="A password-gated web app combining code-based chart calculation, true-solar-time correction, and streaming AI interpretation." data-zh="一个受密码保护的 Web 应用，结合代码排盘、真太阳时校正与 AI 流式解读。">A password-gated web app combining code-based chart calculation, true-solar-time correction, and streaming AI interpretation.</p>
               <div class="project-links"><a href="https://clinical-bazi-web.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a><a href="https://github.com/HaoPan036/clinical-bazi-web" target="_blank" rel="noopener">GitHub ↗</a></div>
-              <div class="project-foot"><strong class="proof" data-en="Private beta · Password on request" data-zh="内测阶段 · 密码可联系获取">Private beta · Password on request</strong><button class="detail-btn" type="button" data-project="bazi" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
+              <div class="project-foot"><strong class="proof" data-en="Private beta · In active use" data-zh="内测阶段 · 有真实用户使用">Private beta · In active use</strong><button class="detail-btn" type="button" data-project="bazi" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="Details" data-zh="详情">Details</span><span aria-hidden="true">↗</span></button></div>
             </article>
             <article class="project-card">
               <p class="card-meta" data-en="Concept · AI-assisted learning" data-zh="概念原型 · AI 辅助学习">Concept · AI-assisted learning</p>
@@ -728,7 +755,7 @@
       <div class="shell about-grid">
         <div>
           <p class="section-label" data-en="About" data-zh="关于">About</p>
-          <p class="about-copy" data-en="I design trustworthy AI systems at the boundary between expert judgment and automation." data-zh="我在专家判断与自动化的交界处，设计值得信任的 AI 系统。">I design trustworthy AI systems at the boundary between expert judgment and automation.</p>
+          <p class="about-copy" data-en="Product-minded AI engineering: find the right problem, choose the right solution, and be able to say why." data-zh="产品导向的 AI 工程：找到正确的问题，选对解法，并说得清为什么。">Product-minded AI engineering: find the right problem, choose the right solution, and be able to say why.</p>
           <div class="actions" style="justify-content:flex-start">
             <a class="btn" href="https://github.com/HaoPan036" target="_blank" rel="noopener">GitHub ↗</a>
             <a class="btn" href="https://www.linkedin.com/in/hao-pan-59193937a/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -1128,17 +1155,19 @@
           en: [
             "Calculates structured Bazi chart data in code.",
             "Applies true-solar-time correction before interpretation.",
-            "Streams AI-assisted interpretation through a focused web interface."
+            "Streams AI-assisted interpretation through a focused web interface.",
+            "Interpretation runs inside an explicit rule system with stated boundaries — judgment and decisions stay with the user."
           ],
           zh: [
             "通过代码计算结构化八字排盘数据。",
             "在解读前进行真太阳时校正。",
-            "通过专注的 Web 界面流式输出 AI 辅助解读。"
+            "通过专注的 Web 界面流式输出 AI 辅助解读。",
+            "解读在显式规则系统与明确边界内进行——判断与决策留给用户。"
           ]
         },
         note: {
-          en: "Currently in private beta. Contact me to request the access password.",
-          zh: "目前处于内测阶段，可联系我获取访问密码。"
+          en: "In private beta with a small group of active users; feedback so far has been positive. Contact me to request the access password.",
+          zh: "目前处于内测阶段，已有少量真实用户持续使用并给出积极反馈。可联系我获取访问密码。"
         },
         links: [
           { label: { en: "Open private beta", zh: "打开内测版" }, url: "https://clinical-bazi-web.vercel.app/", primary: true },
