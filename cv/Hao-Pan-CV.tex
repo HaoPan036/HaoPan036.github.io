@@ -1,0 +1,173 @@
+%-------------------------
+% CV in LaTeX
+% Author: Hao Pan
+% Target: 2026 Autumn Recruitment - Data Agent / LLM Application Engineer
+% Version: Portfolio-aligned revision (2026-07-17)
+% Based on: https://github.com/sb2nov/resume
+% License: MIT
+%-------------------------
+
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[letterpaper,left=0.45in,right=0.45in,top=0.25in,bottom=0.30in]{geometry}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{multicol}
+\linespread{0.97}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\hypersetup{
+  pdftitle={Hao Pan - CV},
+  pdfauthor={Hao Pan},
+  pdfsubject={Data Agent / LLM Application Engineer}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{
+  \item\small{{#1 \vspace{-3pt}}}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
+    \small #1 & \textbf{\small #2} \\
+  \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in,label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.16in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+
+\begin{document}
+
+\begin{center}
+  {\Huge \scshape Hao Pan} \\ \vspace{2pt}
+  Singapore \\ \vspace{2pt}
+  \small
+  +65 8124 4894 ~|~
+  \href{mailto:hao036@e.ntu.edu.sg}{\underline{hao036@e.ntu.edu.sg}} ~|~
+  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\underline{linkedin.com/in/hao-pan-59193937a}} ~|~
+  \href{https://haopan036.github.io/}{\underline{haopan036.github.io}}
+  \vspace{-8pt}
+\end{center}
+
+\section{Summary}
+\begin{itemize}[leftmargin=0.15in,label={}]
+  \small{\item{
+    \textbf{Data Agent / LLM Application Engineer} building constrained, auditable analytics systems. Developed production Data Agent Skills, deterministic Text-to-SQL workflows, and field-level evaluations at Shopee; combines product diagnosis, failure-mode engineering, and human-in-the-loop design to turn business logic into reliable AI capabilities.
+  }}
+\end{itemize}
+\vspace{-12pt}
+
+\section{Education}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Nanyang Technological University}{Nov. 2025 -- Jan. 2027}
+    {Master of Computing in Applied Artificial Intelligence, College of Computing and Data Science}{Singapore}
+    \resumeItemListStart
+      \resumeItem{Coursework: Agentic AI \& Applications, Reinforcement Learning, and LLM Applications.}
+    \resumeItemListEnd
+  \resumeSubheading
+    {Suzhou University}{Sep. 2019 -- Jun. 2023}
+    {Bachelor of Engineering in Data Science and Big Data Technology}{China}
+    \resumeItemListStart
+      \resumeItem{\textbf{China National Scholarship} (Top 0.2\% nationwide, 2022--2023).}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{Experience}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Shopee Singapore}{Mar. 2026 -- Sep. 2026}
+    {AI Data Analyst Intern, Buyer \& Marketing BI Team}{Singapore}
+    \resumeItemListStart
+      \resumeItem{Built and deployed \textbf{5 production Data Agent Skills} spanning PDP, OPC, Review, Cart, and a standardized Skill authoring template; migrated metric definitions, joins, filters, and calculation logic from the A/B testing platform into reusable, auditable runbooks.}
+      \resumeItem{Designed deterministic execution boundaries: froze reference SQL, limited changes to \textbf{6 validated placeholders}, sharded one \texttt{group\_id} per query, and required successful shard results to be concatenated without rewriting, optimization, or re-aggregation.}
+      \resumeItem{Documented \textbf{15 explicit failure modes} across SQL rewriting, timeouts, partial results, live-table drift, and infrastructure errors; under the same SQL version and parameters, matched manual SQL exactly on \textbf{18 rows across all 19 fields}.}
+      \resumeItem{Automated recurring A/B-test analysis from requirement parsing through multi-region execution and result delivery, reducing turnaround from \textbf{30--45 min to 2--3 min}; built validation utilities and an AI-readable knowledge base for historical analyses, business logic, metrics, methods, and best practices.}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {Jinken Vocational and Technical College}{Mar. 2023 -- Oct. 2025}
+    {Instructor \& AI Technical Lead}{China}
+    \resumeItemListStart
+      \resumeItem{Designed and delivered Python, applied ML, and generative-AI curricula for \textbf{300+ students}; created hands-on labs, assessments, and project rubrics.}
+      \resumeItem{Led STEM robotics initiatives and mentored an autonomous indoor-UAV team using ROS, scenario decomposition, and obstacle avoidance to win \textbf{Third Prize at the RAICOM 2024 National Finals}.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{Selected Projects}
+\vspace{-5pt}
+\resumeSubHeadingListStart
+  \resumeProjectHeading
+    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\textbf{Multi-Agent Literature Monitoring System}} $|$ \emph{Python, Google ADK, ChromaDB, SQLite, Langfuse}}{Apr. -- May 2026}
+    \resumeItemListStart
+      \resumeItem{Architected the orchestrator for a team-built research-monitoring agent using \texttt{SequentialAgent + LoopAgent}, a critic-revision loop, and two human-in-the-loop checkpoints; designed typed schemas, dual storage, tracing, prompts, and guardrails.}
+      \resumeItem{Delivered approximately \textbf{3,990 LOC in owned modules} across orchestration, storage, observability, and guardrails; passed \textbf{18/18 smoke tests} and the full pytest suite.}
+    \resumeItemListEnd
+  \resumeProjectHeading
+    {\href{https://github.com/HaoPan036/surviv-code-as-policies}{\textbf{Hand-Coded Adversarial Agent}} $|$ \emph{Pure Python, standard library only}}{May 2026}
+    \resumeItemListStart
+      \resumeItem{Converted partial game observations into a transparent hierarchical policy for movement, aiming, and combat; iterated through black-box behavioral analysis, seeded tournaments, ablations, and systematic failure logging.}
+      \resumeItem{\textbf{Tied for 1st of 6 agents} in battle royale and won \textbf{43\% of 1v1 matches} against a neural-network opponent trained for 70M steps, without model training or external dependencies.}
+    \resumeItemListEnd
+  \resumeProjectHeading
+    {\href{https://github.com/HaoPan036/Burning-your-calories}{\textbf{Sim2Real Calorie Prediction}} $|$ \emph{Python, scikit-learn, physics-informed ML}}{2026}
+    \resumeItemListStart
+      \resumeItem{Built a Sim2Real pipeline combining MET-based physical relabeling, explicit feature engineering, and data expansion from \textbf{973 to 20K samples}; evaluated generalization on \textbf{15K unseen real-world records}.}
+      \resumeItem{Improved external $R^2$ from \textbf{-14.38} for a baseline random forest to \textbf{0.79} with linear regression, showing that distribution alignment and physics-grounded features outperformed added model complexity.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{Honors}
+\resumeSubHeadingListStart
+  \resumeProjectHeading
+    {\textbf{Huawei ICT Competition Global Final} $|$ Cloud Track, Global Third Prize (Top 5\%)}{Jun. 2022}
+\resumeSubHeadingListEnd
+\vspace{-12pt}
+
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in,label={}]
+  \small{\item{
+    \textbf{Languages}{: Python, SQL (Presto/Trino, Hive, MySQL), C++, Shell} \\
+    \textbf{Agent Systems}{: Google ADK, context engineering, Agent Skills/runbooks, Text-to-SQL, RAG, workflow automation} \\
+    \textbf{Reliability \& Data}{: LLM evaluation, failure-mode analysis, guardrails, PyTorch, Transformers, PySpark, SQLite, Langfuse} \\
+    \textbf{Engineering}{: Git, Linux, ROS} \quad
+    \textbf{Certifications}{: Software Designer (PRC), Higher Education Teacher's Certificate in AI (PRC), IELTS 6.5}
+  }}
+\end{itemize}
+\vspace{-16pt}
+
+\end{document}
