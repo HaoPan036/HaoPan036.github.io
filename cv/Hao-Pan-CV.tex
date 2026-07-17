@@ -16,6 +16,7 @@
 \usepackage{verbatim}
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage[english]{babel}
 \usepackage{tabularx}
@@ -23,6 +24,7 @@
 \linespread{0.97}
 \setlength{\multicolsep}{-3.0pt}
 \setlength{\columnsep}{-1pt}
+\graphicspath{{cv/icons/}{icons/}}
 \hypersetup{
   pdftitle={Hao Pan - CV},
   pdfauthor={Hao Pan},
@@ -42,6 +44,9 @@
 \titleformat{\section}{
   \vspace{-4pt}\raggedright\large\bfseries
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Font Awesome Free 5.15.4 icons (CC BY 4.0); see cv/icons/LICENSE.txt.
+\newcommand{\resumeIcon}[1]{\raisebox{-0.12\height}{\includegraphics[height=0.85em]{#1.pdf}}}
 
 \newcommand{\resumeItem}[1]{
   \item\small{{#1 \vspace{-3pt}}}
@@ -73,10 +78,10 @@
   {\Huge \scshape Hao Pan} \\ \vspace{2pt}
   Singapore \\ \vspace{2pt}
   \small
-  +65 8124 4894 ~|~
-  \href{mailto:hao036@e.ntu.edu.sg}{\underline{hao036@e.ntu.edu.sg}} ~|~
-  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\underline{linkedin.com/in/hao-pan-59193937a}} ~|~
-  \href{https://haopan036.github.io/}{\underline{haopan036.github.io}}
+  \resumeIcon{phone}\ +65 8124 4894 ~
+  \href{mailto:hao036@e.ntu.edu.sg}{\resumeIcon{envelope}\ \underline{hao036@e.ntu.edu.sg}} ~
+  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\resumeIcon{linkedin}\ \underline{linkedin.com/in/hao-pan}} ~
+  \href{https://haopan036.github.io/}{\resumeIcon{github}\ \underline{Website: haopan036.github.io}}
   \vspace{-8pt}
 \end{center}
 
