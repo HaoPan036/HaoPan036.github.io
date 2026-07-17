@@ -176,9 +176,14 @@
     .featured-metric strong {
       margin: 0; font-size: clamp(2.2rem, 4.2vw, 4.8rem); letter-spacing: -.07em; line-height: .9;
     }
+    .featured-metric.is-eval strong { font-size: clamp(1.8rem, 3.2vw, 3.6rem); }
     .featured-metric span {
       color: #d6dde6; font-family: "JetBrains Mono", monospace;
       font-size: .62rem; letter-spacing: .07em; line-height: 1.35; text-transform: uppercase;
+    }
+    .featured-scope {
+      margin: 12px 0 0; color: #f2c66d; font-family: "JetBrains Mono", monospace;
+      font-size: .6rem; letter-spacing: .06em; line-height: 1.5;
     }
     .detail-btn {
       display: inline-flex; min-height: 44px; align-items: center; gap: 20px; margin-top: 28px;
@@ -284,7 +289,7 @@
     }
     .journey-head h2 em { color: var(--jade-dark); font: inherit; font-style: normal; }
     .journey-track {
-      position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      position: relative; display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
       gap: clamp(28px, 4vw, 64px); margin-top: 94px;
     }
     .journey-track::before {
@@ -314,6 +319,7 @@
     .journey-item strong { margin-top: 7px; font-size: 1.08rem; line-height: 1.35; }
     .journey-org { color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
     .journey-detail { max-width: 34ch; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .journey-item:first-child .journey-detail { max-width: 56ch; }
     .journey-detail p { margin: 0; color: var(--muted); line-height: 1.62; }
     .journey-detail p + p { margin-top: 14px; }
 
@@ -435,6 +441,7 @@
       .featured-metrics { gap: 5px; }
       .featured-metric { min-height: 102px; padding: 13px 9px; }
       .featured-metric span { font-size: .52rem; }
+      .featured-scope { font-size: .56rem; }
       .flow-line { gap: 4px; }
       .flow-node { min-height: 66px; padding: 7px 4px; }
       .flow-node strong { font-size: .62rem; }
@@ -502,7 +509,7 @@
         <div class="principles-grid">
           <article>
             <h3 data-en="Find the real problem" data-zh="找到真实问题">Find the real problem</h3>
-            <p data-en="The 30–45-minute A/B readouts at Shopee were never a query-speed problem — they were a standardization problem. Diagnosis comes before solution." data-zh="Shopee 每次 30–45 分钟的 A/B 分析从来不是查询速度问题，而是标准化问题。先诊断，再动手。">The 30–45-minute A/B readouts at Shopee were never a query-speed problem — they were a standardization problem. Diagnosis comes before solution.</p>
+            <p data-en="At Shopee, the bottleneck was not query speed. Metric definitions, analytical logic, recurring workflows, and team knowledge had to be standardized before they could be automated reliably. Diagnosis comes before solution." data-zh="在 Shopee，瓶颈不是查询速度。指标定义、分析逻辑、重复工作流与团队知识必须先被标准化，才能可靠地自动化。先诊断，再动手。">At Shopee, the bottleneck was not query speed. Metric definitions, analytical logic, recurring workflows, and team knowledge had to be standardized before they could be automated reliably. Diagnosis comes before solution.</p>
           </article>
           <article>
             <h3 data-en="Automate execution, never understanding" data-zh="让渡执行，不让渡理解">Automate execution, never understanding</h3>
@@ -524,14 +531,15 @@
             <div>
               <p class="card-meta" data-en="Internal · Data-agent reliability" data-zh="内部项目 · 数据 Agent 可靠性">Internal · Data-agent reliability</p>
               <h2 data-en="Shopee Internal Data Agent" data-zh="Shopee 内部数据 Agent">Shopee Internal Data Agent</h2>
-              <div class="featured-metrics" aria-label="Shopee internal data-agent engineering metrics">
-                <div class="featured-metric"><strong>3</strong><span data-en="Production Skills" data-zh="生产 Skills">Production Skills</span></div>
-                <div class="featured-metric"><strong>9</strong><span data-en="Failure modes" data-zh="失败模式">Failure modes</span></div>
-                <div class="featured-metric"><strong>14</strong><span data-en="Lint rules" data-zh="Lint 规则">Lint rules</span></div>
+              <div class="featured-metrics" aria-label="Shopee internal Data Agent capability and evaluation metrics" data-label-en="Shopee internal Data Agent capability and evaluation metrics" data-label-zh="Shopee 内部数据 Agent 能力与评估指标">
+                <div class="featured-metric"><strong>5</strong><span data-en="Production Skills" data-zh="生产 Skills">Production Skills</span></div>
+                <div class="featured-metric"><strong>15</strong><span data-en="Failure modes" data-zh="失败模式">Failure modes</span></div>
+                <div class="featured-metric is-eval"><strong>18×19</strong><span data-en="Exact-match eval" data-zh="逐字段一致评估">Exact-match eval</span></div>
               </div>
+              <p class="featured-scope" data-en="PDP · OPC · Review · Cart · Skill build template" data-zh="PDP · OPC · Review · Cart · Skill 构建模板">PDP · OPC · Review · Cart · Skill build template</p>
             </div>
             <div class="featured-copy">
-              <p data-en="Turns recurring A/B-test analysis into auditable, repeatable production Skills." data-zh="把重复的 A/B 测试分析变成可审计、可复现的生产 Skill。">Turns recurring A/B-test analysis into auditable, repeatable production Skills.</p>
+              <p data-en="Turns metric logic, recurring analytics, and team knowledge into reusable Data Agent capabilities — standardized to build, constrained to run, and evaluated field by field." data-zh="把指标逻辑、重复分析与团队知识转化为可复用的数据 Agent 能力——以模板统一构建，以规则约束执行，并逐字段评估。">Turns metric logic, recurring analytics, and team knowledge into reusable Data Agent capabilities — standardized to build, constrained to run, and evaluated field by field.</p>
               <button class="detail-btn" type="button" data-project="shopeeAgent" aria-haspopup="dialog" aria-controls="project-dialog"><span data-en="View case study" data-zh="查看案例">View case study</span><span aria-hidden="true">↗</span></button>
             </div>
           </div>
@@ -800,22 +808,24 @@
         category: { en: "Internal · Data-agent reliability", zh: "内部项目 · 数据 Agent 可靠性" },
         title: { en: "Shopee Internal Data Agent", zh: "Shopee 内部数据 Agent" },
         summary: {
-          en: "An internal LLM-powered data agent that turns recurring analyst work into auditable, repeatable production Skills.",
-          zh: "一个内部 LLM 数据 Agent，把重复的分析师工作转化为可审计、可复现的生产 Skill。"
+          en: "An internal Data Agent capability layer that turns metric logic, recurring analytics, and team knowledge into reusable, testable production Skills.",
+          zh: "一个内部数据 Agent 能力层，把指标逻辑、重复分析与团队知识转化为可复用、可测试的生产 Skill。"
         },
-        proof: { en: "3 production Skills · 9 failure modes · 14 lint rules", zh: "3 个生产 Skill · 9 类失败模式 · 14 条 lint 规则" },
+        proof: { en: "5 production Skills · 15 failure modes · 18 rows × 19 fields exact match", zh: "5 个生产 Skill · 15 类失败模式 · 18 行 × 19 字段完全一致" },
         details: {
           en: [
             "The problem: product managers and regional stakeholders repeat the same A/B-test readouts; each one cost an analyst 30–45 minutes, with no standardized, auditable procedure.",
-            "The boundary: another team owns the underlying agent platform; I own the application-constraint layer — three production Skills covering Me-Page traffic, PDP ads-voucher conversion, and PDP OPU & GMV.",
-            "What stays out of the LLM: each Skill is fixed as inputs → procedure → SQL template → output schema → pre-return checklist, so query logic and output shape are guaranteed by design, not by the model.",
-            "How it is verified: nine failure modes are explicit and guarded by fourteen lint rules — including denominator shrinkage when a LEFT JOIN silently collapses into an INNER JOIN."
+            "The boundary: another team owns the underlying agent platform; I own five production Skills spanning PDP, OPC, Review, Cart, and a standardized Skill build template.",
+            "What stays out of the LLM: SQL is frozen; only six validated placeholders may change. Sharding is limited to one group_id per query, and successful results are concatenated without rewriting, optimization, or re-aggregation.",
+            "Failure coverage: fifteen explicit modes cover SQL rewrites, USING resolution, timeout behavior, Topic interference, partial results, live-table drift, and infrastructure errors.",
+            "Evaluation: with the same SQL version and parameters, the Skill reproduced 18 rows across all 19 output fields exactly against the manual SQL; live-table comparisons must run close in time or use a fixed snapshot."
           ],
           zh: [
             "问题：产品经理与区域业务方反复提出相似的 A/B 测试分析，每次占用分析师 30–45 分钟，且没有标准化、可审计的流程。",
-            "边界：底层 Agent 平台由其他团队负责；我负责应用约束层——Me-Page 流量、PDP 广告 voucher 转化、PDP OPU & GMV 三个生产 Skill。",
-            "不交给 LLM 的部分：每个 Skill 固定为输入 → 流程 → SQL 模板 → 输出 schema → 返回前检查，查询逻辑与输出结构由设计保证，而不是由模型保证。",
-            "验证方式：显式列出 9 类失败模式，由 14 条 lint 规则守护——包括 LEFT JOIN 静默退化为 INNER JOIN 导致的分母缩小。"
+            "边界：底层 Agent 平台由其他团队负责；我负责 PDP、OPC、Review、Cart 与标准化 Skill 构建模板五个生产 Skill。",
+            "不交给 LLM 的部分：SQL 完全冻结，只允许替换 6 个经过校验的占位符；每条查询仅按单个 group_id 分片，成功结果只做纵向拼接，不允许改写、优化或再次聚合。",
+            "失败覆盖：显式整理 15 类失败模式，涵盖 SQL 改写、USING 解析、超时行为、Topic 干扰、部分结果、Live 表漂移与基础设施错误。",
+            "评估方式：在相同 SQL 版本与参数下，Skill 的 18 行结果在全部 19 个输出字段上与手动 SQL 完全一致；Live 表比较需尽量接近执行时间，或使用固定快照。"
           ]
         },
         note: {
