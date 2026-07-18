@@ -11,7 +11,8 @@
 
 \usepackage{latexsym}
 \usepackage[a4paper,left=0.50in,right=0.50in,top=0.32in,bottom=0.35in]{geometry}
-\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\usepackage{fontspec}
+\usepackage{xeCJK}
 \usepackage{titlesec}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{verbatim}
@@ -27,12 +28,15 @@
   BoldItalicFont=texgyreheros-bolditalic.otf
 ]{texgyreheros-regular.otf}
 \setCJKmainfont[
-  BoldFont=FandolHei-Bold.otf,
-  ItalicFont=FandolKai-Regular.otf,
-  BoldItalicFont=FandolHei-Bold.otf
-]{FandolHei-Regular.otf}
+  Script=Default,
+  BoldFont={Songti SC Bold},
+  AutoFakeSlant=0.18
+]{Songti SC Regular}
+\setCJKmonofont[Script=Default]{Songti SC Regular}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
 
-\linespread{1.01}
+\linespread{1.05}
 \setlength{\multicolsep}{-3.0pt}
 \setlength{\columnsep}{-1pt}
 \graphicspath{{cv/icons/}{icons/}}
