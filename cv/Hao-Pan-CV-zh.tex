@@ -1,0 +1,189 @@
+%-------------------------
+% 中文简历 LaTeX
+% Author: Hao Pan
+% Target: Data Agent / LLM Application Engineer
+% Version: 2026-07-18
+% Based on: https://github.com/sb2nov/resume
+% License: MIT
+%-------------------------
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[a4paper,left=0.50in,right=0.50in,top=0.32in,bottom=0.35in]{geometry}
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{multicol}
+\setmainfont[
+  BoldFont=texgyreheros-bold.otf,
+  ItalicFont=texgyreheros-italic.otf,
+  BoldItalicFont=texgyreheros-bolditalic.otf
+]{texgyreheros-regular.otf}
+\setCJKmainfont[
+  BoldFont=FandolHei-Bold.otf,
+  ItalicFont=FandolKai-Regular.otf,
+  BoldItalicFont=FandolHei-Bold.otf
+]{FandolHei-Regular.otf}
+
+\linespread{1.01}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\graphicspath{{cv/icons/}{icons/}}
+\hypersetup{
+  pdftitle={潘昊 - 中文简历},
+  pdfauthor={潘昊},
+  pdfsubject={Data Agent / LLM Application Engineer}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Font Awesome Free 5.15.4 icons (CC BY 4.0); see cv/icons/LICENSE.txt.
+\newcommand{\resumeIcon}[1]{\raisebox{-0.12\height}{\includegraphics[height=0.85em]{#1.pdf}}}
+
+\newcommand{\resumeItem}[1]{
+  \item\small{{#1 \vspace{-3pt}}}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
+    \small #1 & \textbf{\small #2} \\
+  \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in,label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.16in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+
+\begin{document}
+
+\begin{center}
+  {\Huge \bfseries 潘昊} {\large (Hao Pan)} \\ \vspace{2pt}
+  新加坡 \\ \vspace{2pt}
+  \small
+  \resumeIcon{phone}\ +65 8124 4894 ~
+  \href{mailto:hao036@e.ntu.edu.sg}{\resumeIcon{envelope}\ \underline{hao036@e.ntu.edu.sg}} ~
+  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\resumeIcon{linkedin}\ \underline{linkedin.com/in/hao-pan}} ~
+  \href{https://haopan036.github.io/}{\resumeIcon{github}\ \underline{个人网站: haopan036.github.io}}
+  \vspace{-8pt}
+\end{center}
+
+\section{个人简介}
+\begin{itemize}[leftmargin=0.15in,label={}]
+  \small{\item{
+    \textbf{Data Agent / LLM 应用工程师}，构建受约束、可审计的数据分析型 AI 系统。在 Shopee 开发生产级 Data Agent Skills、确定性的 Text-to-SQL 工作流与字段级评估；结合产品问题诊断、失败模式分析与 human-in-the-loop 设计，将业务逻辑转化为可靠、可复用的 AI 能力。
+  }}
+\end{itemize}
+\vspace{-12pt}
+
+\section{教育背景}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Nanyang Technological University（南洋理工大学）}{2025.11 -- 2027.01}
+    {应用人工智能计算硕士，College of Computing and Data Science}{新加坡}
+    \resumeItemListStart
+      \resumeItem{相关课程：Agentic AI \& Applications、Reinforcement Learning、LLM Applications。}
+    \resumeItemListEnd
+  \resumeSubheading
+    {Suzhou University}{2019.09 -- 2023.06}
+    {数据科学与大数据技术工学学士}{中国}
+    \resumeItemListStart
+      \resumeItem{\textbf{国家奖学金}（2022--2023，全国前 0.2\%）。}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{工作经历}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Shopee Singapore}{2026.03 -- 2026.09}
+    {AI 数据分析实习生，Buyer \& Marketing BI Team}{新加坡}
+    \resumeItemListStart
+      \resumeItem{开发并部署 \textbf{5 个生产级 Data Agent Skills}，覆盖 PDP、OPC、Review、Cart 及标准化 Skill 编写模板；将 A/B 测试平台中的指标定义、Join、筛选与计算逻辑迁移为可复用、可审计的 Runbooks。}
+      \resumeItem{设计确定性执行边界：固定 reference SQL，仅允许修改 \textbf{6 个已验证占位符}；每条查询只处理一个 \texttt{group\_id}，成功分片结果仅作拼接，禁止重写、优化或重新聚合。}
+      \resumeItem{梳理 SQL 重写、超时、部分结果、Live 表漂移与基础设施异常等 \textbf{15 类显式失败模式}；在 SQL 版本与参数一致时，结果与人工 SQL 在 \textbf{18 行、全部 19 个字段}上完全一致。}
+      \resumeItem{自动化从需求解析、多区域执行到结果交付的重复 A/B 测试分析，将处理时间从 \textbf{30--45 分钟缩短至 2--3 分钟}；同时构建验证工具与供 AI 读取的团队知识库，沉淀历史分析、业务逻辑、指标、方法与最佳实践。}
+    \resumeItemListEnd
+
+  \resumeSubheading
+    {金肯职业技术学院}{2023.03 -- 2025.10}
+    {讲师兼 AI 技术负责人}{中国}
+    \resumeItemListStart
+      \resumeItem{设计并讲授 Python、应用机器学习与生成式 AI 课程，覆盖 \textbf{300+ 名学生}；配套开发实践实验、考核与项目评分标准。}
+      \resumeItem{牵头 STEM 机器人项目，指导室内自主无人机团队运用 ROS、场景拆解与避障技术，获得 \textbf{RAICOM 2024 全国总决赛三等奖}。}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{精选项目}
+\vspace{-5pt}
+\resumeSubHeadingListStart
+  \resumeProjectHeading
+    {\textbf{Data Agent Sandbox} $|$ \emph{TypeScript、React、AlaSQL、Vitest} $|$ \href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $|$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}{2026.07}
+    \resumeItemListStart
+      \resumeItem{构建公开、纯浏览器运行的 BI Data Agent 沙盒，将业务问题转化为结构化参数契约和经校验的 SQL，在本地执行后输出图表、Trace 与可下载报告；演示仅使用合成电商数据。}
+      \resumeItem{实现确定性 Guardrails 与回归评估工作区，支持测试集选择、失败模式分布、逐案例 Trace 和 Bad Case Review Queue；无需登录、外部服务或 API Key 即可运行。}
+    \resumeItemListEnd
+  \resumeProjectHeading
+    {\textbf{ContextCue} $|$ \emph{TypeScript、Next.js、React} $|$ \href{https://contex-cue.vercel.app/}{\underline{在线演示}} $|$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}{2026.06 -- 2026.07}
+    \resumeItemListStart
+      \resumeItem{构建面向个人 AI Agent 的跨应用 Context Layer，将模拟语音指令及聊天/AI 反馈片段转化为结构化记忆与带证据引用的回复上下文。}
+      \resumeItem{实现确定性的 MemoryGate，控制人物与任务作用域、人工确认和 TTL 过期，并阻止原始聊天与音频写入记忆；设计 \textbf{16 个静态 V0.1 评估用例}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。}
+    \resumeItemListEnd
+  \resumeProjectHeading
+    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\textbf{Multi-Agent Literature Monitoring System}} $|$ \emph{Python、Google ADK、ChromaDB、SQLite、Langfuse}}{2026.04 -- 2026.05}
+    \resumeItemListStart
+      \resumeItem{设计团队研究监测 Agent 的 Orchestrator 架构，组合 \texttt{SequentialAgent + LoopAgent}、critic-revision loop 与 2 个人工检查点；设计 typed schemas、双存储、tracing、prompts 与 guardrails。}
+      \resumeItem{本人负责的编排、存储、可观测性与 guardrails 模块共约 \textbf{3,990 行代码}；通过 \textbf{18/18 smoke tests} 及完整 pytest suite。}
+    \resumeItemListEnd
+  \resumeItem{\textbf{其他作品：} Clinical Bazi Web $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。}
+\resumeSubHeadingListEnd
+\vspace{-11pt}
+
+\section{荣誉奖项}
+\resumeSubHeadingListStart
+  \resumeProjectHeading
+    {\textbf{Huawei ICT Competition Global Final} $|$ Cloud Track 全球三等奖（Top 5\%）}{2022.06}
+\resumeSubHeadingListEnd
+\vspace{-12pt}
+
+\section{技术能力}
+\begin{itemize}[leftmargin=0.15in,label={}]
+  \small{\item{
+    \textbf{编程语言}{：Python、SQL（Presto/Trino、Hive、MySQL）、C++、Shell} \\
+    \textbf{Agent Systems}{：Google ADK、Context Engineering、Agent Skills / Runbooks、Text-to-SQL、RAG、Workflow Automation} \\
+    \textbf{Reliability \& Data}{：LLM Evaluation、Failure-mode Analysis、Guardrails、PyTorch、Transformers、PySpark、SQLite、Langfuse} \\
+    \textbf{工程工具}{：Git、Linux、ROS} \quad
+    \textbf{证书}{：软件设计师（PRC）、高等学校教师资格证（人工智能，PRC）、IELTS 6.5}
+  }}
+\end{itemize}
+
+\end{document}

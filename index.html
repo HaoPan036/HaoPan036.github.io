@@ -485,7 +485,7 @@
       <a href="#experience" data-en="Experience" data-zh="经历">Experience</a>
       <a href="#skills" data-en="Skills" data-zh="技能">Skills</a>
       <a href="mailto:hao036@e.ntu.edu.sg" data-en="Contact" data-zh="联系">Contact</a>
-      <a class="nav-download" href="output/pdf/Hao-Pan-CV.pdf" download="Hao-Pan-CV.pdf" aria-label="Download Hao Pan CV as PDF" data-label-en="Download Hao Pan CV as PDF" data-label-zh="下载潘昊的 PDF 简历"><span data-en="Download CV" data-zh="下载简历">Download CV</span><span aria-hidden="true">↓</span></a>
+      <a class="nav-download" href="output/pdf/Hao-Pan-CV.pdf" download="Hao-Pan-CV.pdf" aria-label="Download Hao Pan English CV as PDF" data-label-en="Download Hao Pan English CV as PDF" data-label-zh="下载潘昊的中文 PDF 简历" data-href-en="output/pdf/Hao-Pan-CV.pdf" data-href-zh="output/pdf/Hao-Pan-CV-zh.pdf" data-download-en="Hao-Pan-CV.pdf" data-download-zh="Hao-Pan-CV-zh.pdf"><span data-en="Download CV" data-zh="下载简历">Download CV</span><span aria-hidden="true">↓</span></a>
     </nav>
     <div class="lang" aria-label="Language">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
@@ -1283,6 +1283,11 @@
       document.querySelectorAll("[data-label-en][data-label-zh]").forEach(function (element) {
         element.setAttribute("aria-label", language === "zh" ? element.dataset.labelZh : element.dataset.labelEn);
       });
+      var cvDownload = document.querySelector(".nav-download");
+      if (cvDownload) {
+        cvDownload.setAttribute("href", language === "zh" ? cvDownload.dataset.hrefZh : cvDownload.dataset.hrefEn);
+        cvDownload.setAttribute("download", language === "zh" ? cvDownload.dataset.downloadZh : cvDownload.dataset.downloadEn);
+      }
       document.querySelectorAll(".lang button").forEach(function (button) {
         button.setAttribute("aria-pressed", String(button.dataset.lang === language));
       });
