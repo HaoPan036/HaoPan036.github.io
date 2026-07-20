@@ -22,6 +22,8 @@
 \usepackage{fancyhdr}
 \usepackage{tabularx}
 \usepackage{multicol}
+\definecolor{accent}{rgb}{0.18,0.36,0.33}
+\definecolor{muted}{rgb}{0.35,0.40,0.38}
 \setmainfont[
   BoldFont=texgyreheros-bold.otf,
   ItalicFont=texgyreheros-italic.otf,
@@ -29,8 +31,7 @@
 ]{texgyreheros-regular.otf}
 \setCJKmainfont[
   Script=Default,
-  BoldFont={Songti SC Bold},
-  AutoFakeSlant=0.18
+  BoldFont={Songti SC Bold}
 ]{Songti SC Regular}
 \setCJKmonofont[Script=Default]{Songti SC Regular}
 \XeTeXlinebreaklocale "zh"
@@ -57,22 +58,22 @@
 \setlength{\tabcolsep}{0in}
 
 \titleformat{\section}{
-  \vspace{-4pt}\raggedright\large\bfseries
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-2pt}\raggedright\large\bfseries\color{accent}
+}{}{0em}{}[\color{accent}\titlerule \vspace{-3pt}]
 
 % Font Awesome Free 5.15.4 icons (CC BY 4.0); see cv/icons/LICENSE.txt.
 \newcommand{\resumeIcon}[1]{\raisebox{-0.12\height}{\includegraphics[height=0.85em]{#1.pdf}}}
 
 \newcommand{\resumeItem}[1]{
-  \item\small{{#1 \vspace{-3pt}}}
+  \item\small{{#1 \vspace{-2pt}}}
 }
 
 \newcommand{\resumeSubheading}[4]{
   \vspace{-2pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
-      \textit{\small #3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-7pt}
+      {\small\color{muted} #3} & {\small\color{muted} #4} \\
+    \end{tabular*}\vspace{-6pt}
 }
 
 \newcommand{\resumeProjectHeading}[2]{
@@ -82,15 +83,23 @@
   \end{tabular*}\vspace{-7pt}
 }
 
+\newcommand{\resumeProjectHeadingDetailed}[4]{
+  \item
+  \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
+    \small\textbf{#1} & \textbf{\small #2} \\
+    \color{muted}\small #3 & \color{muted}\small #4 \\
+  \end{tabular*}\vspace{-6pt}
+}
+
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in,label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.16in]}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-6pt}}
 
 \begin{document}
 
 \begin{center}
-  {\Huge \bfseries 潘昊} {\large (Hao Pan)} \\ \vspace{2pt}
+  {\Huge \bfseries\color{accent} 潘昊} {\large (Hao Pan)} \\ \vspace{2pt}
   新加坡 \\ \vspace{2pt}
   \small
   \resumeIcon{phone}\ +65 8124 4894 ~
@@ -103,7 +112,7 @@
 \section{个人简介}
 \begin{itemize}[leftmargin=0.15in,label={}]
   \small{\item{
-    \textbf{Data Agent / LLM 应用工程师}，构建受约束、可审计的数据分析型 AI 系统。在 Shopee 开发生产级 Data Agent Skills、确定性的 Text-to-SQL 工作流与字段级评估；结合产品问题诊断、失败模式分析与 human-in-the-loop 设计，将业务逻辑转化为可靠、可复用的 AI 能力。
+    \textbf{Data Agent / LLM 应用工程师}，专注将真实 BI 工作流转化为受约束、可审计、可实际使用的 AI 系统。在 Shopee 与产品经理和区域业务方协作，将重复分析落地为生产级 Data Agent Skills，并通过业务逻辑工程化、确定性约束和可靠性评估，让 Agent 结果进入真实分析流程，并由人完成最终判断。
   }}
 \end{itemize}
 \vspace{-12pt}
@@ -131,10 +140,10 @@
     {Shopee Singapore}{2026.03 -- 2026.09}
     {AI 数据分析实习生，Buyer \& Marketing BI Team}{新加坡}
     \resumeItemListStart
-      \resumeItem{开发并部署 \textbf{5 个生产级 Data Agent Skills}，覆盖 PDP、OPC、Review、Cart 及标准化 Skill 编写模板；将 A/B 测试平台中的指标定义、Join、筛选与计算逻辑迁移为可复用、可审计的 Runbooks。}
-      \resumeItem{设计确定性执行边界：固定 reference SQL，仅允许修改 \textbf{6 个已验证占位符}；每条查询只处理一个 \texttt{group\_id}，成功分片结果仅作拼接，禁止重写、优化或重新聚合。}
-      \resumeItem{梳理 SQL 重写、超时、部分结果、Live 表漂移与基础设施异常等 \textbf{15 类显式失败模式}；在 SQL 版本与参数一致时，结果与人工 SQL 在 \textbf{18 行、全部 19 个字段}上完全一致。}
-      \resumeItem{自动化从需求解析、多区域执行到结果交付的重复 A/B 测试分析，将处理时间从 \textbf{30--45 分钟缩短至 2--3 分钟}；同时构建验证工具与供 AI 读取的团队知识库，沉淀历史分析、业务逻辑、指标、方法与最佳实践。}
+      \resumeItem{与产品经理和区域业务方协作，梳理业务目标、指标口径与分析需求，将重复 A/B 测试流程落地为 \textbf{5 个生产级 Data Agent Skills}，分别覆盖 PDP、OPC、Review、Cart 和 Item。}
+      \resumeItem{设计标准化 Skill 编写模板，将指标定义、表关系、筛选条件与计算逻辑沉淀为可复用 Runbooks；Skills 部署后用于实际分析工作流，将单次处理时间从 \textbf{30--45 分钟缩短至 2--3 分钟}。}
+      \resumeItem{围绕基准 SQL、参数处理、分片执行与结果合并建立确定性执行和验证机制；梳理 \textbf{15 类失败模式}，并在 SQL 版本与参数一致时，使 \textbf{18 行结果的全部 19 个字段}与人工执行的 SQL 结果完全一致。}
+      \resumeItem{构建验证工具与 \textbf{AI-readable 团队知识库}，沉淀历史分析、业务逻辑、指标定义、分析方法与最佳实践，使团队能够一致地开发、测试和维护 Data Agent Skills。}
     \resumeItemListEnd
 
   \resumeSubheading
@@ -150,25 +159,31 @@
 \section{精选项目}
 \vspace{-5pt}
 \resumeSubHeadingListStart
-  \resumeProjectHeading
-    {\textbf{Data Agent Sandbox} $|$ \emph{TypeScript、React、AlaSQL、Vitest} $|$ \href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $|$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}{2026.07}
+  \resumeProjectHeadingDetailed
+    {Data Agent Sandbox}{2026.07}
+    {TypeScript、React、AlaSQL、Vitest}
+    {\href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}
     \resumeItemListStart
       \resumeItem{构建公开、纯浏览器运行的 BI Data Agent 沙盒，将业务问题转化为结构化参数契约和经校验的 SQL，在本地执行后输出图表、Trace 与可下载报告；演示仅使用合成电商数据。}
       \resumeItem{实现确定性 Guardrails 与回归评估工作区，支持测试集选择、失败模式分布、逐案例 Trace 和 Bad Case Review Queue；无需登录、外部服务或 API Key 即可运行。}
     \resumeItemListEnd
-  \resumeProjectHeading
-    {\textbf{ContextCue} $|$ \emph{TypeScript、Next.js、React} $|$ \href{https://contex-cue.vercel.app/}{\underline{在线演示}} $|$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}{2026.06 -- 2026.07}
+  \resumeProjectHeadingDetailed
+    {ContextCue}{2026.06 -- 2026.07}
+    {TypeScript、Next.js、React}
+    {\href{https://contex-cue.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}
     \resumeItemListStart
       \resumeItem{构建面向个人 AI Agent 的跨应用 Context Layer，将模拟语音指令及聊天/AI 反馈片段转化为结构化记忆与带证据引用的回复上下文。}
-      \resumeItem{实现确定性的 MemoryGate，控制人物与任务作用域、人工确认和 TTL 过期，并阻止原始聊天与音频写入记忆；设计 \textbf{16 个静态 V0.1 评估用例}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。}
+      \resumeItem{实现确定性的 MemoryGate，控制人物与任务作用域、人工确认和 TTL 过期，并阻止原始聊天与音频写入记忆；设计 \mbox{\textbf{16 个静态 V0.1 评估用例}}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。}
     \resumeItemListEnd
-  \resumeProjectHeading
-    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\textbf{Multi-Agent Literature Monitoring System}} $|$ \emph{Python、Google ADK、ChromaDB、SQLite、Langfuse}}{2026.04 -- 2026.05}
+  \resumeProjectHeadingDetailed
+    {Multi-Agent Literature Monitoring System}{2026.04 -- 2026.05}
+    {Python、Google ADK、ChromaDB、SQLite、Langfuse}
+    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\underline{GitHub}}}
     \resumeItemListStart
       \resumeItem{设计团队研究监测 Agent 的 Orchestrator 架构，组合 \texttt{SequentialAgent + LoopAgent}、critic-revision loop 与 2 个人工检查点；设计 typed schemas、双存储、tracing、prompts 与 guardrails。}
       \resumeItem{本人负责的编排、存储、可观测性与 guardrails 模块共约 \textbf{3,990 行代码}；通过 \textbf{18/18 smoke tests} 及完整 pytest suite。}
     \resumeItemListEnd
-  \resumeItem{\textbf{其他作品：} Clinical Bazi Web $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。}
+  \resumeItem{\textbf{其他作品：} \href{https://clinical-bazi-web.vercel.app/}{\underline{Clinical Bazi Web}} $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。}
 \resumeSubHeadingListEnd
 \vspace{-11pt}
 
@@ -182,11 +197,14 @@
 \section{技术能力}
 \begin{itemize}[leftmargin=0.15in,label={}]
   \small{\item{
-    \textbf{编程语言}{：Python、SQL（Presto/Trino、Hive、MySQL）、C++、Shell} \\
-    \textbf{Agent Systems}{：Google ADK、Context Engineering、Agent Skills / Runbooks、Text-to-SQL、RAG、Workflow Automation} \\
-    \textbf{Reliability \& Data}{：LLM Evaluation、Failure-mode Analysis、Guardrails、PyTorch、Transformers、PySpark、SQLite、Langfuse} \\
-    \textbf{工程工具}{：Git、Linux、ROS} \quad
-    \textbf{证书}{：软件设计师（PRC）、高等学校教师资格证（人工智能，PRC）、IELTS 6.5}
+    \renewcommand{\arraystretch}{1.08}
+    \begin{tabularx}{\linewidth}{@{}>{\bfseries}l@{\hspace{0.55em}}X@{}}
+      编程语言： & Python、SQL（Presto/Trino、Hive、MySQL）、C++、Shell \\
+      Agent Systems： & Google ADK、Context Engineering、Agent Skills / Runbooks、Text-to-SQL、RAG、Workflow Automation \\
+      Reliability \& Data： & LLM Evaluation、Failure-mode Analysis、Guardrails、PyTorch、Transformers、PySpark、SQLite、Langfuse \\
+      工程工具： & Git、Linux、ROS \\
+      证书： & 软件设计师（PRC）、高等学校教师资格证（人工智能，PRC）、IELTS 6.5
+    \end{tabularx}
   }}
 \end{itemize}
 
