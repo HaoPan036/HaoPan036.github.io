@@ -67,6 +67,10 @@
   \end{tabular*}\vspace{-7pt}
 }
 
+\newcommand{\resumeExperienceProject}[1]{
+  \par\vspace{2pt}\noindent\small\textbf{#1}\par\vspace{-2pt}
+}
+
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in,label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.16in]}
@@ -88,7 +92,7 @@
 \section{Summary}
 \begin{itemize}[leftmargin=0.15in,label={}]
   \small{\item{
-    \textbf{Data Agent / LLM Application Engineer} focused on turning real BI workflows into constrained, auditable AI systems that people can use in practice. At Shopee, partnered with product managers and regional stakeholders to deploy production Data Agent Skills for recurring analytics, combining business-logic formalization, deterministic guardrails, reliability evaluation, and human review.
+    \textbf{Data Agent / LLM Application Engineer} focused on whether AI systems work after they are built. At Shopee, translated recurring analytics into production Skills and delivered a working internal MVP for traceable case reuse, using deterministic boundaries, human-controlled evidence, and evaluation.
   }}
 \end{itemize}
 \vspace{-12pt}
@@ -115,11 +119,17 @@
   \resumeSubheading
     {Shopee Singapore}{Mar. 2026 -- Sep. 2026}
     {AI Data Analyst Intern, Buyer \& Marketing BI Team}{Singapore}
+    \par\vspace{8pt}
+    \resumeExperienceProject{Data Agent Skill Engineering \& Reliability}
     \resumeItemListStart
-      \resumeItem{Partnered with product managers and regional stakeholders to define business objectives, metric logic, and analytical requirements, then translated recurring A/B-test workflows into \textbf{5 production Data Agent Skills} covering PDP, OPC, Review, Cart, and Item.}
-      \resumeItem{Designed a standardized Skill authoring template and codified metric definitions, table relationships, filters, and calculation logic into reusable runbooks; deployed the Skills into actual analytics workflows and reduced turnaround from \textbf{30--45 min to 2--3 min}.}
-      \resumeItem{Established deterministic execution and validation controls for reference SQL, parameter handling, shard execution, and result assembly; documented \textbf{15 failure modes} and matched manual SQL exactly on \textbf{18 rows across all 19 fields} under identical SQL versions and parameters.}
-      \resumeItem{Built validation utilities and an \textbf{AI-readable team knowledge base} for historical analyses, business logic, metric definitions, methodologies, and best practices, helping the team build, test, and maintain agent capabilities consistently.}
+      \resumeItem{Partnered with product managers and regional stakeholders to define decision goals, metric logic, and capability boundaries, then translated recurring A/B-test workflows into \textbf{5 production Data Agent Skills} covering PDP, OPC, Review, Cart, and Item; standardized inputs, SQL, output schemas, and pre-return checks, reducing turnaround from \textbf{30--45 min to 2--3 min}.}
+      \resumeItem{Constrained SQL rewrites, timeouts, partial results, and live-table drift through frozen SQL, input validation, single-group sharding, and completeness checks; documented \textbf{15 failure modes} and matched manual SQL on \textbf{18 rows across all 19 fields} under identical SQL versions and parameters.}
+    \resumeItemListEnd
+    \resumeExperienceProject{Analysis Knowledge Base \& Human-in-the-Loop Retrieval Agent (Internal Pilot)}
+    \resumeItemListStart
+      \resumeItem{Audited \textbf{160 tracking records} from the previous six months and standardized 5 real cases (4 Requests, 5 Reports, 12 SQL, and 9 CSV artifacts) into GitLab-backed Case Bundles; validation covered 5 cases and 30 Markdown files with \textbf{0 errors and 0 warnings}.}
+      \resumeItem{Delivered a working internal MVP on Hangar: a constrained router dispatches static handlers across one registered Diana Topic, historical cases, and supplemental input to return 3--5 candidates; Compare and structured Request Draft run only after users review evidence and select 0--3 cases.}
+      \resumeItem{Bound each run to one Git commit and recorded blob/hash provenance for catalog, Skills, and evidence; used backend-enforced handler allowlists, server-owned inputs, user isolation, persisted run state, and idempotency to reject stale, fabricated, or unconfirmed evidence before draft generation; historical SQL is referenced but never executed.}
     \resumeItemListEnd
 
   \resumeSubheading
@@ -146,12 +156,6 @@
     \resumeItemListStart
       \resumeItem{Built a cross-app context layer for personal AI agents that converts simulated voice instructions and chat/AI-feedback fragments into structured memory and evidence-cited reply context.}
       \resumeItem{Implemented deterministic MemoryGate guardrails for person/task scoping, human confirmation, TTL-based expiration, and raw chat/audio blocking; authored a \textbf{16-case static V0.1 evaluation suite} covering context stitching, wrong-person leakage, privacy, expiry, evidence citation, and tone safety.}
-    \resumeItemListEnd
-  \resumeProjectHeading
-    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\textbf{Multi-Agent Literature Monitoring System}} $|$ \emph{Python, Google ADK, ChromaDB, SQLite, Langfuse}}{Apr. -- May 2026}
-    \resumeItemListStart
-      \resumeItem{Architected the orchestrator for a team-built research-monitoring agent using \texttt{SequentialAgent + LoopAgent}, a critic-revision loop, and two human-in-the-loop checkpoints; designed typed schemas, dual storage, tracing, prompts, and guardrails.}
-      \resumeItem{Delivered approximately \textbf{3,990 LOC in owned modules} across orchestration, storage, observability, and guardrails; passed \textbf{18/18 smoke tests} and the full pytest suite.}
     \resumeItemListEnd
   \resumeItem{\textbf{Additional build:} Clinical Bazi Web $|$ Code-based charting and bounded AI interpretation; private beta, access on request.}
 \resumeSubHeadingListEnd
