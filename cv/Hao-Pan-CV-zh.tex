@@ -14,10 +14,11 @@
 \usepackage{fancyhdr}
 \usepackage{fontawesome}
 
-\definecolor{accent}{HTML}{245E55}
-\definecolor{ink}{HTML}{172B2D}
-\definecolor{muted}{HTML}{526461}
-\definecolor{rule}{HTML}{AFC6C0}
+\definecolor{accent}{HTML}{2F6661}
+\definecolor{project}{HTML}{355B58}
+\definecolor{ink}{HTML}{20262E}
+\definecolor{muted}{HTML}{5F6975}
+\definecolor{rule}{HTML}{CBD5D2}
 
 \setmainfont[
   BoldFont=texgyreheros-bold.otf,
@@ -25,7 +26,7 @@
   BoldItalicFont=texgyreheros-bolditalic.otf
 ]{texgyreheros-regular.otf}
 
-% Noto is available on Overleaf; Fandol keeps the source portable elsewhere.
+% Overleaf 优先使用 Noto；其他环境按顺序回退。
 \IfFontExistsTF{Noto Sans CJK SC}{
   \setCJKmainfont[BoldFont={Noto Sans CJK SC Bold}]{Noto Sans CJK SC}
   \setCJKsansfont[BoldFont={Noto Sans CJK SC Bold}]{Noto Sans CJK SC}
@@ -46,9 +47,9 @@
 \XeTeXlinebreakskip=0pt plus 1pt
 \XeTeXgenerateactualtext=1
 \hypersetup{
-  pdftitle={潘昊 - Data Agent / LLM 应用工程师简历},
+  pdftitle={潘昊 - 数据智能体 / 大语言模型应用工程师简历},
   pdfauthor={潘昊},
-  pdfsubject={Data Agent / LLM Application Engineer},
+  pdfsubject={数据智能体 / 大语言模型应用工程师},
   pdfkeywords={Data Agent, LLM Application, Text-to-SQL, Agent Evaluation, Guardrails}
 }
 
@@ -61,39 +62,52 @@
 \setlength{\emergencystretch}{1.2em}
 \raggedbottom
 \urlstyle{same}
+\AtBeginDocument{\fontsize{9.6}{12.8}\selectfont}
 
 \titleformat{\section}
-  {\fontsize{11.5}{13}\selectfont\bfseries\color{accent}}
+  {\fontsize{12}{14.2}\selectfont\bfseries\color{accent}}
   {}{0pt}{}
   [\vspace{1pt}{\color{rule}\titlerule}]
-\titlespacing*{\section}{0pt}{5pt}{3pt}
+\titlespacing*{\section}{0pt}{6pt}{3.5pt}
 
 \setlist[itemize]{
   leftmargin=1.15em,
   label={\color{accent}\textbullet},
-  itemsep=1.4pt,
-  topsep=1.5pt,
+  itemsep=1.8pt,
+  topsep=1.8pt,
   parsep=0pt,
   partopsep=0pt
 }
 
 \newcommand{\resumeEntry}[4]{%
-  \textbf{#1}\hfill{\color{muted}#2}\par
-  {\color{muted}#3\hfill#4}\par\vspace{-1pt}
+  {\fontsize{10.3}{12.1}\selectfont\bfseries #1}%
+  \hfill{\fontsize{9.1}{11.1}\selectfont\color{muted}#2}\par
+  {\fontsize{9.2}{11.3}\selectfont\color{muted}#3\hfill#4}\par\vspace{-0.5pt}
 }
 
 \newcommand{\resumeProject}[4]{%
-  \textbf{#1}\hfill{\color{muted}#2}\par
-  {\color{muted}#3\hfill#4}\par\vspace{-1pt}
+  {\fontsize{10.3}{12.1}\selectfont\bfseries #1}%
+  \hfill{\fontsize{9.1}{11.1}\selectfont\color{muted}#2}\par
+  {\fontsize{9.2}{11.3}\selectfont\color{muted}#3\hfill#4}\par\vspace{-0.5pt}
 }
 
 \newcommand{\skillline}[2]{%
   \textbf{#1}\hspace{0.45em}#2\par
 }
 
-\newcommand{\roleProject}[1]{%
-  \vspace{1pt}{\bfseries #1}\par\vspace{-1pt}
+\newcommand{\roleProject}[2]{%
+  \par\addvspace{3.8pt}%
+  \noindent\hspace*{0.8em}%
+  {\fontsize{10}{12}\selectfont\bfseries\color{project}#1}%
+  \if\relax\detokenize{#2}\relax\else
+    \hspace{0.55em}{\fontsize{9}{10.4}\selectfont\color{muted}（#2）}%
+  \fi
+  \par\vspace{0.7pt}
 }
+
+\newenvironment{roleItems}
+  {\begin{itemize}[leftmargin=1.75em,labelsep=0.48em,itemsep=2pt,topsep=1.3pt,parsep=0pt,partopsep=0pt]}
+  {\end{itemize}}
 
 \newcommand{\contactsep}{\enspace{\color{rule}\textbar}\enspace}
 
@@ -101,12 +115,12 @@
 \color{ink}
 
 \begin{center}
-  {\fontsize{23}{25}\selectfont\bfseries\color{accent} 潘昊}\par
+  {\fontsize{24}{26}\selectfont\bfseries\color{accent} 潘昊}\par
   \vspace{1pt}
-  {\bfseries Data Agent / LLM 应用工程师}\par
+  {\fontsize{10.8}{12.5}\selectfont\bfseries 数据智能体 / 大语言模型应用工程师}\par
   \vspace{2pt}
   \small
-  \href{tel:+6581244894}{\faPhone\ +65 8124 4894}
+  \href{tel:+8618226918182}{\faPhone\ +86 18226918182}
   \contactsep
   \href{mailto:hao036@e.ntu.edu.sg}{\faEnvelope\ \underline{hao036@e.ntu.edu.sg}}
   \contactsep
@@ -114,38 +128,50 @@
   \contactsep
   \href{https://github.com/HaoPan036}{\faGithub\ \underline{GitHub}}
   \contactsep
-  \href{https://haopan036.github.io/}{\faGlobe\ \underline{Portfolio}}
+  \href{https://haopan036.github.io/}{\faGlobe\ \underline{个人网站}}
 \end{center}
 \vspace{-4pt}
 
 \section{个人简介}
-关注 AI 系统在 build 完成后是否真正可用的 Data Agent / LLM 应用工程师。能够与产品和业务方澄清目标、指标口径与能力边界，将重复分析落地为受约束的 Skills / Runbooks，并把历史材料重构为可追溯、由人工控制证据的知识资产；通过确定性执行、失败模式检查与评估确认结果是否可靠。
+我更关心人工智能功能做出来后能不能真正被业务使用，结果能不能复核。能够先与产品经理和业务方明确问题、指标口径和系统边界，再把重复分析做成输入、步骤和检查规则都清楚的智能体技能；也能把分散的历史材料整理成可追溯、由人工选择证据的案例知识库，并通过失败模式检查和评估验证可靠性。
+
+\section{教育背景}
+\resumeEntry
+  {南洋理工大学}
+  {2025.11 -- 至今（预计 2027.01 毕业）}
+  {应用人工智能硕士，计算机与数据科学学院}
+  {新加坡}
+\resumeEntry
+  {宿州学院}
+  {2019.09 -- 2023.06}
+  {数据科学与大数据技术工学学士；国家奖学金（2022--2023，全国前 0.2\%）}
+  {中国}
 
 \section{工作经历}
 \resumeEntry
-  {Shopee Singapore}
-  {2026.03 -- 至今（预计 2026.09）}
-  {AI 数据分析实习生，Buyer \& Marketing BI Team}
+  {Shopee Singapore（虾皮）}
+  {2026.03 -- 2026.09}
+  {人工智能数据分析实习生，买家与营销商业智能团队}
   {新加坡}
-\roleProject{Data Agent Skill Engineering \& Reliability}
-\begin{itemize}
-  \item 与产品经理及区域业务方对齐决策目标、指标口径和能力边界，将 PDP、OPC、Review、Cart 和 Item 五类重复 A/B 分析落地为生产 Data Agent Skills；以标准化模板固定输入、SQL、输出 Schema 与返回前检查，使单次处理由 \textbf{30--45 分钟缩短至 2--3 分钟}。
-  \item 针对 SQL 改写、查询超时、Partial Result 与 Live 表漂移等风险，以 Frozen SQL、输入校验、单 Group 分片和完整性检查约束执行；整理 \textbf{15 类失败模式}，在 SQL 版本和参数一致的评估中，\textbf{18 行结果的全部 19 个字段}均与人工 SQL 一致。
-\end{itemize}
-\roleProject{Analysis Knowledge Base \& Human-in-the-Loop Retrieval Agent {\normalfont\color{muted}（内部试点）}}
-\begin{itemize}
-  \item 审计最近半年 \textbf{160 条 Tracking Record}，将 5 个真实 Case（4 份 Request、5 份 Report、12 个 SQL、9 个 CSV）重构为 GitLab-backed Case Bundles；5 个 Case、30 个 Markdown 的校验结果为 \textbf{0 Error、0 Warning}。
-  \item 基于 Hangar 交付可运行的内部 MVP：受约束 Router 在单个已登记的 Diana Topic、历史 Case 与补充信息之间路由，由静态 Handler 返回 3--5 个候选；用户查看证据并选择 0--3 个 Case 后，系统才允许 Compare 和固定格式 Request Draft。
-  \item 将每次执行绑定至同一 Git Commit，并记录 Catalog、Skill 与 Evidence 的 Blob / Hash provenance；后端通过 Handler Allowlist、Server-owned Inputs、用户隔离、持久状态与幂等控制，在 Draft 生成前拒绝伪造、过期或未确认的证据；历史 SQL 只展示和引用，不执行。
-\end{itemize}
+\roleProject{数据分析智能体技能开发与可靠性}{}
+\begin{roleItems}
+  \item 与产品经理和区域业务方确认分析目标、指标口径和交付要求，把 PDP、OPC、Review、Cart、Item 五类重复的 A/B 分析做成实际投入使用的数据分析智能体技能。设计统一的技能编写模板，固定输入参数、SQL、输出格式和返回前检查，单次处理由 \textbf{30--45 分钟缩短到 2--3 分钟}。
+  \item 面对 SQL 被改写、查询超时、结果不完整和线上表变化等问题，采用固定版本 SQL、参数校验、按实验组拆分查询和完整性检查。总结 \textbf{15 类失败模式}；在 SQL 版本和参数一致的评估中，\textbf{18 行结果的 19 个字段}均与人工 SQL 一致。
+\end{roleItems}
+\roleProject{分析案例知识库与人机协同检索智能体}{内部试点}
+\begin{roleItems}
+  \item 把分散在跟踪表、Google 文档和表格、个人目录中的历史分析材料整理成可追溯的案例包，并统一纳入 GitLab 管理。审查近半年 \textbf{160 条记录}，完成 5 个真实案例的标准化，覆盖 4 份需求、5 份报告、12 个 SQL 和 9 个 CSV；30 个 Markdown 文件全部通过校验（\textbf{0 个错误、0 个警告}）。
+  \item 基于 Hangar 交付可运行的内部试点版本：用户输入新需求后，受约束的路由模块在一个已登记的 Diana Topic、历史案例和补充信息之间选择处理路径，再由固定处理模块返回 3--5 个相似案例和原始证据；人工选定 0--3 个案例后，系统才会继续比较并生成固定格式的需求草稿。
+  \item 为避免模型引用错误、过期或未确认的材料，将每次检索绑定到一个确定的 Git 提交版本，并分别记录目录、技能和证据文件的 Blob / Hash 来源。案例、Topic、用户身份和选择记录均由后端校验；再用处理模块白名单、状态持久化和幂等控制处理伪造 ID、刷新、重试和后端重启。历史 SQL 只供查看和引用，不自动执行。
+\end{roleItems}
 
 \resumeEntry
   {金肯职业技术学院}
   {2023.03 -- 2025.10}
-  {讲师兼 AI 技术负责人}
+  {讲师兼人工智能技术负责人}
   {中国}
 \begin{itemize}
-  \item 为把抽象的 AI 知识转化为可操作、可评价的学习任务，设计并讲授 Python、应用机器学习与生成式 AI 课程，配套开发实验、考核和项目评分标准，覆盖 \textbf{300+ 名学生}。
+  \item 设计并讲授 Python、应用机器学习和生成式人工智能课程，把抽象概念拆成实验、考核与项目任务，覆盖 \textbf{300+ 名学生}。
   \item 牵头 STEM 机器人项目，指导团队使用 ROS 拆解室内自主飞行与避障问题，获 \textbf{RAICOM 2024 全国总决赛三等奖}。
 \end{itemize}
 
@@ -156,8 +182,8 @@
   {TypeScript、React、Node / Vercel Serverless、AlaSQL、Vitest}
   {\href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}
 \begin{itemize}
-  \item 针对自由生成 SQL 难复现、结果难审计的问题，构建公开、纯浏览器运行的 BI Data Agent 沙盒，将受支持的业务问题转化为结构化参数契约和经校验的只读 SQL，并在合成电商数据上输出图表、回答与可审查的执行轨迹（Trace）。
-  \item 实现确定性 Guardrails、版本化回归评估、失败模式分布与 Bad Case Review Queue，使敏感请求被阻断、边界案例降级至 needs-review；演示无需登录、外部服务或模型 API Key。
+  \item 为解决自由生成 SQL 难复现、结果难审计的问题，搭建一个完全在浏览器运行的 BI 数据智能体沙盒。系统把支持的业务问题转成结构化参数和经过校验的只读 SQL，并基于合成电商数据输出图表、回答和可追查的执行轨迹。
+  \item 加入确定性约束、按版本回归评估、失败模式统计和问题样本复核队列。敏感请求会被拦截，边界案例会进入“待人工复核（needs-review）”状态；演示不需要登录、外部服务或模型 API 密钥。
 \end{itemize}
 
 \resumeProject
@@ -166,29 +192,17 @@
   {TypeScript、Next.js、React}
   {\href{https://contex-cue.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}
 \begin{itemize}
-  \item 针对个人 Agent 跨应用记忆中的人物串线、过期信息召回与隐私写入风险，构建 Context Layer，将模拟语音指令、聊天与 AI 反馈转化为结构化记忆和带来源引用的回复上下文。
-  \item 通过确定性 MemoryGate 控制人物与任务作用域、人工确认、TTL 过期及原始聊天/音频阻断；设计 \textbf{16 个静态 V0.1 评估场景}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。
+  \item 针对个人智能体跨应用记忆中容易出现的人物串线、召回过期信息和隐私写入问题，搭建上下文层，把模拟语音指令、聊天和人工智能反馈转成结构化记忆，并在回复中保留来源引用。
+  \item 用 MemoryGate 控制人物和任务范围、人工确认、TTL 过期，并阻止原始聊天和音频直接写入记忆；设计 \textbf{16 个静态 V0.1 评估场景}，覆盖上下文拼接、人物串线、隐私、过期、证据引用和语气安全。
 \end{itemize}
 
 \vspace{-1pt}
-\textbf{其他作品：}\href{https://clinical-bazi-web.vercel.app/}{\underline{Clinical Bazi Web}} $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。
-
-\section{教育背景}
-\resumeEntry
-  {Nanyang Technological University（南洋理工大学）}
-  {2025.11 -- 至今（预计 2027.01 毕业）}
-  {计算学硕士（应用人工智能，MCAAI），College of Computing and Data Science}
-  {新加坡}
-\resumeEntry
-  {Suzhou University}
-  {2019.09 -- 2023.06}
-  {数据科学与大数据技术工学学士；国家奖学金（2022--2023，全国前 0.2\%）}
-  {中国}
+\textbf{其他作品：}\href{https://clinical-bazi-web.vercel.app/}{\underline{Clinical Bazi Web}} $|$ 按明确规则排盘，并提供边界清楚的人工智能辅助解读。
 
 \section{技术能力}
 \skillline{语言与数据：}{Python、TypeScript、SQL（Presto / Trino、Hive、MySQL）、PySpark、SQLite、Shell}
-\skillline{Agent / LLM：}{Google ADK、Agent Skills / Runbooks、Text-to-SQL、RAG、LLM Evaluation、Guardrails、Langfuse}
+\skillline{智能体与大语言模型：}{Google ADK、智能体技能 / 操作手册、Text-to-SQL、RAG、大语言模型评估、约束规则、Langfuse}
 \skillline{工程工具：}{React、Next.js、Vitest、pytest、Git、Linux、ROS}
-\skillline{荣誉：}{Huawei ICT Competition Global Final，Cloud Track 全球三等奖（Top 5\%，2022.06）}
+\skillline{荣誉：}{华为 ICT 大赛全球总决赛，云赛道全球三等奖（前 5\%，2022.06）}
 
 \end{document}
