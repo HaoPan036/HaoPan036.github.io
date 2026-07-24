@@ -1,211 +1,193 @@
-%-------------------------
-% 中文简历 LaTeX
-% Author: Hao Pan
-% Target: Data Agent / LLM Application Engineer
-% Version: 2026-07-18
-% Based on: https://github.com/sb2nov/resume
-% License: MIT
-%-------------------------
+% !TeX program = xelatex
+% Hao Pan - Chinese resume
+% Overleaf-ready standalone version
 
 \documentclass[a4paper,10pt]{article}
 
-\usepackage{latexsym}
-\usepackage[a4paper,left=0.50in,right=0.50in,top=0.32in,bottom=0.35in]{geometry}
+\usepackage[a4paper,left=13.5mm,right=13.5mm,top=9.5mm,bottom=9.5mm]{geometry}
 \usepackage{fontspec}
 \usepackage{xeCJK}
-\usepackage{titlesec}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{verbatim}
+\usepackage{xcolor}
 \usepackage{enumitem}
+\usepackage{titlesec}
 \usepackage[hidelinks]{hyperref}
-\usepackage{graphicx}
 \usepackage{fancyhdr}
-\usepackage{tabularx}
-\usepackage{multicol}
-\definecolor{accent}{rgb}{0.18,0.36,0.33}
-\definecolor{muted}{rgb}{0.35,0.40,0.38}
+\usepackage{fontawesome}
+
+\definecolor{accent}{HTML}{245E55}
+\definecolor{ink}{HTML}{172B2D}
+\definecolor{muted}{HTML}{526461}
+\definecolor{rule}{HTML}{AFC6C0}
+
 \setmainfont[
   BoldFont=texgyreheros-bold.otf,
   ItalicFont=texgyreheros-italic.otf,
   BoldItalicFont=texgyreheros-bolditalic.otf
 ]{texgyreheros-regular.otf}
-\setCJKmainfont[
-  Script=Default,
-  BoldFont={Songti SC Bold}
-]{Songti SC Regular}
-\setCJKmonofont[Script=Default]{Songti SC Regular}
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
 
-\linespread{1.05}
-\setlength{\multicolsep}{-3.0pt}
-\setlength{\columnsep}{-1pt}
-\graphicspath{{cv/icons/}{icons/}}
+% Noto is available on Overleaf; Fandol keeps the source portable elsewhere.
+\IfFontExistsTF{Noto Sans CJK SC}{
+  \setCJKmainfont[BoldFont={Noto Sans CJK SC Bold}]{Noto Sans CJK SC}
+  \setCJKsansfont[BoldFont={Noto Sans CJK SC Bold}]{Noto Sans CJK SC}
+  \setCJKmonofont{Noto Sans Mono CJK SC}
+}{
+  \IfFontExistsTF{Hiragino Sans GB}{
+    \setCJKmainfont[BoldFont={Hiragino Sans GB W6}]{Hiragino Sans GB W3}
+    \setCJKsansfont[BoldFont={Hiragino Sans GB W6}]{Hiragino Sans GB W3}
+    \setCJKmonofont{Hiragino Sans GB W3}
+  }{
+    \setCJKmainfont[BoldFont=FandolHei-Bold.otf]{FandolHei-Regular.otf}
+    \setCJKsansfont[BoldFont=FandolHei-Bold.otf]{FandolHei-Regular.otf}
+    \setCJKmonofont{FandolHei-Regular.otf}
+  }
+}
+
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+\XeTeXgenerateactualtext=1
 \hypersetup{
-  pdftitle={潘昊 - 中文简历},
+  pdftitle={潘昊 - Data Agent / LLM 应用工程师简历},
   pdfauthor={潘昊},
-  pdfsubject={Data Agent / LLM Application Engineer}
+  pdfsubject={Data Agent / LLM Application Engineer},
+  pdfkeywords={Data Agent, LLM Application, Text-to-SQL, Agent Evaluation, Guardrails}
 }
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{1.2em}
 \raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
+\urlstyle{same}
 
-\titleformat{\section}{
-  \vspace{-2pt}\raggedright\large\bfseries\color{accent}
-}{}{0em}{}[\color{accent}\titlerule \vspace{-3pt}]
+\titleformat{\section}
+  {\fontsize{11.5}{13}\selectfont\bfseries\color{accent}}
+  {}{0pt}{}
+  [\vspace{1pt}{\color{rule}\titlerule}]
+\titlespacing*{\section}{0pt}{5pt}{3pt}
 
-% Font Awesome Free 5.15.4 icons (CC BY 4.0); see cv/icons/LICENSE.txt.
-\newcommand{\resumeIcon}[1]{\raisebox{-0.12\height}{\includegraphics[height=0.85em]{#1.pdf}}}
-
-\newcommand{\resumeItem}[1]{
-  \item\small{{#1 \vspace{-2pt}}}
+\setlist[itemize]{
+  leftmargin=1.15em,
+  label={\color{accent}\textbullet},
+  itemsep=1.4pt,
+  topsep=1.5pt,
+  parsep=0pt,
+  partopsep=0pt
 }
 
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
-    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & \textbf{\small #2} \\
-      {\small\color{muted} #3} & {\small\color{muted} #4} \\
-    \end{tabular*}\vspace{-6pt}
+\newcommand{\resumeEntry}[4]{%
+  \textbf{#1}\hfill{\color{muted}#2}\par
+  {\color{muted}#3\hfill#4}\par\vspace{-1pt}
 }
 
-\newcommand{\resumeProjectHeading}[2]{
-  \item
-  \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
-    \small #1 & \textbf{\small #2} \\
-  \end{tabular*}\vspace{-7pt}
+\newcommand{\resumeProject}[4]{%
+  \textbf{#1}\hfill{\color{muted}#2}\par
+  {\color{muted}#3\hfill#4}\par\vspace{-1pt}
 }
 
-\newcommand{\resumeProjectHeadingDetailed}[4]{
-  \item
-  \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
-    \small\textbf{#1} & \textbf{\small #2} \\
-    \color{muted}\small #3 & \color{muted}\small #4 \\
-  \end{tabular*}\vspace{-6pt}
+\newcommand{\skillline}[2]{%
+  \textbf{#1}\hspace{0.45em}#2\par
 }
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in,label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.16in]}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-6pt}}
+\newcommand{\contactsep}{\enspace{\color{rule}\textbar}\enspace}
 
 \begin{document}
+\color{ink}
 
 \begin{center}
-  {\Huge \bfseries\color{accent} 潘昊} {\large (Hao Pan)} \\ \vspace{2pt}
-  新加坡 \\ \vspace{2pt}
+  {\fontsize{23}{25}\selectfont\bfseries\color{accent} 潘昊}\par
+  \vspace{1pt}
+  {\bfseries Data Agent / LLM 应用工程师}\par
+  \vspace{2pt}
   \small
-  \resumeIcon{phone}\ +65 8124 4894 ~
-  \href{mailto:hao036@e.ntu.edu.sg}{\resumeIcon{envelope}\ \underline{hao036@e.ntu.edu.sg}} ~
-  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\resumeIcon{linkedin}\ \underline{linkedin.com/in/hao-pan}} ~
-  \href{https://haopan036.github.io/}{\resumeIcon{github}\ \underline{个人网站: haopan036.github.io}}
-  \vspace{-8pt}
+  \href{tel:+6581244894}{\faPhone\ +65 8124 4894}
+  \contactsep
+  \href{mailto:hao036@e.ntu.edu.sg}{\faEnvelope\ \underline{hao036@e.ntu.edu.sg}}
+  \contactsep
+  \href{https://www.linkedin.com/in/hao-pan-59193937a/}{\faLinkedin\ \underline{LinkedIn}}
+  \contactsep
+  \href{https://github.com/HaoPan036}{\faGithub\ \underline{GitHub}}
+  \contactsep
+  \href{https://haopan036.github.io/}{\faGlobe\ \underline{Portfolio}}
 \end{center}
+\vspace{-4pt}
 
 \section{个人简介}
-\begin{itemize}[leftmargin=0.15in,label={}]
-  \small{\item{
-    \textbf{Data Agent / LLM 应用工程师}，专注将真实 BI 工作流转化为受约束、可审计、可实际使用的 AI 系统。在 Shopee 与产品经理和区域业务方协作，将重复分析落地为生产级 Data Agent Skills，并通过业务逻辑工程化、确定性约束和可靠性评估，让 Agent 结果进入真实分析流程，并由人完成最终判断。
-  }}
-\end{itemize}
-\vspace{-12pt}
-
-\section{教育背景}
-\resumeSubHeadingListStart
-  \resumeSubheading
-    {Nanyang Technological University（南洋理工大学）}{2025.11 -- 2027.01}
-    {应用人工智能计算硕士，College of Computing and Data Science}{新加坡}
-    \resumeItemListStart
-      \resumeItem{相关课程：Agentic AI \& Applications、Reinforcement Learning、LLM Applications。}
-    \resumeItemListEnd
-  \resumeSubheading
-    {Suzhou University}{2019.09 -- 2023.06}
-    {数据科学与大数据技术工学学士}{中国}
-    \resumeItemListStart
-      \resumeItem{\textbf{国家奖学金}（2022--2023，全国前 0.2\%）。}
-    \resumeItemListEnd
-\resumeSubHeadingListEnd
-\vspace{-11pt}
+关注 AI 系统在 build 完成后是否真正可用的 Data Agent / LLM 应用工程师。能够先与产品经理和业务方澄清决策目标、指标口径与能力边界，再将分析逻辑转化为受约束的 Agent Skills / Runbooks，并用确定性执行、失败模式评估和人工复核验证结果；具备从问题诊断、方案落地到真实工作流使用的完整经历。
 
 \section{工作经历}
-\resumeSubHeadingListStart
-  \resumeSubheading
-    {Shopee Singapore}{2026.03 -- 2026.09}
-    {AI 数据分析实习生，Buyer \& Marketing BI Team}{新加坡}
-    \resumeItemListStart
-      \resumeItem{与产品经理和区域业务方协作，梳理业务目标、指标口径与分析需求，将重复 A/B 测试流程落地为 \textbf{5 个生产级 Data Agent Skills}，分别覆盖 PDP、OPC、Review、Cart 和 Item。}
-      \resumeItem{设计标准化 Skill 编写模板，将指标定义、表关系、筛选条件与计算逻辑沉淀为可复用 Runbooks；Skills 部署后用于实际分析工作流，将单次处理时间从 \textbf{30--45 分钟缩短至 2--3 分钟}。}
-      \resumeItem{围绕基准 SQL、参数处理、分片执行与结果合并建立确定性执行和验证机制；梳理 \textbf{15 类失败模式}，并在 SQL 版本与参数一致时，使 \textbf{18 行结果的全部 19 个字段}与人工执行的 SQL 结果完全一致。}
-      \resumeItem{构建验证工具与 \textbf{AI-readable 团队知识库}，沉淀历史分析、业务逻辑、指标定义、分析方法与最佳实践，使团队能够一致地开发、测试和维护 Data Agent Skills。}
-    \resumeItemListEnd
+\resumeEntry
+  {Shopee Singapore}
+  {2026.03 -- 至今（预计 2026.09）}
+  {AI 数据分析实习生，Buyer \& Marketing BI Team}
+  {新加坡}
+\begin{itemize}
+  \item 与产品经理及区域业务方拆解反复出现的 A/B 分析需求，澄清决策目标、指标口径和能力边界；将瓶颈定位为分析逻辑缺少标准化，而非单条 SQL 提速。底层 Agent 平台由其他团队负责，我负责 Skill / Runbook 应用约束层。
+  \item 将 PDP、OPC、Review、Cart 和 Item 五类高频流程落地为生产 Data Agent Skills，并用于实际分析；把输入、执行步骤、SQL 模板、输出 Schema 与返回前检查固化为 Runbooks，使单次重复分析的处理时间由 \textbf{30--45 分钟缩短至 2--3 分钟}，结果仍由分析师最终复核。
+  \item 针对 SQL 改写、参数异常、查询超时、Partial Result 与 Live 表漂移等风险，以 Frozen SQL 为真值，建立输入校验、单 Group 分片并行、完整性检查与结果原样合并机制；共整理 \textbf{15 类失败模式}，限制 Agent 在失败后自行改写业务逻辑。
+  \item 在 SQL 版本和参数一致的评估案例中，分片执行后的 \textbf{18 行结果、全部 19 个字段}均与人工 SQL 一致；将复盘规则沉淀为标准化 Skill 编写模板、验证工具和 AI-readable 团队知识库，支持团队按统一规范开发、测试和维护 Agent 能力。
+\end{itemize}
 
-  \resumeSubheading
-    {金肯职业技术学院}{2023.03 -- 2025.10}
-    {讲师兼 AI 技术负责人}{中国}
-    \resumeItemListStart
-      \resumeItem{设计并讲授 Python、应用机器学习与生成式 AI 课程，覆盖 \textbf{300+ 名学生}；配套开发实践实验、考核与项目评分标准。}
-      \resumeItem{牵头 STEM 机器人项目，指导室内自主无人机团队运用 ROS、场景拆解与避障技术，获得 \textbf{RAICOM 2024 全国总决赛三等奖}。}
-    \resumeItemListEnd
-\resumeSubHeadingListEnd
-\vspace{-11pt}
+\resumeEntry
+  {金肯职业技术学院}
+  {2023.03 -- 2025.10}
+  {讲师兼 AI 技术负责人}
+  {中国}
+\begin{itemize}
+  \item 为把抽象的 AI 知识转化为可操作、可评价的学习任务，设计并讲授 Python、应用机器学习与生成式 AI 课程，配套开发实验、考核和项目评分标准，覆盖 \textbf{300+ 名学生}。
+  \item 牵头 STEM 机器人项目，指导团队使用 ROS 拆解室内自主飞行与避障问题，获 \textbf{RAICOM 2024 全国总决赛三等奖}。
+\end{itemize}
 
 \section{精选项目}
-\vspace{-5pt}
-\resumeSubHeadingListStart
-  \resumeProjectHeadingDetailed
-    {Data Agent Sandbox}{2026.07}
-    {TypeScript、React、AlaSQL、Vitest}
-    {\href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}
-    \resumeItemListStart
-      \resumeItem{构建公开、纯浏览器运行的 BI Data Agent 沙盒，将业务问题转化为结构化参数契约和经校验的 SQL，在本地执行后输出图表、Trace 与可下载报告；演示仅使用合成电商数据。}
-      \resumeItem{实现确定性 Guardrails 与回归评估工作区，支持测试集选择、失败模式分布、逐案例 Trace 和 Bad Case Review Queue；无需登录、外部服务或 API Key 即可运行。}
-    \resumeItemListEnd
-  \resumeProjectHeadingDetailed
-    {ContextCue}{2026.06 -- 2026.07}
-    {TypeScript、Next.js、React}
-    {\href{https://contex-cue.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}
-    \resumeItemListStart
-      \resumeItem{构建面向个人 AI Agent 的跨应用 Context Layer，将模拟语音指令及聊天/AI 反馈片段转化为结构化记忆与带证据引用的回复上下文。}
-      \resumeItem{实现确定性的 MemoryGate，控制人物与任务作用域、人工确认和 TTL 过期，并阻止原始聊天与音频写入记忆；设计 \mbox{\textbf{16 个静态 V0.1 评估用例}}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。}
-    \resumeItemListEnd
-  \resumeProjectHeadingDetailed
-    {Multi-Agent Literature Monitoring System}{2026.04 -- 2026.05}
-    {Python、Google ADK、ChromaDB、SQLite、Langfuse}
-    {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\underline{GitHub}}}
-    \resumeItemListStart
-      \resumeItem{设计团队研究监测 Agent 的 Orchestrator 架构，组合 \texttt{SequentialAgent + LoopAgent}、critic-revision loop 与 2 个人工检查点；设计 typed schemas、双存储、tracing、prompts 与 guardrails。}
-      \resumeItem{本人负责的编排、存储、可观测性与 guardrails 模块共约 \textbf{3,990 行代码}；通过 \textbf{18/18 smoke tests} 及完整 pytest suite。}
-    \resumeItemListEnd
-  \resumeItem{\textbf{其他作品：} \href{https://clinical-bazi-web.vercel.app/}{\underline{Clinical Bazi Web}} $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。}
-\resumeSubHeadingListEnd
-\vspace{-11pt}
+\resumeProject
+  {BI Data Agent Sandbox}
+  {2026.07}
+  {TypeScript、React、Node / Vercel Serverless、AlaSQL、Vitest}
+  {\href{https://data-agent-sandbox.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/Data-Agent-Sandbox}{\underline{GitHub}}}
+\begin{itemize}
+  \item 针对自由生成 SQL 难复现、结果难审计的问题，构建公开、纯浏览器运行的 BI Data Agent 沙盒，将受支持的业务问题转化为结构化参数契约和经校验的只读 SQL，并在合成电商数据上输出图表、回答与可审查的执行轨迹（Trace）。
+  \item 实现确定性 Guardrails、版本化回归评估、失败模式分布与 Bad Case Review Queue，使敏感请求被阻断、边界案例降级至 needs-review；演示无需登录、外部服务或模型 API Key。
+\end{itemize}
 
-\section{荣誉奖项}
-\resumeSubHeadingListStart
-  \resumeProjectHeading
-    {\textbf{Huawei ICT Competition Global Final} $|$ Cloud Track 全球三等奖（Top 5\%）}{2022.06}
-\resumeSubHeadingListEnd
-\vspace{-12pt}
+\resumeProject
+  {ContextCue}
+  {2026.06 -- 2026.07}
+  {TypeScript、Next.js、React}
+  {\href{https://contex-cue.vercel.app/}{\underline{在线演示}} $\cdot$ \href{https://github.com/HaoPan036/ContexCue}{\underline{GitHub}}}
+\begin{itemize}
+  \item 针对个人 Agent 跨应用记忆中的人物串线、过期信息召回与隐私写入风险，构建 Context Layer，将模拟语音指令、聊天与 AI 反馈转化为结构化记忆和带来源引用的回复上下文。
+  \item 通过确定性 MemoryGate 控制人物与任务作用域、人工确认、TTL 过期及原始聊天/音频阻断；设计 \textbf{16 个静态 V0.1 评估场景}，覆盖上下文拼接、人物串线、隐私、过期、证据引用与语气安全。
+\end{itemize}
+
+\resumeProject
+  {Multi-Agent Literature Monitoring System}
+  {2026.04 -- 2026.05}
+  {Python、Google ADK、ChromaDB、SQLite、Langfuse}
+  {\href{https://github.com/HaoPan036/CA6123-frontier-lit-agent}{\underline{GitHub}}}
+\begin{itemize}
+  \item 为减少研究监测中单轮生成缺少复核的问题，设计基于 \texttt{SequentialAgent + LoopAgent} 的 Orchestrator，引入 critic-revision loop、typed schemas、tracing 与 2 个人工检查点；关键流程通过 \textbf{18/18 smoke tests} 及项目 pytest 测试套件。
+\end{itemize}
+\vspace{-1pt}
+\textbf{其他作品：}\href{https://clinical-bazi-web.vercel.app/}{\underline{Clinical Bazi Web}} $|$ 代码排盘与有边界的 AI 辅助解读；私有内测，访问密码可联系获取。
+
+\section{教育背景}
+\resumeEntry
+  {Nanyang Technological University（南洋理工大学）}
+  {2025.11 -- 至今（预计 2027.01 毕业）}
+  {计算学硕士（应用人工智能，MCAAI），College of Computing and Data Science}
+  {新加坡}
+\resumeEntry
+  {Suzhou University}
+  {2019.09 -- 2023.06}
+  {数据科学与大数据技术工学学士；国家奖学金（2022--2023，全国前 0.2\%）}
+  {中国}
 
 \section{技术能力}
-\begin{itemize}[leftmargin=0.15in,label={}]
-  \small{\item{
-    \renewcommand{\arraystretch}{1.08}
-    \begin{tabularx}{\linewidth}{@{}>{\bfseries}l@{\hspace{0.55em}}X@{}}
-      编程语言： & Python、SQL（Presto/Trino、Hive、MySQL）、C++、Shell \\
-      Agent Systems： & Google ADK、Context Engineering、Agent Skills / Runbooks、Text-to-SQL、RAG、Workflow Automation \\
-      Reliability \& Data： & LLM Evaluation、Failure-mode Analysis、Guardrails、PyTorch、Transformers、PySpark、SQLite、Langfuse \\
-      工程工具： & Git、Linux、ROS \\
-      证书： & 软件设计师（PRC）、高等学校教师资格证（人工智能，PRC）、IELTS 6.5
-    \end{tabularx}
-  }}
-\end{itemize}
+\skillline{语言与数据：}{Python、TypeScript、SQL（Presto / Trino、Hive、MySQL）、PySpark、SQLite、Shell}
+\skillline{Agent / LLM：}{Google ADK、Agent Skills / Runbooks、Text-to-SQL、RAG、LLM Evaluation、Guardrails、Langfuse}
+\skillline{工程工具：}{React、Next.js、Vitest、pytest、Git、Linux、ROS}
+\skillline{荣誉：}{Huawei ICT Competition Global Final，Cloud Track 全球三等奖（Top 5\%，2022.06）}
 
 \end{document}
