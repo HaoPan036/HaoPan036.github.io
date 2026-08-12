@@ -295,7 +295,7 @@
     }
     .journey-head h2 em { color: var(--jade-dark); font: inherit; font-style: normal; }
     .journey-track {
-      position: relative; display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+      position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 2fr);
       gap: clamp(28px, 4vw, 64px); margin-top: 94px;
     }
     .journey-track::before {
@@ -325,7 +325,7 @@
     .journey-item strong { margin-top: 7px; font-size: 1.08rem; line-height: 1.35; }
     .journey-org { color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
     .journey-detail { max-width: 34ch; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
-    .journey-item:first-child .journey-detail { max-width: 56ch; }
+    .journey-item:last-child .journey-detail { max-width: 56ch; }
     .journey-detail p { margin: 0; color: var(--muted); line-height: 1.62; }
     .journey-detail p + p { margin-top: 14px; }
 
@@ -743,6 +743,18 @@
           <h2><span data-en="The" data-zh="我的">The</span> <em data-en="journey" data-zh="历程">journey</em></h2>
         </header>
         <div class="journey-track">
+          <details class="journey-item">
+            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2019-09">Sep 2019—Jun 2023</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="B.Eng. Data Science &amp; Big Data" data-zh="数据科学与大数据工学学士">B.Eng. Data Science &amp; Big Data</strong><span class="journey-org" data-en="Suzhou University" data-zh="Suzhou University">Suzhou University</span></summary>
+            <div class="journey-detail"><p data-en="China National Scholarship, placing in the top 0.2% nationwide in 2022–23." data-zh="获 2022–23 年国家奖学金，全国前 0.2%。">China National Scholarship, placing in the top 0.2% nationwide in 2022–23.</p></div>
+          </details>
+          <details class="journey-item">
+            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2023">2023—2025</time><small class="journey-kind" data-en="Work" data-zh="工作">Work</small></span><strong data-en="Lecturer" data-zh="讲师">Lecturer</strong><span class="journey-org" data-en="Jinken Vocational &amp; Technical College" data-zh="金肯职业技术学院">Jinken Vocational &amp; Technical College</span></summary>
+            <div class="journey-detail"><p data-en="Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities." data-zh="为 300 多名学生讲授 AI 与 Python，并设计应用机器学习、生成式 AI 课程与主动学习活动。">Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities.</p></div>
+          </details>
+          <details class="journey-item">
+            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2025-11">Nov 2025—Jan 2027</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="M.Comp. in Applied AI" data-zh="应用人工智能硕士">M.Comp. in Applied AI</strong><span class="journey-org" data-en="Nanyang Technological University · CCDS" data-zh="南洋理工大学 · 计算机与数据科学学院">Nanyang Technological University · CCDS</span></summary>
+            <div class="journey-detail"><p data-en="Multi-agent systems, trustworthy AI applications, and human–AI learning research." data-zh="研究方向覆盖多 Agent 系统、可信 AI 应用与人机学习。">Multi-agent systems, trustworthy AI applications, and human–AI learning research.</p></div>
+          </details>
           <details class="journey-item" open>
             <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2026-03">Mar 2026—Sep 2026</time><small class="journey-kind" data-en="Work" data-zh="工作">Work</small></span><strong data-en="AI Data Analyst Intern" data-zh="AI 数据分析实习生">AI Data Analyst Intern</strong><span class="journey-org">Shopee · Singapore</span></summary>
             <div class="journey-detail">
@@ -750,18 +762,6 @@
               <p data-en="Designed and implemented the application layer of Analysis Agent Copilot: a Svelte frontend, layered FastAPI backend, governed data pipeline, platform-LLM integration, evidence-bound candidate selection, and structured drafting. The delivered MVP is now used by analysts in daily work." data-zh="设计并实现 Analysis Agent Copilot 应用层：包括 Svelte 前端、分层 FastAPI 后端、受治理的数据流程、平台 LLM 接入、证据绑定的候选选择与结构化草稿；已交付的 MVP 现用于分析师日常工作。">Designed and implemented the application layer of Analysis Agent Copilot: a Svelte frontend, layered FastAPI backend, governed data pipeline, platform-LLM integration, evidence-bound candidate selection, and structured drafting. The delivered MVP is now used by analysts in daily work.</p>
               <p data-en="The platform team owns the underlying runtime and hosting. My scope is the full application workflow and its backend gates; high-risk changes remain isolated for review rather than being written directly to the knowledge base or main branch." data-zh="底层运行时与托管平台由平台团队负责；我的范围是完整应用工作流及后端门禁。高风险变更保持隔离审阅，不直接写入知识库或主分支。">The platform team owns the underlying runtime and hosting. My scope is the full application workflow and its backend gates; high-risk changes remain isolated for review rather than being written directly to the knowledge base or main branch.</p>
             </div>
-          </details>
-          <details class="journey-item">
-            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2025-11">Nov 2025—Jan 2027</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="M.Comp. in Applied AI" data-zh="应用人工智能硕士">M.Comp. in Applied AI</strong><span class="journey-org" data-en="Nanyang Technological University · CCDS" data-zh="南洋理工大学 · 计算机与数据科学学院">Nanyang Technological University · CCDS</span></summary>
-            <div class="journey-detail"><p data-en="Multi-agent systems, trustworthy AI applications, and human–AI learning research." data-zh="研究方向覆盖多 Agent 系统、可信 AI 应用与人机学习。">Multi-agent systems, trustworthy AI applications, and human–AI learning research.</p></div>
-          </details>
-          <details class="journey-item">
-            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2023">2023—2025</time><small class="journey-kind" data-en="Work" data-zh="工作">Work</small></span><strong data-en="Lecturer" data-zh="讲师">Lecturer</strong><span class="journey-org" data-en="Jinken Vocational &amp; Technical College" data-zh="金肯职业技术学院">Jinken Vocational &amp; Technical College</span></summary>
-            <div class="journey-detail"><p data-en="Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities." data-zh="为 300 多名学生讲授 AI 与 Python，并设计应用机器学习、生成式 AI 课程与主动学习活动。">Taught AI and Python to 300+ students; designed applied-ML and GenAI curricula and active-learning activities.</p></div>
-          </details>
-          <details class="journey-item">
-            <summary><span class="journey-dot" aria-hidden="true"></span><span class="journey-meta"><time datetime="2019-09">Sep 2019—Jun 2023</time><small class="journey-kind" data-en="Education" data-zh="教育">Education</small></span><strong data-en="B.Eng. Data Science &amp; Big Data" data-zh="数据科学与大数据工学学士">B.Eng. Data Science &amp; Big Data</strong><span class="journey-org" data-en="Suzhou University" data-zh="Suzhou University">Suzhou University</span></summary>
-            <div class="journey-detail"><p data-en="China National Scholarship, placing in the top 0.2% nationwide in 2022–23." data-zh="获 2022–23 年国家奖学金，全国前 0.2%。">China National Scholarship, placing in the top 0.2% nationwide in 2022–23.</p></div>
           </details>
         </div>
       </div>
